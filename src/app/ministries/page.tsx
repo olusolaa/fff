@@ -3,66 +3,46 @@ import ContentBlock from '@/components/shared/ContentBlock';
 import CardGrid, { type CardGridItem } from '@/components/shared/CardGrid';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 
-const ftmPrograms: CardGridItem[] = [
+const ftmProgramCategories: CardGridItem[] = [
   {
-    id: 'asc',
-    title: 'Adolescent & Singles Club (ASC)',
-    description: 'Monthly gatherings (1st Saturday, 10 AM) guiding adolescents and singles towards purposeful living through discussions, teachings, and interactive sessions.',
+    id: 'counseling-family-support',
+    title: 'Counseling & Family Support',
+    description: 'Providing confidential counseling and support for individuals and families, alongside seminars to strengthen family life, marriage, and parenting.',
     imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Young people in a discussion',
-    imageHint: 'youth group discussion',
+    imageAlt: 'Supportive group session',
+    imageHint: 'support group family counseling',
     actionText: 'Learn More',
-    actionLink: '/ministries/adolescent-singles-club',
+    actionLink: '/ministries/counseling-family-support',
   },
   {
-    id: 'fls',
-    title: 'Family Life Seminars (FLS)',
-    description: 'Quarterly seminars (April, July, November) addressing marriage, parenting, and relationship dynamics to strengthen family bonds.',
+    id: 'youth-student-empowerment',
+    title: 'Youth & Student Empowerment',
+    description: 'Engaging adolescents, singles, and students through monthly clubs and school outreaches to foster purposeful living and moral values.',
     imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Family attending a seminar',
-    imageHint: 'family seminar conference',
+    imageAlt: 'Students learning together',
+    imageHint: 'youth group students learning',
     actionText: 'Learn More',
-    actionLink: '/ministries/family-life-seminars',
+    actionLink: '/ministries/youth-student-empowerment',
   },
   {
-    id: 'discipleship',
-    title: 'Discipleship Classes',
-    description: 'Weekly classes (Mondays, 5 PM) aimed at deepening understanding of Christian doctrines and fostering spiritual growth.',
+    id: 'faith-growth',
+    title: 'Faith & Growth',
+    description: 'Deepening spiritual understanding and fostering growth through discipleship classes, forums, and focused study.',
     imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'People studying together',
-    imageHint: 'bible study group',
+    imageAlt: 'Person studying a book',
+    imageHint: 'bible study spiritual growth',
     actionText: 'Learn More',
-    actionLink: '/ministries/discipleship-classes',
+    actionLink: '/ministries/faith-growth',
   },
    {
-    id: 'marriage-forum',
-    title: 'Marriage Forum',
-    description: 'Monthly forums (2nd Saturday, 10 AM) providing a platform for couples to discuss and learn about building strong, godly marriages.',
+    id: 'community-outreach',
+    title: 'Community Outreach',
+    description: 'Reaching out to the wider community through various initiatives and programs designed to share our values and make a positive impact.',
     imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Couples in discussion',
-    imageHint: 'couples talking marriage',
+    imageAlt: 'Community members working together',
+    imageHint: 'community service outreach helping',
     actionText: 'Learn More',
-    actionLink: '/ministries/marriage-forum',
-  },
-  {
-    id: 'school-outreach',
-    title: 'School Outreaches',
-    description: 'Collaborative programs with schools including morning assemblies and campus awareness sessions to promote moral values.',
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Students in an assembly',
-    imageHint: 'school assembly students',
-    actionText: 'Learn More',
-    actionLink: '/ministries/school-outreaches',
-  },
-   {
-    id: 'counseling',
-    title: 'Counseling Services',
-    description: 'Confidential counseling for individuals and couples seeking guidance on personal, relational, or spiritual matters.',
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Counseling session',
-    imageHint: 'counseling support session',
-    actionText: 'Get Support',
-    actionLink: '/ministries/counseling-services',
+    actionLink: '/ministries/community-outreach',
   },
 ];
 
@@ -71,16 +51,16 @@ export default function MinistriesPage() {
     <div>
       <ContentBlock
         title="Our Programs"
-        text="Family Tent Ministry offers a variety of programs designed to foster spiritual growth, strengthen families, and equip individuals with values for purposeful living. Explore how you can get involved."
+        text="Family Tent Ministry offers a variety of programs designed to foster spiritual growth, strengthen families, and equip individuals with values for purposeful living. Explore our main program areas below."
         className="bg-secondary/30 text-center"
         titleClassName="text-4xl md:text-5xl"
       />
-      <CardGrid items={ftmPrograms} />
+      <CardGrid items={ftmProgramCategories} />
       <AnimatedSection className="py-12 md:py-20 text-center">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold font-headline text-primary md:text-4xl mb-4">Find Your Place to Grow</h2>
           <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-            No matter your age or stage of life, there's a program at Family Tent Ministry designed to support your journey. We encourage you to connect and grow with us.
+            No matter your age or stage of life, there's a program area at Family Tent Ministry designed to support your journey. We encourage you to connect and grow with us.
           </p>
         </div>
       </AnimatedSection>

@@ -1,7 +1,5 @@
 
 import Link from 'next/link';
-// Social media icons can be re-added if FTM provides links
-// import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
 const footerSections = [
@@ -17,12 +15,10 @@ const footerSections = [
   {
     title: 'Our Programs',
     links: [
-      { label: 'Adolescent & Singles Club', href: '/ministries/adolescent-singles-club' },
-      { label: 'Family Life Seminars', href: '/ministries/family-life-seminars' },
-      { label: 'Discipleship Classes', href: '/ministries/discipleship-classes' },
-      { label: 'Marriage Forum', href: '/ministries/marriage-forum' },
-      { label: 'School Outreaches', href: '/ministries/school-outreaches' },
-      { label: 'Counseling Services', href: '/ministries/counseling-services' },
+      { label: 'Counseling & Family Support', href: '/ministries/counseling-family-support' },
+      { label: 'Youth & Student Empowerment', href: '/ministries/youth-student-empowerment' },
+      { label: 'Faith & Growth', href: '/ministries/faith-growth' },
+      { label: 'Community Outreach', href: '/ministries/community-outreach' },
     ],
   },
   {
@@ -31,18 +27,11 @@ const footerSections = [
       { label: 'Contact Us', href: '/contact' },
       { label: 'Our Locations', href: '/locations' },
       { label: 'Events', href: '/events' },
-      { label: 'Sermons/Teachings', href: '/sermons' }, // If applicable
+      { label: 'Sermons/Teachings', href: '/sermons' },
       { label: 'Give / Partner', href: '/give' },
     ],
   },
 ];
-
-// const socialLinks = [
-//   { label: 'Facebook', icon: Facebook, href: '#' },
-//   { label: 'Instagram', icon: Instagram, href: '#' },
-//   { label: 'Twitter', icon: Twitter, href: '#' },
-//   { label: 'YouTube', icon: Youtube, href: '#' },
-// ];
 
 export default function Footer() {
   return (
@@ -76,15 +65,6 @@ export default function Footer() {
         <Separator className="my-8 bg-border" />
         <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
           <p className="text-sm">&copy; {new Date().getFullYear()} Family Tent Ministry. All rights reserved.</p>
-          {/* 
-          <div className="flex space-x-4">
-            {socialLinks.map((social) => (
-              <Link key={social.label} href={social.href} aria-label={social.label} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
-                <social.icon className="h-6 w-6" />
-              </Link>
-            ))}
-          </div>
-           */}
         </div>
          <div className="mt-4 text-center text-xs">
             <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>

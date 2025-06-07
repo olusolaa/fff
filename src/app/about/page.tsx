@@ -68,7 +68,7 @@ export default function AboutPage() {
 
       <ContentBlock
         title="Our Beliefs"
-        text="As a Christian nonprofit organization, our core beliefs are centered on biblical teachings. Family Tent Ministry is a Christian nonprofit organization dedicated to teaching values and ethics that foster meaningful and purposeful living. We aim to guide young people toward becoming healthy, responsible, and spiritually grounded members of society."
+        text="Family Tent Ministry is a Christian nonprofit organization dedicated to teaching values and ethics that foster meaningful and purposeful living. We aim to guide young people toward becoming healthy, responsible, and spiritually grounded members of society."
         actionText="Learn More About Our Beliefs"
         actionLink="/about/beliefs"
       />
@@ -86,8 +86,8 @@ export default function AboutPage() {
               { name: "Team Member Placeholder", title: "Role Placeholder", img: "https://placehold.co/400x400.png", hint: "leader portrait" },
               { name: "Team Member Placeholder", title: "Role Placeholder", img: "https://placehold.co/400x400.png", hint: "team member"  },
               { name: "Team Member Placeholder", title: "Role Placeholder", img: "https://placehold.co/400x400.png", hint: "professional portrait"  },
-            ].map(leader => (
-              <div key={leader.name} className="flex flex-col items-center">
+            ].map((leader, index) => (
+              <div key={`team-member-${index}`} className="flex flex-col items-center">
                 <div className="relative w-40 h-40 rounded-full overflow-hidden mb-4 shadow-lg">
                   <Image src={leader.img} alt={leader.name} layout="fill" objectFit="cover" data-ai-hint={leader.hint}/>
                 </div>

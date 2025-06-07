@@ -23,14 +23,14 @@ const nextSteps = [
   {
     icon: CalendarDays,
     title: "Attend a Welcome Event",
-    description: "Meet our pastors and learn more about The Austin Stone at our next newcomer event.",
+    description: "Meet our pastors and learn more about Family Tent Ministry at our next newcomer event.",
     actionText: "See Upcoming Events",
     actionLink: "/events"
   },
   {
     icon: MessageCircleQuestion,
     title: "Ask Questions",
-    description: "Have questions about faith, our church, or how to get involved? We'd love to talk.",
+    description: "Have questions about faith, our ministry, or how to get involved? We'd love to talk.",
     actionText: "Contact Us",
     actionLink: "/contact"
   }
@@ -41,7 +41,7 @@ export default function NewHerePage() {
     <div>
       <ContentBlock
         title="Welcome! We're Glad You're Here."
-        text="Whether you're new to Austin, new to church, or just exploring faith, we're excited to connect with you. The Austin Stone is a community where people from all walks of life can encounter Jesus and experience authentic relationships."
+        text="Whether you're new to the area, new to church, or just exploring faith, we're excited to connect with you. Family Tent Ministry is a community where people from all walks of life can encounter Jesus and experience authentic relationships."
         className="bg-secondary/30 text-center"
         titleClassName="text-4xl md:text-5xl"
       />

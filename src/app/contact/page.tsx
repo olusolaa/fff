@@ -10,7 +10,7 @@ export default function ContactPage() {
     <div>
       <ContentBlock
         title="Contact Us"
-        text="We'd love to hear from you! Whether you have questions, need prayer, or want to learn more about The Austin Stone, feel free to reach out."
+        text="We'd love to hear from you! Whether you have questions, need prayer, or want to learn more about Family Tent Ministry, feel free to reach out."
         className="bg-secondary/30 text-center"
         titleClassName="text-4xl md:text-5xl"
       />
@@ -36,7 +36,7 @@ export default function ContactPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-foreground/80">info@austinstone.org</p>
+                  <p className="text-foreground/80">info@familytentministry.org</p>
                 </CardContent>
               </Card>
               <Card className="shadow-lg">

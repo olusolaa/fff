@@ -4,8 +4,8 @@ import { Toaster } from "@/components/ui/toaster";
 import AppLayout from '@/components/layout/AppLayout';
 
 export const metadata: Metadata = {
-  title: 'Austin Stone Recreation',
-  description: 'Recreation of The Austin Stone Community Church website',
+  title: 'Family Tent Ministry',
+  description: 'Family Tent Ministry - Taking the gospel of our Lord Jesus Christ to all people groups in Kenya and beyond.',
 };
 
 export default function RootLayout({

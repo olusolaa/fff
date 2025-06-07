@@ -31,11 +31,11 @@ export default function AboutPage() {
   return (
     <div>
       <ContentBlock
-        title="About The Austin Stone"
-        text="The Austin Stone Community Church exists to love God, love people, and love our city. We are a diverse community of believers united by the gospel of Jesus Christ, committed to growing in faith and making a positive impact in Austin and beyond."
+        title="About Family Tent Ministry"
+        text="Family Tent Ministry exists to take the gospel of our Lord Jesus Christ to all people groups in Kenya and beyond. We are a diverse community united by the gospel, committed to growing in faith and making a positive impact."
         imageUrl="https://placehold.co/1200x800.png"
-        imageAlt="Aerial view of Austin city"
-        imageHint="Austin city"
+        imageAlt="Family Tent Ministry outreach event"
+        imageHint="Kenya landscape"
         imagePosition="right"
         className="bg-secondary/30"
         titleClassName="text-4xl md:text-5xl"
@@ -43,7 +43,7 @@ export default function AboutPage() {
 
       <ContentBlock
         title="Our History"
-        text="Founded in 2002, The Austin Stone began with a small group of people passionate about seeing Austin transformed by the gospel. Over the years, God has blessed us with growth, allowing us to expand our reach and ministries throughout the city."
+        text="Family Tent Ministry has a rich history, beginning with a passionate group of people dedicated to seeing lives transformed by the gospel. Over the years, God has blessed us with growth, allowing us to expand our reach and ministries."
         imagePosition="left"
       />
       
@@ -65,7 +65,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold font-headline text-primary md:text-4xl mb-8">Meet Our Leadership</h2>
           <p className="text-lg text-foreground/80 mb-10 max-w-2xl mx-auto">
-            Our church is led by a dedicated team of pastors, elders, and staff who are committed to shepherding our congregation and guiding our mission.
+            Our ministry is led by a dedicated team committed to shepherding and guiding our mission.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[

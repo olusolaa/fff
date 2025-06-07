@@ -77,10 +77,10 @@ export default function HomePage() {
   return (
     <div>
       <HeroSection
-        title="Welcome to The Austin Stone"
-        subtitle="A church that loves God, loves people, and loves our city."
+        title="Welcome to Family Tent Ministry"
+        subtitle="Taking the gospel of our Lord Jesus Christ to all people groups in Kenya and beyond."
         imageUrl="https://placehold.co/1920x1080.png"
-        imageAlt="Austin Stone Church congregation"
+        imageAlt="Family Tent Ministry congregation or event"
         imageHint="church congregation"
         primaryActionText="I'm New Here"
         primaryActionLink="/new"
@@ -90,7 +90,7 @@ export default function HomePage() {
 
       <ContentBlock
         title="Who We Are"
-        text="The Austin Stone is a community of people who are being transformed by the gospel of Jesus Christ. We desire to see Austin renewed by the gospel and are committed to making disciples who make disciples."
+        text="Family Tent Ministry is a ministry of people who are being transformed by the gospel of Jesus Christ. We desire to see communities renewed by the gospel and are committed to making disciples who make disciples."
         imageUrl="https://placehold.co/800x600.png"
         imageAlt="Diverse group of people smiling"
         imageHint="diverse community"
@@ -116,7 +116,7 @@ export default function HomePage() {
       <AnimatedSection className="py-12 md:py-20 text-center bg-primary text-primary-foreground">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold font-headline md:text-4xl mb-4">Latest Sermon</h2>
-          <p className="text-lg mb-6">Watch our most recent message from Pastor John Doe.</p>
+          <p className="text-lg mb-6">Watch our most recent message.</p>
           <div className="aspect-video max-w-3xl mx-auto bg-muted rounded-lg overflow-hidden shadow-xl mb-6">
             <Image src="https://placehold.co/1280x720.png" alt="Latest sermon video placeholder" data-ai-hint="sermon video" width={1280} height={720} className="w-full h-full object-cover"/>
           </div>

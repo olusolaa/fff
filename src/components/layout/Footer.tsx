@@ -49,7 +49,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div className="md:col-span-1 lg:col-span-1">
             <Link href="/" className="mb-4 inline-block text-2xl font-bold font-headline text-primary">
-              Austin Stone
+              Family Tent Ministry
             </Link>
             <p className="text-sm">
               123 Church Street<br />
@@ -74,7 +74,7 @@ export default function Footer() {
         </div>
         <Separator className="my-8 bg-border" />
         <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
-          <p className="text-sm">&copy; {new Date().getFullYear()} Austin Stone Community Church. All rights reserved.</p>
+          <p className="text-sm">&copy; {new Date().getFullYear()} Family Tent Ministry. All rights reserved.</p>
           <div className="flex space-x-4">
             {socialLinks.map((social) => (
               <Link key={social.label} href={social.href} aria-label={social.label} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">

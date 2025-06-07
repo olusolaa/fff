@@ -23,7 +23,7 @@ export default function TermsOfServicePage() {
           </p>
           <h2 className="text-2xl font-bold font-headline text-primary mt-8 mb-4">Intellectual Property (Placeholder)</h2>
            <p className="text-lg text-foreground/80 mb-4">
-            The Service and its original content, features, and functionality are and will remain the exclusive property of The Austin Stone Community Church and its licensors.
+            The Service and its original content, features, and functionality are and will remain the exclusive property of Family Tent Ministry and its licensors.
           </p>
            <h2 className="text-2xl font-bold font-headline text-primary mt-8 mb-4">Changes to Terms</h2>
            <p className="text-lg text-foreground/80 mb-4">
@@ -31,7 +31,7 @@ export default function TermsOfServicePage() {
           </p>
            <h2 className="text-2xl font-bold font-headline text-primary mt-8 mb-4">Contact Us</h2>
            <p className="text-lg text-foreground/80">
-            If you have any questions about these Terms, please contact us at info@austinstone.org.
+            If you have any questions about these Terms, please contact us at info@familytentministry.org.
           </p>
            <p className="text-sm text-muted-foreground mt-8">
             Last updated: [Date to be filled]

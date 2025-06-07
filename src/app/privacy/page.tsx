@@ -15,7 +15,7 @@ export default function PrivacyPolicyPage() {
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold font-headline text-primary mb-4">Our Commitment</h2>
           <p className="text-lg text-foreground/80 mb-4">
-            The Austin Stone Community Church values your privacy. This policy will outline how we collect, use, disclose, and safeguard your information when you visit our website or interact with our services.
+            Family Tent Ministry values your privacy. This policy will outline how we collect, use, disclose, and safeguard your information when you visit our website or interact with our services.
           </p>
           <h2 className="text-2xl font-bold font-headline text-primary mt-8 mb-4">Information Collection (Placeholder)</h2>
           <p className="text-lg text-foreground/80 mb-4">
@@ -27,7 +27,7 @@ export default function PrivacyPolicyPage() {
           </p>
            <h2 className="text-2xl font-bold font-headline text-primary mt-8 mb-4">Contact Us</h2>
            <p className="text-lg text-foreground/80">
-            If you have any questions about this Privacy Policy, please contact us at info@austinstone.org.
+            If you have any questions about this Privacy Policy, please contact us at info@familytentministry.org.
           </p>
           <p className="text-sm text-muted-foreground mt-8">
             Last updated: [Date to be filled]

@@ -1,39 +1,9 @@
 
 import ContentBlock from '@/components/shared/ContentBlock';
 import AnimatedSection from '@/components/shared/AnimatedSection';
-import CardGrid, { type CardGridItem } from '@/components/shared/CardGrid';
-import { Users, HeartHandshake, ShieldCheck } from 'lucide-react';
-
-const subPrograms: CardGridItem[] = [
-  {
-    id: 'counseling',
-    title: 'Counseling Services',
-    description: 'Confidential, biblically-based counseling for individuals, couples, and families facing personal, relational, or spiritual challenges.',
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageHint: 'counseling session support',
-    actionText: 'Learn About Counseling',
-    actionLink: '/ministries/counseling-services', // Link to old page, to be updated/removed
-  },
-  {
-    id: 'family-life',
-    title: 'Family Life Programs',
-    description: 'Seminars and forums designed to equip individuals and families with practical wisdom for marriage, parenting, and relationship dynamics.',
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageHint: 'family seminar conference',
-    actionText: 'Explore Family Programs',
-    actionLink: '/ministries/family-life-seminars', // Link to old page, to be updated/removed
-  },
-   {
-    id: 'marriage-forum',
-    title: 'Marriage Forum',
-    description: 'Monthly forums (2nd Saturday, 10 AM) providing a platform for couples to discuss and learn about building strong, godly marriages.',
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Couples in discussion',
-    imageHint: 'couples talking marriage',
-    actionText: 'Join the Forum',
-    actionLink: '/ministries/marriage-forum', // Link to old page, to be updated/removed
-  }
-];
+import { Users, HeartHandshake, ShieldCheck, CalendarDays, Clock, BookOpen } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function CounselingFamilySupportPage() {
   return (
@@ -48,30 +18,67 @@ export default function CounselingFamilySupportPage() {
       />
       <AnimatedSection className="py-12 md:py-20">
         <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="text-2xl md:text-3xl font-bold font-headline text-primary mb-10 text-center">Key Areas of Support</h2>
-          <div className="grid md:grid-cols-2 gap-8 text-center">
-            <div className="bg-card p-6 rounded-lg shadow-md">
-              <HeartHandshake className="h-12 w-12 text-accent mx-auto mb-4" />
-              <h3 className="font-headline text-xl text-primary mb-2">Individual & Couples Counseling</h3>
-              <p className="text-foreground/80">
-                Offering a safe space for individuals and couples to explore challenges, find healing, and grow in their relationships and personal well-being.
-              </p>
-            </div>
-            <div className="bg-card p-6 rounded-lg shadow-md">
-              <Users className="h-12 w-12 text-accent mx-auto mb-4" />
-              <h3 className="font-headline text-xl text-primary mb-2">Family Life Enrichment</h3>
-              <p className="text-foreground/80">
-                Providing seminars, forums, and resources focused on marriage enrichment, effective parenting, and building strong family bonds.
-              </p>
-            </div>
+          <h2 className="text-2xl md:text-3xl font-bold font-headline text-primary mb-10 text-center">Our Support Programs</h2>
+          
+          {/* Counseling Services Section */}
+          <div className="mb-12 bg-card p-6 rounded-lg shadow-md">
+            <h3 className="font-headline text-2xl text-accent mb-4 flex items-center">
+              <HeartHandshake className="mr-3 h-7 w-7" /> Counseling Services
+            </h3>
+            <p className="text-foreground/80 mb-4">
+              Confidential counseling sessions available for individuals, couples, and families seeking guidance on personal, relational, or spiritual matters from a Christian perspective.
+            </p>
+            <ul className="list-disc list-inside text-foreground/80 space-y-1 mb-4">
+              <li>Personal challenges (stress, anxiety, grief, identity).</li>
+              <li>Marital and pre-marital counseling.</li>
+              <li>Family relationship difficulties.</li>
+              <li>Parenting concerns.</li>
+              <li>Spiritual guidance and discipleship.</li>
+            </ul>
+            <p className="text-foreground/80 mb-4">
+              All sessions are conducted with the utmost confidentiality and in a compassionate, non-judgmental atmosphere.
+            </p>
+            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
+              <Link href="/contact?subject=CounselingInquiry">Request Counseling Information</Link>
+            </Button>
           </div>
+
+          {/* Family Life Seminars Section */}
+          <div className="mb-12 bg-card p-6 rounded-lg shadow-md">
+            <h3 className="font-headline text-2xl text-accent mb-4 flex items-center">
+              <Users className="mr-3 h-7 w-7" /> Family Life Seminars (FLS)
+            </h3>
+            <p className="text-foreground/80 mb-2">
+              Quarterly seminars designed to equip individuals and families with practical wisdom and biblical principles for navigating various aspects of family life.
+            </p>
+            <div className="flex items-center text-foreground/80 mb-1"><CalendarDays className="mr-2 h-5 w-5 text-primary" /> Held quarterly in April, July, and November.</div>
+            <p className="text-foreground/80 mb-4">
+              Focus Areas: Marriage enrichment, effective parenting, relationship dynamics, financial management, spiritual leadership in the home.
+            </p>
+            <Button asChild variant="outline">
+              <Link href="/events">Check Upcoming Seminars</Link>
+            </Button>
+          </div>
+
+          {/* Marriage Forum Section */}
+          <div className="bg-card p-6 rounded-lg shadow-md">
+            <h3 className="font-headline text-2xl text-accent mb-4 flex items-center">
+              <HeartHandshake className="mr-3 h-7 w-7" /> Marriage Forum
+            </h3>
+            <p className="text-foreground/80 mb-2">
+              A monthly forum providing a supportive platform for couples to discuss, learn, and grow together in building strong, healthy, and godly marriages.
+            </p>
+            <div className="flex items-center text-foreground/80 mb-1"><CalendarDays className="mr-2 h-5 w-5 text-primary" /> Every second Saturday of the month.</div>
+            <div className="flex items-center text-foreground/80 mb-4"><Clock className="mr-2 h-5 w-5 text-primary" /> Time: 10:00 AM.</div>
+            <p className="text-foreground/80 mb-4">
+              Topics Include: Communication, conflict resolution, intimacy, finance, parenting, spiritual unity.
+            </p>
+             <Button asChild variant="outline">
+              <Link href="/events">View Forum Schedule</Link>
+            </Button>
+          </div>
+
         </div>
-      </AnimatedSection>
-      <CardGrid title="Our Support Programs" items={subPrograms} className="bg-background" />
-      <AnimatedSection className="container mx-auto px-4 py-12 md:py-20">
-        <p className="text-lg text-center text-foreground/80">
-          Detailed information about our Counseling Services, Family Life Seminars, and Marriage Forum can be found by exploring the cards above. These programs are designed to provide practical tools and spiritual guidance.
-        </p>
       </AnimatedSection>
     </div>
   );

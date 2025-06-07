@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -8,7 +9,7 @@ import NavLink from './NavLink';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 const navItems = [
-  { href: '/ministries', label: 'Ministries' },
+  { href: '/programs', label: 'Programs' },
   { href: '/give', label: 'Give' },
   { href: '/resources', label: 'Resources' },
   { href: '/about', label: 'About' },

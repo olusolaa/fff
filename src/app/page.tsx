@@ -11,32 +11,32 @@ const ftmProgramsHighlight: CardGridItem[] = [
   {
     id: 'counseling-family',
     title: 'Counseling & Family Support',
-    description: 'Support for individuals, couples, and families, plus family life enrichment programs.',
+    description: 'Support for individuals, couples, and families. Includes counseling, family life seminars, and marriage forums.',
     imageUrl: 'https://placehold.co/600x400.png',
     imageAlt: 'Supportive hands',
     imageHint: 'family support counseling',
     actionText: 'Learn More',
-    actionLink: '/ministries/counseling-family-support',
+    actionLink: '/programs/counseling-family-support',
   },
   {
     id: 'youth-student',
     title: 'Youth & Student Empowerment',
-    description: 'Guiding young people and students through clubs and school outreaches.',
+    description: 'Guiding young people and students through clubs (ASC) and school outreaches.',
     imageUrl: 'https://placehold.co/600x400.png',
     imageAlt: 'Youth group',
     imageHint: 'youth students learning',
     actionText: 'Learn More',
-    actionLink: '/ministries/youth-student-empowerment',
+    actionLink: '/programs/youth-student-empowerment',
   },
   {
     id: 'faith-growth',
     title: 'Faith & Growth',
-    description: 'Deepening spiritual understanding through discipleship classes and study.',
+    description: 'Deepening spiritual understanding through discipleship classes.',
     imageUrl: 'https://placehold.co/600x400.png',
     imageAlt: 'Open book',
     imageHint: 'bible study growth',
     actionText: 'Learn More',
-    actionLink: '/ministries/faith-growth',
+    actionLink: '/programs/faith-growth',
   },
 ];
 
@@ -69,7 +69,7 @@ const resourceItems: CardGridItem[] = [
     imageAlt: 'Supportive hands',
     imageHint: 'support help guidance',
     actionText: 'Get Support',
-    actionLink: '/ministries/counseling-family-support',
+    actionLink: '/programs/counseling-family-support',
   },
 ];
 
@@ -84,9 +84,9 @@ export default function HomePage() {
         imageAlt="Family Tent Ministry gathering or community event"
         imageHint="community gathering diverse"
         primaryActionText="Our Programs"
-        primaryActionLink="/ministries"
+        primaryActionLink="/programs"
         secondaryActionText="Get Involved"
-        secondaryActionLink="/contact"
+        secondaryActionLink="/contact" // Or /give
       />
 
       <ContentBlock
@@ -110,7 +110,7 @@ export default function HomePage() {
         imageAlt="People participating in a ministry program"
         imageHint="community learning FTM"
         actionText="Explore Our Programs"
-        actionLink="/ministries"
+        actionLink="/programs"
         imagePosition="left"
         className="bg-secondary/30"
       />
@@ -120,7 +120,7 @@ export default function HomePage() {
       <AnimatedSection className="py-12 md:py-20 text-center bg-primary text-primary-foreground">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold font-headline md:text-4xl mb-4">Recent Teachings</h2>
-          <p className="text-lg mb-6">Engage with recent messages from our ministry leaders and events.</p>
+          <p className="text-lg mb-6">Engage with recent messages from our ministry leaders and events. (Content Coming Soon)</p>
           <div className="aspect-video max-w-3xl mx-auto bg-muted rounded-lg overflow-hidden shadow-xl mb-6">
             <Image src="https://placehold.co/1280x720.png" alt="Latest sermon video placeholder" data-ai-hint="sermon teaching video" width={1280} height={720} className="w-full h-full object-cover"/>
           </div>
@@ -138,7 +138,7 @@ export default function HomePage() {
            <p className="text-lg text-foreground/80 mb-6">Stay connected and join us for our upcoming events, seminars, and club meetings.</p>
            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { title: "Family Life Seminar (FLS)", date: "Check Events Page", hint: "family conference poster" },
+              { title: "Family Life Seminar (FLS)", date: "Quarterly (Apr, Jul, Nov)", hint: "family conference poster" },
               { title: "Adolescent & Singles Club", date: "1st Saturday Monthly", hint: "youth event poster" },
               { title: "Discipleship Classes", date: "Mondays 5 PM", hint: "study group poster" }
             ].map((event, i) => (

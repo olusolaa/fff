@@ -7,7 +7,7 @@ const footerSections = [
     title: 'About FTM',
     links: [
       { label: 'Our Story', href: '/about' },
-      { label: 'Our Mission & Vision', href: '/about#mission-vision' }, // Assuming an ID can be added to the section
+      { label: 'Our Mission & Vision', href: '/about#mission-vision' },
       { label: 'Our Beliefs', href: '/about/beliefs' },
       { label: 'Our Team', href: '/about/leadership' },
     ],
@@ -15,10 +15,10 @@ const footerSections = [
   {
     title: 'Our Programs',
     links: [
-      { label: 'Counseling & Family Support', href: '/ministries/counseling-family-support' },
-      { label: 'Youth & Student Empowerment', href: '/ministries/youth-student-empowerment' },
-      { label: 'Faith & Growth', href: '/ministries/faith-growth' },
-      { label: 'Community Outreach', href: '/ministries/community-outreach' },
+      { label: 'Counseling & Family Support', href: '/programs/counseling-family-support' },
+      { label: 'Youth & Student Empowerment', href: '/programs/youth-student-empowerment' },
+      { label: 'Faith & Growth', href: '/programs/faith-growth' },
+      { label: 'Community Outreach', href: '/programs/community-outreach' },
     ],
   },
   {
@@ -27,7 +27,7 @@ const footerSections = [
       { label: 'Contact Us', href: '/contact' },
       { label: 'Our Locations', href: '/locations' },
       { label: 'Events', href: '/events' },
-      { label: 'Sermons/Teachings', href: '/sermons' },
+      { label: 'Sermons/Teachings', href: '/sermons' }, // Assuming /sermons is still relevant
       { label: 'Give / Partner', href: '/give' },
     ],
   },

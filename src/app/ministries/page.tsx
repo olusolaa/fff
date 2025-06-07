@@ -7,46 +7,46 @@ const ftmProgramCategories: CardGridItem[] = [
   {
     id: 'counseling-family-support',
     title: 'Counseling & Family Support',
-    description: 'Providing confidential counseling and support for individuals and families, alongside seminars to strengthen family life, marriage, and parenting.',
+    description: 'Providing confidential counseling and support for individuals and families. Includes: Counseling Services, Family Life Seminars, Marriage Forum.',
     imageUrl: 'https://placehold.co/600x400.png',
     imageAlt: 'Supportive group session',
-    imageHint: 'support group family counseling',
+    imageHint: 'support group family',
     actionText: 'Learn More',
-    actionLink: '/ministries/counseling-family-support',
+    actionLink: '/programs/counseling-family-support',
   },
   {
     id: 'youth-student-empowerment',
     title: 'Youth & Student Empowerment',
-    description: 'Engaging adolescents, singles, and students through monthly clubs and school outreaches to foster purposeful living and moral values.',
+    description: 'Engaging adolescents, singles, and students. Includes: Adolescent & Singles Club (ASC), School Outreaches.',
     imageUrl: 'https://placehold.co/600x400.png',
     imageAlt: 'Students learning together',
-    imageHint: 'youth group students learning',
+    imageHint: 'youth students learning',
     actionText: 'Learn More',
-    actionLink: '/ministries/youth-student-empowerment',
+    actionLink: '/programs/youth-student-empowerment',
   },
   {
     id: 'faith-growth',
     title: 'Faith & Growth',
-    description: 'Deepening spiritual understanding and fostering growth through discipleship classes, forums, and focused study.',
+    description: 'Deepening spiritual understanding and fostering growth. Includes: Discipleship Classes.',
     imageUrl: 'https://placehold.co/600x400.png',
     imageAlt: 'Person studying a book',
-    imageHint: 'bible study spiritual growth',
+    imageHint: 'bible study growth',
     actionText: 'Learn More',
-    actionLink: '/ministries/faith-growth',
+    actionLink: '/programs/faith-growth',
   },
    {
     id: 'community-outreach',
     title: 'Community Outreach',
-    description: 'Reaching out to the wider community through various initiatives and programs designed to share our values and make a positive impact.',
+    description: 'Reaching out to the wider community through various initiatives designed to share our values and make a positive impact.',
     imageUrl: 'https://placehold.co/600x400.png',
     imageAlt: 'Community members working together',
-    imageHint: 'community service outreach helping',
+    imageHint: 'community service helping',
     actionText: 'Learn More',
-    actionLink: '/ministries/community-outreach',
+    actionLink: '/programs/community-outreach',
   },
 ];
 
-export default function MinistriesPage() {
+export default function ProgramsPage() {
   return (
     <div>
       <ContentBlock

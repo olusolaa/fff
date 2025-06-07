@@ -1,22 +1,7 @@
 
 import ContentBlock from '@/components/shared/ContentBlock';
 import AnimatedSection from '@/components/shared/AnimatedSection';
-import CardGrid, { type CardGridItem } from '@/components/shared/CardGrid';
 import { HandHeart, Users } from 'lucide-react';
-
-// Placeholder for sub-programs/initiatives once defined
-const subPrograms: CardGridItem[] = [
-  // Example:
-  // {
-  //   id: 'local-projects',
-  //   title: 'Local Service Projects',
-  //   description: 'Engaging in hands-on projects to serve the needs of our local community.',
-  //   imageUrl: 'https://placehold.co/600x400.png',
-  //   imageHint: 'volunteers working community',
-  //   actionText: 'Get Involved',
-  //   actionLink: '#', 
-  // },
-];
 
 export default function CommunityOutreachPage() {
   return (
@@ -50,12 +35,9 @@ export default function CommunityOutreachPage() {
           </div>
         </div>
       </AnimatedSection>
-      {subPrograms.length > 0 && (
-        <CardGrid title="Our Outreach Initiatives" items={subPrograms} className="bg-background" />
-      )}
        <AnimatedSection className="container mx-auto px-4 py-12 md:py-20">
         <p className="text-lg text-center text-foreground/80">
-          More information about our specific community outreach programs and how you can get involved will be available here soon.
+          More information about our specific community outreach programs and how you can get involved will be available here soon. We are committed to actively engaging with and serving our wider community.
         </p>
       </AnimatedSection>
     </div>

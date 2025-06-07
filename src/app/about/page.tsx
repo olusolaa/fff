@@ -3,6 +3,8 @@ import ContentBlock from '@/components/shared/ContentBlock';
 import CardGrid, { CardGridItem } from '@/components/shared/CardGrid';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import Image from 'next/image';
+import { Button } from '@/components/ui/button'; // Added import
+import Link from 'next/link';
 
 const coreValues: CardGridItem[] = [
   {
@@ -68,7 +70,7 @@ export default function AboutPage() {
 
       <ContentBlock
         title="Our Beliefs"
-        text="As a Christian nonprofit organization, our core beliefs are centered on biblical teachings. We are dedicated to teaching values and ethics that foster meaningful and purposeful living, guiding young people to become healthy, responsible, and spiritually grounded members of society."
+        text="As a Christian nonprofit organization, our core beliefs are centered on biblical teachings. Family Tent Ministry is a Christian nonprofit organization dedicated to teaching values and ethics that foster meaningful and purposeful living. We aim to guide young people toward becoming healthy, responsible, and spiritually grounded members of society."
         actionText="Learn More About Our Beliefs"
         actionLink="/about/beliefs"
       />
@@ -79,7 +81,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold font-headline text-primary md:text-4xl mb-8">Meet Our Team</h2>
           <p className="text-lg text-foreground/80 mb-10 max-w-2xl mx-auto">
-            Our ministry is led by a dedicated team committed to shepherding and guiding our mission of fostering values and holistic development.
+            Our ministry is led by a dedicated team committed to shepherding and guiding our mission of fostering values and holistic development. Information about our team is coming soon.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[

@@ -1,13 +1,14 @@
 
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
+import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 
 const footerSections = [
   {
     title: 'About FTM',
     links: [
-      { label: 'Our Story', href: '/about' },
-      { label: 'Our Mission & Vision', href: '/about#mission-vision' },
+      { label: 'Our Story', href: '/about/history' },
+      { label: 'Our Mission & Vision', href: '/about#mission-vision' }, // Assuming mission-vision section ID on about page
       { label: 'Our Beliefs', href: '/about/beliefs' },
       { label: 'Our Team', href: '/about/leadership' },
     ],
@@ -27,10 +28,17 @@ const footerSections = [
       { label: 'Contact Us', href: '/contact' },
       { label: 'Our Locations', href: '/locations' },
       { label: 'Events', href: '/events' },
-      { label: 'Sermons/Teachings', href: '/sermons' }, // Assuming /sermons is still relevant
+      { label: 'Sermons/Teachings', href: '/sermons' },
       { label: 'Give / Partner', href: '/give' },
     ],
   },
+];
+
+const socialLinks = [
+  { label: 'Facebook', href: '#', icon: Facebook }, // Replace # with actual FTM Facebook link
+  { label: 'Instagram', href: '#', icon: Instagram }, // Replace # with actual FTM Instagram link
+  { label: 'Twitter', href: '#', icon: Twitter }, // Replace # with actual FTM Twitter link
+  { label: 'YouTube', href: '#', icon: Youtube }, // Replace # with actual FTM YouTube link
 ];
 
 export default function Footer() {
@@ -65,6 +73,20 @@ export default function Footer() {
         <Separator className="my-8 bg-border" />
         <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
           <p className="text-sm">&copy; {new Date().getFullYear()} Family Tent Ministry. All rights reserved.</p>
+          <div className="flex space-x-4">
+            {socialLinks.map((social) => (
+              <Link 
+                key={social.label} 
+                href={social.href} 
+                aria-label={social.label} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-primary transition-colors"
+              >
+                <social.icon className="h-6 w-6" />
+              </Link>
+            ))}
+          </div>
         </div>
          <div className="mt-4 text-center text-xs">
             <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>

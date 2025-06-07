@@ -3,7 +3,7 @@ import ContentBlock from '@/components/shared/ContentBlock';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import { Users, School, CalendarDays, Clock } from 'lucide-react';
 import Image from 'next/image';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
 const impactStories = [
   {
@@ -13,6 +13,28 @@ const impactStories = [
     imageUrl: "https://placehold.co/300x300.png",
     imageHint: "young person smiling",
   }
+];
+
+const programs = [
+  {
+    id: 'asc',
+    title: 'Adolescent & Singles Club (ASC)',
+    icon: Users,
+    description: 'A vibrant monthly gathering focused on guiding adolescents and singles towards purposeful living through engaging discussions, practical teachings, and interactive sessions.',
+    schedule: [
+      { icon: CalendarDays, text: 'Every first Saturday of the month.' },
+      { icon: Clock, text: 'Time: 10:00 AM.' },
+    ],
+    expect: 'Interactive teachings, group discussions, activities for personal/spiritual development, and a welcoming environment.',
+  },
+  {
+    id: 'school-outreach',
+    title: 'School Outreaches',
+    icon: School,
+    description: 'Family Tent Ministry actively collaborates with schools to promote moral values and positive character development among students through engaging and relevant programs.',
+    activities: 'Conducting inspiring morning assemblies, campus awareness programs, reorientation sessions, and mentorship opportunities.',
+    audience: 'Students across various age groups in primary, secondary, and tertiary institutions.',
+  },
 ];
 
 export default function YouthStudentEmpowermentPage() {
@@ -30,33 +52,25 @@ export default function YouthStudentEmpowermentPage() {
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="text-2xl md:text-3xl font-bold font-headline text-primary mb-10 text-center">Our Youth & Student Programs</h2>
           
-          <div className="mb-12 bg-card p-6 rounded-lg shadow-md">
-            <h3 className="font-headline text-2xl text-accent mb-4 flex items-center">
-              <Users className="mr-3 h-7 w-7" /> Adolescent & Singles Club (ASC)
-            </h3>
-            <p className="text-foreground/80 mb-2">
-              A vibrant monthly gathering focused on guiding adolescents and singles towards purposeful living through engaging discussions, practical teachings, and interactive sessions.
-            </p>
-            <div className="flex items-center text-foreground/80 mb-1"><CalendarDays className="mr-2 h-5 w-5 text-primary" /> Every first Saturday of the month.</div>
-            <div className="flex items-center text-foreground/80 mb-4"><Clock className="mr-2 h-5 w-5 text-primary" /> Time: 10:00 AM.</div>
-            <p className="text-foreground/80">
-              What to Expect: Interactive teachings, group discussions, activities for personal/spiritual development, and a welcoming environment.
-            </p>
-          </div>
-
-          <div className="bg-card p-6 rounded-lg shadow-md">
-            <h3 className="font-headline text-2xl text-accent mb-4 flex items-center">
-              <School className="mr-3 h-7 w-7" /> School Outreaches
-            </h3>
-            <p className="text-foreground/80 mb-2">
-              Family Tent Ministry actively collaborates with schools to promote moral values and positive character development among students through engaging and relevant programs.
-            </p>
-            <p className="text-foreground/80 mb-4">
-              Activities Include: Conducting inspiring morning assemblies, campus awareness programs, reorientation sessions, and mentorship opportunities.
-            </p>
-            <p className="text-foreground/80">
-              Target Audience: Students across various age groups in primary, secondary, and tertiary institutions.
-            </p>
+          <div className="space-y-8">
+            {programs.map((program) => (
+              <Card key={program.id} className="shadow-lg">
+                <CardHeader>
+                  <CardTitle className="font-headline text-2xl text-accent flex items-center">
+                    <program.icon className="mr-3 h-7 w-7" /> {program.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <p className="text-foreground/80">{program.description}</p>
+                  {program.schedule && Array.isArray(program.schedule) && program.schedule.map((item, index) => (
+                     <div key={index} className="flex items-center text-foreground/80"><item.icon className="mr-2 h-5 w-5 text-primary" /> {item.text}</div>
+                  ))}
+                  {program.expect && <p className="text-foreground/80">What to Expect: {program.expect}</p>}
+                  {program.activities && <p className="text-foreground/80">Activities Include: {program.activities}</p>}
+                  {program.audience && <p className="text-foreground/80">Target Audience: {program.audience}</p>}
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </AnimatedSection>

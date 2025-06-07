@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import Image from 'next/image';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+
 
 const ftmProgramsHighlight: CardGridItem[] = [
   {
@@ -85,8 +87,8 @@ export default function HomePage() {
         imageHint="community gathering diverse"
         primaryActionText="Our Programs"
         primaryActionLink="/programs"
-        secondaryActionText="Get Involved"
-        secondaryActionLink="/contact" // Or /give
+        secondaryActionText="Partner With Us"
+        secondaryActionLink="/give"
       />
 
       <ContentBlock
@@ -142,12 +144,18 @@ export default function HomePage() {
               { title: "Adolescent & Singles Club", date: "1st Saturday Monthly", hint: "youth event poster" },
               { title: "Discipleship Classes", date: "Mondays 5 PM", hint: "study group poster" }
             ].map((event, i) => (
-                <div key={i} className="border p-4 rounded-lg shadow-md bg-card">
-                    <Image src={`https://placehold.co/600x300.png`} alt={event.title} data-ai-hint={event.hint} width={600} height={300} className="rounded mb-2"/>
-                    <h3 className="font-headline text-xl text-accent mb-1">{event.title}</h3>
-                    <p className="text-sm text-muted-foreground mb-1">{event.date}</p>
-                    <p className="text-sm text-foreground/70">Details for this event will be available on our events page.</p>
-                </div>
+                <Card key={`event-${i}`} className="flex flex-col overflow-hidden shadow-lg transition-shadow hover:shadow-xl bg-card">
+                    <div className="relative h-40 w-full">
+                         <Image src={`https://placehold.co/600x300.png`} alt={event.title} layout="fill" objectFit="cover" data-ai-hint={event.hint} className="rounded-t-lg"/>
+                    </div>
+                    <CardHeader className="pb-2 pt-4">
+                        <CardTitle className="font-headline text-xl text-accent mb-1">{event.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex-grow">
+                        <p className="text-sm font-semibold text-primary mb-2">{event.date}</p>
+                        <p className="text-sm text-foreground/70">Details for this event will be available on our events page.</p>
+                    </CardContent>
+                </Card>
             ))}
            </div>
            <Button asChild size="lg" className="mt-10 bg-primary hover:bg-primary/90 text-primary-foreground">

@@ -5,7 +5,7 @@ import { Users, HeartHandshake, ShieldCheck, CalendarDays, Clock, BookOpen } fro
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
 const impactStories = [
   {
@@ -15,6 +15,50 @@ const impactStories = [
     imageUrl: "https://placehold.co/300x300.png",
     imageHint: "happy couple portrait",
   }
+];
+
+const programs = [
+  {
+    id: 'counseling',
+    title: 'Counseling Services',
+    icon: HeartHandshake,
+    description: 'Confidential counseling sessions available for individuals, couples, and families seeking guidance on personal, relational, or spiritual matters from a Christian perspective.',
+    details: [
+      'Personal challenges (stress, anxiety, grief, identity).',
+      'Marital and pre-marital counseling.',
+      'Family relationship difficulties.',
+      'Parenting concerns.',
+      'Spiritual guidance and discipleship.',
+    ],
+    note: 'All sessions are conducted with the utmost confidentiality and in a compassionate, non-judgmental atmosphere.',
+    actionText: 'Request Counseling Information',
+    actionLink: '/contact?subject=CounselingInquiry',
+  },
+  {
+    id: 'fls',
+    title: 'Family Life Seminars (FLS)',
+    icon: Users,
+    description: 'Quarterly seminars designed to equip individuals and families with practical wisdom and biblical principles for navigating various aspects of family life.',
+    schedule: 'Held quarterly in April, July, and November.',
+    focusAreas: 'Marriage enrichment, effective parenting, relationship dynamics, financial management, spiritual leadership in the home.',
+    actionText: 'Check Upcoming Seminars',
+    actionLink: '/events',
+    actionVariant: 'outline' as 'outline' | 'default' | 'destructive' | 'secondary' | 'ghost' | 'link' | null | undefined,
+  },
+  {
+    id: 'marriage-forum',
+    title: 'Marriage Forum',
+    icon: HeartHandshake,
+    description: 'A monthly forum providing a supportive platform for couples to discuss, learn, and grow together in building strong, healthy, and godly marriages.',
+    schedule: [
+      { icon: CalendarDays, text: 'Every second Saturday of the month.' },
+      { icon: Clock, text: 'Time: 10:00 AM.' },
+    ],
+    topics: 'Communication, conflict resolution, intimacy, finance, parenting, spiritual unity.',
+    actionText: 'View Forum Schedule',
+    actionLink: '/events',
+    actionVariant: 'outline' as 'outline' | 'default' | 'destructive' | 'secondary' | 'ghost' | 'link' | null | undefined,
+  },
 ];
 
 export default function CounselingFamilySupportPage() {
@@ -32,59 +76,41 @@ export default function CounselingFamilySupportPage() {
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="text-2xl md:text-3xl font-bold font-headline text-primary mb-10 text-center">Our Support Programs</h2>
           
-          <div className="mb-12 bg-card p-6 rounded-lg shadow-md">
-            <h3 className="font-headline text-2xl text-accent mb-4 flex items-center">
-              <HeartHandshake className="mr-3 h-7 w-7" /> Counseling Services
-            </h3>
-            <p className="text-foreground/80 mb-4">
-              Confidential counseling sessions available for individuals, couples, and families seeking guidance on personal, relational, or spiritual matters from a Christian perspective.
-            </p>
-            <ul className="list-disc list-inside text-foreground/80 space-y-1 mb-4">
-              <li>Personal challenges (stress, anxiety, grief, identity).</li>
-              <li>Marital and pre-marital counseling.</li>
-              <li>Family relationship difficulties.</li>
-              <li>Parenting concerns.</li>
-              <li>Spiritual guidance and discipleship.</li>
-            </ul>
-            <p className="text-foreground/80 mb-4">
-              All sessions are conducted with the utmost confidentiality and in a compassionate, non-judgmental atmosphere.
-            </p>
-            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
-              <Link href="/contact?subject=CounselingInquiry">Request Counseling Information</Link>
-            </Button>
-          </div>
-
-          <div className="mb-12 bg-card p-6 rounded-lg shadow-md">
-            <h3 className="font-headline text-2xl text-accent mb-4 flex items-center">
-              <Users className="mr-3 h-7 w-7" /> Family Life Seminars (FLS)
-            </h3>
-            <p className="text-foreground/80 mb-2">
-              Quarterly seminars designed to equip individuals and families with practical wisdom and biblical principles for navigating various aspects of family life.
-            </p>
-            <div className="flex items-center text-foreground/80 mb-1"><CalendarDays className="mr-2 h-5 w-5 text-primary" /> Held quarterly in April, July, and November.</div>
-            <p className="text-foreground/80 mb-4">
-              Focus Areas: Marriage enrichment, effective parenting, relationship dynamics, financial management, spiritual leadership in the home.
-            </p>
-            <Button asChild variant="outline">
-              <Link href="/events">Check Upcoming Seminars</Link>
-            </Button>
-          </div>
-
-          <div className="bg-card p-6 rounded-lg shadow-md">
-            <h3 className="font-headline text-2xl text-accent mb-4 flex items-center">
-              <HeartHandshake className="mr-3 h-7 w-7" /> Marriage Forum
-            </h3>
-            <p className="text-foreground/80 mb-2">
-              A monthly forum providing a supportive platform for couples to discuss, learn, and grow together in building strong, healthy, and godly marriages.
-            </p>
-            <div className="flex items-center text-foreground/80 mb-1"><CalendarDays className="mr-2 h-5 w-5 text-primary" /> Every second Saturday of the month.</div>
-            <div className="flex items-center text-foreground/80 mb-4"><Clock className="mr-2 h-5 w-5 text-primary" /> Time: 10:00 AM.</div>
-            <p className="text-foreground/80 mb-4">
-              Topics Include: Communication, conflict resolution, intimacy, finance, parenting, spiritual unity.
-            </p>
-             <Button asChild variant="outline">
-              <Link href="/events">View Forum Schedule</Link>
-            </Button>
+          <div className="space-y-8">
+            {programs.map((program) => (
+              <Card key={program.id} className="shadow-lg">
+                <CardHeader>
+                  <CardTitle className="font-headline text-2xl text-accent flex items-center">
+                    <program.icon className="mr-3 h-7 w-7" /> {program.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-foreground/80">{program.description}</p>
+                  {program.details && Array.isArray(program.details) && (
+                    <ul className="list-disc list-inside text-foreground/80 space-y-1">
+                      {program.details.map((detail, index) => (
+                        <li key={index}>{detail}</li>
+                      ))}
+                    </ul>
+                  )}
+                  {typeof program.schedule === 'string' && (
+                     <div className="flex items-center text-foreground/80"><CalendarDays className="mr-2 h-5 w-5 text-primary" /> {program.schedule}</div>
+                  )}
+                  {Array.isArray(program.schedule) && program.schedule.map((item, index) => (
+                     <div key={index} className="flex items-center text-foreground/80"><item.icon className="mr-2 h-5 w-5 text-primary" /> {item.text}</div>
+                  ))}
+                  {program.focusAreas && <p className="text-foreground/80">Focus Areas: {program.focusAreas}</p>}
+                  {program.topics && <p className="text-foreground/80">Topics Include: {program.topics}</p>}
+                  {program.note && <p className="text-foreground/80">{program.note}</p>}
+                  
+                  {program.actionText && program.actionLink && (
+                    <Button asChild className={program.actionVariant === 'outline' ? '' : 'bg-accent hover:bg-accent/90 text-accent-foreground'} variant={program.actionVariant || 'default'}>
+                      <Link href={program.actionLink}>{program.actionText}</Link>
+                    </Button>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </AnimatedSection>

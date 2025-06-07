@@ -2,6 +2,18 @@
 import ContentBlock from '@/components/shared/ContentBlock';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import { HandHeart, Users } from 'lucide-react';
+import Image from 'next/image';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+const impactStories = [
+  {
+    id: 'story1',
+    name: "A Community Partner",
+    story: "Family Tent Ministry's outreach programs bring so much hope and practical help to our neighborhood. Their dedication is truly making a difference.",
+    imageUrl: "https://placehold.co/300x300.png",
+    imageHint: "community group happy",
+  }
+];
 
 export default function CommunityOutreachPage() {
   return (
@@ -39,6 +51,34 @@ export default function CommunityOutreachPage() {
         <p className="text-lg text-center text-foreground/80">
           More information about our specific community outreach programs and how you can get involved will be available here soon. We are committed to actively engaging with and serving our wider community.
         </p>
+      </AnimatedSection>
+
+      <AnimatedSection className="py-12 md:py-20 bg-muted/50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold font-headline text-primary md:text-4xl text-center mb-10">
+            Impact Stories
+          </h2>
+          <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-8 max-w-3xl mx-auto">
+            {impactStories.map((testimonial) => (
+              <Card key={testimonial.id} className="shadow-lg">
+                <CardHeader className="items-center pt-6">
+                  <Image
+                    src={testimonial.imageUrl}
+                    alt={`Photo of ${testimonial.name}`}
+                    width={120}
+                    height={120}
+                    className="rounded-full mb-4"
+                    data-ai-hint={testimonial.imageHint}
+                  />
+                  <CardTitle className="font-headline text-xl text-accent text-center">{testimonial.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-foreground/80 italic text-center">"{testimonial.story}"</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
       </AnimatedSection>
     </div>
   );

@@ -4,6 +4,18 @@ import AnimatedSection from '@/components/shared/AnimatedSection';
 import { Users, HeartHandshake, ShieldCheck, CalendarDays, Clock, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import Image from 'next/image';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+const impactStories = [
+  {
+    id: 'story1',
+    name: "A Grateful Couple",
+    story: "The marriage forum and counseling sessions provided us with invaluable tools to strengthen our communication and navigate challenges together. We are closer than ever.",
+    imageUrl: "https://placehold.co/300x300.png",
+    imageHint: "happy couple portrait",
+  }
+];
 
 export default function CounselingFamilySupportPage() {
   return (
@@ -20,7 +32,6 @@ export default function CounselingFamilySupportPage() {
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="text-2xl md:text-3xl font-bold font-headline text-primary mb-10 text-center">Our Support Programs</h2>
           
-          {/* Counseling Services Section */}
           <div className="mb-12 bg-card p-6 rounded-lg shadow-md">
             <h3 className="font-headline text-2xl text-accent mb-4 flex items-center">
               <HeartHandshake className="mr-3 h-7 w-7" /> Counseling Services
@@ -43,7 +54,6 @@ export default function CounselingFamilySupportPage() {
             </Button>
           </div>
 
-          {/* Family Life Seminars Section */}
           <div className="mb-12 bg-card p-6 rounded-lg shadow-md">
             <h3 className="font-headline text-2xl text-accent mb-4 flex items-center">
               <Users className="mr-3 h-7 w-7" /> Family Life Seminars (FLS)
@@ -60,7 +70,6 @@ export default function CounselingFamilySupportPage() {
             </Button>
           </div>
 
-          {/* Marriage Forum Section */}
           <div className="bg-card p-6 rounded-lg shadow-md">
             <h3 className="font-headline text-2xl text-accent mb-4 flex items-center">
               <HeartHandshake className="mr-3 h-7 w-7" /> Marriage Forum
@@ -77,7 +86,34 @@ export default function CounselingFamilySupportPage() {
               <Link href="/events">View Forum Schedule</Link>
             </Button>
           </div>
+        </div>
+      </AnimatedSection>
 
+      <AnimatedSection className="py-12 md:py-20 bg-muted/50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold font-headline text-primary md:text-4xl text-center mb-10">
+            Impact Stories
+          </h2>
+          <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-8 max-w-3xl mx-auto">
+            {impactStories.map((testimonial) => (
+              <Card key={testimonial.id} className="shadow-lg">
+                <CardHeader className="items-center pt-6">
+                  <Image
+                    src={testimonial.imageUrl}
+                    alt={`Photo of ${testimonial.name}`}
+                    width={120}
+                    height={120}
+                    className="rounded-full mb-4"
+                    data-ai-hint={testimonial.imageHint}
+                  />
+                  <CardTitle className="font-headline text-xl text-accent text-center">{testimonial.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-foreground/80 italic text-center">"{testimonial.story}"</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </AnimatedSection>
     </div>

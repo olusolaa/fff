@@ -26,7 +26,9 @@ export default function ContactPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-foreground/80">(512) 555-1234</p>
+                  <p className="text-foreground/80">+234 (0)803 386 1136</p>
+                  <p className="text-foreground/80">+234 (0)703 361 3848</p>
+                  <p className="text-foreground/80">+234 (0)813 056 1063</p>
                 </CardContent>
               </Card>
               <Card className="shadow-lg mb-6">
@@ -36,7 +38,8 @@ export default function ContactPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-foreground/80">info@familytentministry.org</p>
+                  <p className="text-foreground/80">familytentministry@gmail.com</p>
+                  <p className="text-foreground/80">familytent@yahoo.co.uk</p>
                 </CardContent>
               </Card>
               <Card className="shadow-lg">
@@ -46,7 +49,7 @@ export default function ContactPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-foreground/80">123 Church Street<br/>Austin, TX 78701</p>
+                  <p className="text-foreground/80">P.O Box 3992<br/>Akure, Ondo State, Nigeria.</p>
                 </CardContent>
               </Card>
             </div>

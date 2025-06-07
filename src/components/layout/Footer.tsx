@@ -1,46 +1,48 @@
+
 import Link from 'next/link';
-import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+// Social media icons can be re-added if FTM provides links
+// import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
 const footerSections = [
   {
-    title: 'Quick Links',
+    title: 'About FTM',
     links: [
-      { label: 'About Us', href: '/about' },
+      { label: 'Our Story', href: '/about' },
+      { label: 'Our Mission & Vision', href: '/about#mission-vision' }, // Assuming an ID can be added to the section
       { label: 'Our Beliefs', href: '/about/beliefs' },
-      { label: 'Leadership', href: '/about/leadership' },
-      { label: 'Jobs', href: '/jobs' },
+      { label: 'Our Team', href: '/about/leadership' },
+    ],
+  },
+  {
+    title: 'Our Programs',
+    links: [
+      { label: 'Adolescent & Singles Club', href: '/ministries/adolescent-singles-club' },
+      { label: 'Family Life Seminars', href: '/ministries/family-life-seminars' },
+      { label: 'Discipleship Classes', href: '/ministries/discipleship-classes' },
+      { label: 'Marriage Forum', href: '/ministries/marriage-forum' },
+      { label: 'School Outreaches', href: '/ministries/school-outreaches' },
+      { label: 'Counseling Services', href: '/ministries/counseling-services' },
+    ],
+  },
+  {
+    title: 'Connect & Resources',
+    links: [
       { label: 'Contact Us', href: '/contact' },
-    ],
-  },
-  {
-    title: 'Connect',
-    links: [
-      { label: 'Ministries', href: '/ministries' },
-      { label: 'Community Groups', href: '/connect/groups' },
-      { label: 'Serve', href: '/connect/serve' },
-      { label: 'Missions', href: '/connect/missions' },
+      { label: 'Our Locations', href: '/locations' },
       { label: 'Events', href: '/events' },
-    ],
-  },
-  {
-    title: 'Resources',
-    links: [
-      { label: 'Sermons', href: '/sermons' },
-      { label: 'Blog', href: '/resources/blog' },
-      { label: 'Podcasts', href: '/resources/podcasts' },
-      { label: 'Music', href: '/resources/music' },
-      { label: 'Give Online', href: '/give' },
+      { label: 'Sermons/Teachings', href: '/sermons' }, // If applicable
+      { label: 'Give / Partner', href: '/give' },
     ],
   },
 ];
 
-const socialLinks = [
-  { label: 'Facebook', icon: Facebook, href: 'https://facebook.com/austinstone' },
-  { label: 'Instagram', icon: Instagram, href: 'https://instagram.com/austinstone' },
-  { label: 'Twitter', icon: Twitter, href: 'https://twitter.com/austinstone' },
-  { label: 'YouTube', icon: Youtube, href: 'https://youtube.com/austinstone' },
-];
+// const socialLinks = [
+//   { label: 'Facebook', icon: Facebook, href: '#' },
+//   { label: 'Instagram', icon: Instagram, href: '#' },
+//   { label: 'Twitter', icon: Twitter, href: '#' },
+//   { label: 'YouTube', icon: Youtube, href: '#' },
+// ];
 
 export default function Footer() {
   return (
@@ -52,9 +54,8 @@ export default function Footer() {
               Family Tent Ministry
             </Link>
             <p className="text-sm">
-              123 Church Street<br />
-              Austin, TX 78701<br />
-              (512) 555-1234
+              P.O Box 3992, Akure, <br />Ondo State, Nigeria.<br />
+              Phone: +234 (0)803 386 1136
             </p>
           </div>
           {footerSections.map((section) => (
@@ -75,6 +76,7 @@ export default function Footer() {
         <Separator className="my-8 bg-border" />
         <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
           <p className="text-sm">&copy; {new Date().getFullYear()} Family Tent Ministry. All rights reserved.</p>
+          {/* 
           <div className="flex space-x-4">
             {socialLinks.map((social) => (
               <Link key={social.label} href={social.href} aria-label={social.label} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
@@ -82,6 +84,7 @@ export default function Footer() {
               </Link>
             ))}
           </div>
+           */}
         </div>
          <div className="mt-4 text-center text-xs">
             <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>

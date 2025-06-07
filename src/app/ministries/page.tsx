@@ -1,67 +1,68 @@
+
 import ContentBlock from '@/components/shared/ContentBlock';
 import CardGrid, { type CardGridItem } from '@/components/shared/CardGrid';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 
-const ministryCategories: CardGridItem[] = [
+const ftmPrograms: CardGridItem[] = [
   {
-    id: 'adults',
-    title: 'Adult Ministries',
-    description: 'Ministries for men, women, couples, and seniors to grow in faith and community.',
+    id: 'asc',
+    title: 'Adolescent & Singles Club (ASC)',
+    description: 'Monthly gatherings (1st Saturday, 10 AM) guiding adolescents and singles towards purposeful living through discussions, teachings, and interactive sessions.',
     imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Adults in a discussion group',
-    imageHint: 'adults discussion',
+    imageAlt: 'Young people in a discussion',
+    imageHint: 'youth group discussion',
     actionText: 'Learn More',
-    actionLink: '/ministries/adults',
+    actionLink: '/ministries/adolescent-singles-club',
   },
   {
-    id: 'students',
-    title: 'Student Ministries',
-    description: 'Engaging programs for middle school, high school, and college students.',
+    id: 'fls',
+    title: 'Family Life Seminars (FLS)',
+    description: 'Quarterly seminars (April, July, November) addressing marriage, parenting, and relationship dynamics to strengthen family bonds.',
     imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Students laughing together',
-    imageHint: 'students laughing',
+    imageAlt: 'Family attending a seminar',
+    imageHint: 'family seminar conference',
     actionText: 'Learn More',
-    actionLink: '/ministries/students',
+    actionLink: '/ministries/family-life-seminars',
   },
   {
-    id: 'kids',
-    title: 'Kids Ministries',
-    description: 'Fun and safe environments for children to learn about Jesus.',
+    id: 'discipleship',
+    title: 'Discipleship Classes',
+    description: 'Weekly classes (Mondays, 5 PM) aimed at deepening understanding of Christian doctrines and fostering spiritual growth.',
     imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Children playing',
-    imageHint: 'children playing',
+    imageAlt: 'People studying together',
+    imageHint: 'bible study group',
     actionText: 'Learn More',
-    actionLink: '/ministries/kids',
+    actionLink: '/ministries/discipleship-classes',
   },
    {
-    id: 'care',
-    title: 'Care & Support',
-    description: 'Providing care, counseling, and support for those in need.',
+    id: 'marriage-forum',
+    title: 'Marriage Forum',
+    description: 'Monthly forums (2nd Saturday, 10 AM) providing a platform for couples to discuss and learn about building strong, godly marriages.',
     imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Hands offering support',
-    imageHint: 'support help',
+    imageAlt: 'Couples in discussion',
+    imageHint: 'couples talking marriage',
+    actionText: 'Learn More',
+    actionLink: '/ministries/marriage-forum',
+  },
+  {
+    id: 'school-outreach',
+    title: 'School Outreaches',
+    description: 'Collaborative programs with schools including morning assemblies and campus awareness sessions to promote moral values.',
+    imageUrl: 'https://placehold.co/600x400.png',
+    imageAlt: 'Students in an assembly',
+    imageHint: 'school assembly students',
+    actionText: 'Learn More',
+    actionLink: '/ministries/school-outreaches',
+  },
+   {
+    id: 'counseling',
+    title: 'Counseling Services',
+    description: 'Confidential counseling for individuals and couples seeking guidance on personal, relational, or spiritual matters.',
+    imageUrl: 'https://placehold.co/600x400.png',
+    imageAlt: 'Counseling session',
+    imageHint: 'counseling support session',
     actionText: 'Get Support',
-    actionLink: '/ministries/care',
-  },
-  {
-    id: 'outreach',
-    title: 'Outreach & Missions',
-    description: 'Serving our local community and sharing the gospel globally.',
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Volunteers working in community',
-    imageHint: 'community outreach',
-    actionText: 'Get Involved',
-    actionLink: '/ministries/outreach',
-  },
-   {
-    id: 'worship',
-    title: 'Worship & Arts',
-    description: 'Using creative arts to glorify God and lead others in worship.',
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Worship band playing',
-    imageHint: 'worship band',
-    actionText: 'Join the Team',
-    actionLink: '/ministries/worship',
+    actionLink: '/ministries/counseling-services',
   },
 ];
 
@@ -69,17 +70,17 @@ export default function MinistriesPage() {
   return (
     <div>
       <ContentBlock
-        title="Our Ministries"
-        text="At The Austin Stone, we offer a variety of ministries designed to help you grow in your relationship with God and connect with others. Explore the different ways you can get involved and find your place in our community."
+        title="Our Programs"
+        text="Family Tent Ministry offers a variety of programs designed to foster spiritual growth, strengthen families, and equip individuals with values for purposeful living. Explore how you can get involved."
         className="bg-secondary/30 text-center"
         titleClassName="text-4xl md:text-5xl"
       />
-      <CardGrid items={ministryCategories} />
+      <CardGrid items={ftmPrograms} />
       <AnimatedSection className="py-12 md:py-20 text-center">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold font-headline text-primary md:text-4xl mb-4">Find Your Place</h2>
+          <h2 className="text-3xl font-bold font-headline text-primary md:text-4xl mb-4">Find Your Place to Grow</h2>
           <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-            No matter your age, background, or stage of life, there's a ministry for you at The Austin Stone. We encourage you to explore, connect, and grow with us.
+            No matter your age or stage of life, there's a program at Family Tent Ministry designed to support your journey. We encourage you to connect and grow with us.
           </p>
         </div>
       </AnimatedSection>

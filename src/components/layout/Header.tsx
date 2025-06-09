@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import {
   Menu, Search, X, MapPin, ChevronDown, Video, Newspaper,
   GraduationCap, BookMarked, Church, Disc3, Mic2, Library, Users, HeartHandshake,
-  BookOpen, ShieldCheck, Users2, HandHeart, CalendarDays, CheckCircle2, Gift, LayoutDashboard, School
+  BookOpen, ShieldCheck, Users2, HandHeart, CalendarDays, CheckCircle2, Gift, LayoutDashboard, School, Briefcase
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import NavLink from './NavLink';
@@ -31,10 +31,10 @@ interface NavSubItem {
   label: string;
   href: string;
   icon?: LucideIcon;
-  category?: string; // For Resources mega menu
-  description?: string; // For Ministries mega menu (no longer used for ministries, but kept for Resources)
-  isFullWidthLink?: boolean; // For mega menu headers
-  subPrograms?: Array<{ label: string; href: string; icon?: LucideIcon; description?: string; }>; // For Ministries sub-items if needed (not used in current flat structure)
+  category?: string; 
+  description?: string; 
+  isFullWidthLink?: boolean; 
+  subPrograms?: Array<{ label: string; href: string; icon?: LucideIcon; description?: string; }>;
 }
 
 interface NavItem {
@@ -42,8 +42,8 @@ interface NavItem {
   label: string;
   href?: string;
   icon?: LucideIcon;
-  subItems?: NavSubItem[]; // For simple dropdowns
-  megaMenuItems?: NavSubItem[]; // For mega menus
+  subItems?: NavSubItem[]; 
+  megaMenuItems?: NavSubItem[]; 
   isDropdown?: boolean;
   isMegaMenu?: boolean;
 }
@@ -63,17 +63,17 @@ const navItems: NavItem[] = [
   {
     id: 'ministries',
     label: 'Ministries',
-    href: '/ministries', // Links to the overview page
-    isDropdown: true, // Changed from isMegaMenu
-    subItems: [ // Direct list of programs
-      { label: 'Adolescent & Singles Club (ASC)', href: '/programs/youth-student-empowerment', icon: Users },
-      { label: 'School Outreaches', href: '/ministries/school-outreaches', icon: School },
-      { label: 'Counseling Services', href: '/programs/counseling-family-support', icon: HeartHandshake },
-      { label: 'Family Life Seminars (FLS)', href: '/ministries/family-life-seminars', icon: CalendarDays },
-      { label: 'Marriage Forum', href: '/programs/counseling-family-support', icon: HeartHandshake }, // Points to broader page
-      { label: 'Discipleship Classes', href: '/programs/faith-growth', icon: BookOpen },
-      { label: 'Community Outreach', href: '/programs/community-outreach', icon: HandHeart },
-    ],
+    href: '/ministries', 
+    isMegaMenu: true,
+    megaMenuItems: [
+      { label: 'Adolescent & Singles Club', href: '/ministries/adolescent-singles-club', icon: Users, category: 'CLUB' },
+      { label: 'School Outreaches', href: '/ministries/school-outreaches', icon: School, category: 'OUTREACH' },
+      { label: 'Counseling Services', href: '/programs/counseling-family-support', icon: HeartHandshake, category: 'SUPPORT' },
+      { label: 'Family Life Seminars', href: '/ministries/family-life-seminars', icon: CalendarDays, category: 'SEMINAR' },
+      { label: 'Marriage Forum', href: '/programs/counseling-family-support', icon: Users2, category: 'FORUM' },
+      { label: 'Discipleship Classes', href: '/programs/faith-growth', icon: BookOpen, category: 'GROWTH' },
+      { label: 'Community Outreach', href: '/programs/community-outreach', icon: HandHeart, category: 'SERVICE' },
+    ]
   },
   {
     id: 'resources',
@@ -100,10 +100,10 @@ const navItems: NavItem[] = [
   {
     id: 'visit',
     label: 'Visit',
-    href: '/plan-visit', // Main link for the tab itself
+    href: '/plan-visit',
     isDropdown: true,
     subItems: [
-        { label: 'Plan Your Visit', href: '/plan-visit', icon: CheckCircle2}, // Specific action
+        { label: 'Plan Your Visit', href: '/plan-visit', icon: CheckCircle2},
         { label: 'Locations', href: '/locations', icon: MapPin },
     ]
   },
@@ -118,7 +118,7 @@ const navItems: NavItem[] = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
-  const [isTransparent, setIsTransparent] = useState(false); // Initial state for transparency
+  const [isTransparent, setIsTransparent] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const menuTimers = useRef<{ [key: string]: NodeJS.Timeout }>({});
 
@@ -134,11 +134,13 @@ export default function Header() {
     const isHomePageCurrently = pathname === '/';
 
     const handleScroll = () => {
-      setIsTransparent(isHomePageCurrently && window.scrollY <= 50);
+      if (isHomePageCurrently) {
+        setIsTransparent(window.scrollY <= 50);
+      }
     };
 
     if (isHomePageCurrently) {
-      handleScroll(); // Set initial state based on scroll for homepage
+      setIsTransparent(window.scrollY <= 50); // Set initial state
       window.addEventListener('scroll', handleScroll);
     } else {
       setIsTransparent(false); // Not on homepage, header is solid
@@ -162,11 +164,10 @@ export default function Header() {
   const handleMenuLeave = (menuId: string) => {
     menuTimers.current[menuId] = setTimeout(() => {
       setActiveMenu(null);
-    }, 200); // 200ms delay before closing
+    }, 200); 
   };
-
-  // Determine effective styles based on mounted status and transparency state
-  const currentIsTransparent = hasMounted && isTransparent && pathname === '/';
+  
+  const currentIsTransparent = isTransparent && hasMounted && pathname === '/';
 
   const headerClasses = cn(
     "sticky top-0 z-50 w-full border-b transition-colors duration-300 ease-in-out",
@@ -184,6 +185,7 @@ export default function Header() {
   const dropdownButtonHoverBgTransparent = "hover:bg-white/10";
   const chevronColorBase = "text-foreground/70";
   const chevronColorTransparent = "text-white/70";
+
 
   return (
     <header className={headerClasses}>
@@ -216,7 +218,7 @@ export default function Header() {
                     href={item.href!}
                     className={cn("px-3 py-2", currentIsTransparent ? linkTextColorTransparent : linkTextColorBase)}
                   >
-                     {item.icon && <item.icon className={cn("h-5 w-5", currentIsTransparent ? iconColorTransparent : iconColorBase, currentIsTransparent ? linkTextColorTransparent : linkTextColorBase)} />}
+                     {item.icon && <item.icon className={cn("h-5 w-5 mr-1", currentIsTransparent ? iconColorTransparent : iconColorBase, currentIsTransparent ? linkTextColorTransparent : linkTextColorBase)} />}
                     <span>{item.label}</span>
                   </NavLink>
                 )}
@@ -224,13 +226,13 @@ export default function Header() {
               {(item.isDropdown && item.subItems) && (
                 <DropdownMenuContent
                   align="start"
-                  className="mt-1" // Adjusted from w-56 to allow natural width
+                  className="mt-1" 
                   onPointerEnter={() => handleMenuEnter(item.id)}
                   onPointerLeave={() => handleMenuLeave(item.id)}
                 >
-                  {item.href && ( // Add link to the main page of the dropdown section
+                  {item.href && ( 
                      <DropdownMenuItem asChild>
-                      <Link href={item.href} className="w-full font-semibold text-primary hover:bg-accent/10">All {item.label}</Link>
+                      <Link href={item.href} className="w-full font-semibold text-primary hover:bg-accent/10" onClick={() => setActiveMenu(null)}>All {item.label}</Link>
                     </DropdownMenuItem>
                   )}
                   {item.subItems.map((subItem) => (
@@ -248,7 +250,7 @@ export default function Header() {
                     align="center"
                     className={cn(
                       "mt-1 p-6 bg-background shadow-xl rounded-lg",
-                       item.id === 'resources' ? "w-[600px] md:w-[700px] lg:w-[800px]" : "w-[550px] md:w-[600px]" // Default width for other mega menus
+                       item.id === 'resources' ? "w-[600px] md:w-[700px] lg:w-[800px]" : "w-[700px] md:w-[800px] lg:w-[900px]" // Adjusted width for Ministries
                     )}
                     onPointerEnter={() => handleMenuEnter(item.id)}
                     onPointerLeave={() => handleMenuLeave(item.id)}
@@ -257,7 +259,7 @@ export default function Header() {
                        item.megaMenuItems!.filter(sub => sub.isFullWidthLink && sub.category === 'MEGA_HEADER').map(subItem => (
                         <div key={`${subItem.label}-header`} className="mb-4 pb-3 border-b border-border">
                             <Link
-                                href={subItem.href}
+                                href={subItem.href!}
                                 className="font-semibold text-lg text-primary hover:underline flex items-center space-x-2"
                                 onClick={() => setActiveMenu(null)}
                             >
@@ -267,6 +269,25 @@ export default function Header() {
                         </div>
                        ))
                     )}
+                    
+                    {/* Ministries Mega Menu Specific Layout */}
+                    {item.id === 'ministries' && (
+                      <div className="grid grid-cols-3 gap-x-4 gap-y-6">
+                        {item.megaMenuItems!.filter(sub => !sub.isFullWidthLink).map((subItem) => (
+                           <Link
+                              key={subItem.label}
+                              href={subItem.href}
+                              className="group flex flex-col items-center text-center p-3 rounded-md hover:bg-accent/10 transition-colors"
+                              onClick={() => setActiveMenu(null)}
+                            >
+                              {subItem.icon && <subItem.icon className="h-10 w-10 text-accent group-hover:text-primary mb-2" />}
+                              {subItem.category && <p className="text-xs uppercase font-semibold text-muted-foreground mb-1">{subItem.category}</p>}
+                              <p className="text-sm font-medium text-foreground group-hover:text-primary">{subItem.label}</p>
+                            </Link>
+                        ))}
+                      </div>
+                    )}
+
 
                     {item.id === 'resources' && (
                       <div className="grid grid-cols-3 gap-x-6 gap-y-4">
@@ -328,11 +349,23 @@ export default function Header() {
               </div>
               <nav className="flex flex-col space-y-1">
                 {navItems.map((item) => {
-                  if ((item.isDropdown || item.isMegaMenu) && (item.subItems || item.megaMenuItems)) {
+                  if (item.isDropdown || item.isMegaMenu) {
+                    const itemsToDisplay = item.isMegaMenu ? item.megaMenuItems?.filter(mItem => !mItem.isFullWidthLink) : item.subItems;
                     return (
-                      <Accordion key={item.label} type="single" collapsible className="w-full">
-                        <AccordionItem value={item.label} className="border-b-0">
-                          <AccordionTrigger className="text-lg font-medium text-foreground/80 hover:text-primary hover:no-underline py-3 px-0 data-[state=open]:text-primary [&[data-state=open]>svg]:text-primary">
+                      <Accordion key={item.id} type="single" collapsible className="w-full">
+                        <AccordionItem value={item.id} className="border-b-0">
+                          <AccordionTrigger 
+                            className="text-lg font-medium text-foreground/80 hover:text-primary hover:no-underline py-3 px-0 data-[state=open]:text-primary [&[data-state=open]>svg]:text-primary"
+                            onClick={(e) => {
+                              // If it's a mega menu with a direct link, navigate instead of just toggling
+                              if (item.isMegaMenu && item.href && item.id !== 'resources' && item.id !== 'ministries') { // prevent navigation for main mega menu triggers
+                                e.preventDefault();
+                                // router.push(item.href); // Would need to import useRouter
+                                setMobileMenuOpen(false); 
+                                window.location.href = item.href; // simple navigation
+                              }
+                            }}
+                          >
                             <span>{item.label}</span>
                           </AccordionTrigger>
                           <AccordionContent className="pt-1 pb-0 pl-4">
@@ -342,21 +375,12 @@ export default function Header() {
                                   All {item.label}
                                 </NavLink>
                               )}
-                              {item.isDropdown && item.subItems?.map(subItem => (
+                              {itemsToDisplay?.map(subItem => (
                                  <NavLink key={subItem.href} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary">
+                                  {item.id === 'resources' && subItem.category && !subItem.isFullWidthLink && <span className="text-xs uppercase text-muted-foreground mr-1">{subItem.category}:</span>}
+                                  {item.id === 'ministries' && subItem.category && <span className="text-xs uppercase text-muted-foreground mr-1">{subItem.category} - </span>}
                                   {subItem.label}
                                 </NavLink>
-                              ))}
-                              {item.isMegaMenu && item.megaMenuItems?.map(megaItem => (
-                                <React.Fragment key={megaItem.label}>
-                                  {/* For Resources Mega Menu in Mobile */}
-                                  {item.id === 'resources' && !megaItem.isFullWidthLink && megaItem.category !== 'MEGA_HEADER' && (
-                                    <NavLink href={megaItem.href} icon={megaItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary">
-                                      {megaItem.category && <span className="text-xs uppercase text-muted-foreground mr-1">{megaItem.category}:</span>}
-                                      {megaItem.label}
-                                    </NavLink>
-                                  )}
-                                </React.Fragment>
                               ))}
                             </nav>
                           </AccordionContent>
@@ -364,9 +388,8 @@ export default function Header() {
                       </Accordion>
                     );
                   }
-                  // For direct nav links like Events, Give
                   return (
-                    <NavLink key={item.href} href={item.href!} icon={item.icon} onClick={() => setMobileMenuOpen(false)} className="text-lg py-3 flex items-center hover:text-primary">
+                    <NavLink key={item.id} href={item.href!} icon={item.icon} onClick={() => setMobileMenuOpen(false)} className="text-lg py-3 flex items-center hover:text-primary">
                        {item.icon && <item.icon className="h-5 w-5 mr-3 text-muted-foreground" />}
                       <span>{item.label}</span>
                     </NavLink>

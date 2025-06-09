@@ -77,9 +77,7 @@ const navItems: NavItem[] = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
-  // isTransparent will determine if transparent styles should be applied.
-  // Default to false, so server and initial client render are solid.
-  const [isTransparent, setIsTransparent] = useState(false); 
+  const [isTransparent, setIsTransparent] = useState(false); // Default to solid for SSR and initial client render
 
   const pathname = usePathname();
 
@@ -111,26 +109,26 @@ export default function Header() {
       // Not on homepage, so header should be solid
       setIsTransparent(false);
     }
-  }, [hasMounted, pathname]); // Rerun when pathname changes or after mount
+  }, [hasMounted, pathname]);
 
   // Determine effective transparency for styling
-  // On server and initial client render, hasMounted is false, so effectiveIsTransparent is false (solid)
-  // After mount, effectiveIsTransparent depends on the isTransparent state driven by scroll/route
-  const effectiveIsTransparent = hasMounted && isTransparent;
+  // On server and initial client render, hasMounted is false, so localIsTransparent is false (solid)
+  // After mount, localIsTransparent depends on the isTransparent state driven by scroll/route
+  const localIsTransparent = hasMounted && isTransparent;
 
   const headerClasses = cn(
     "sticky top-0 z-50 w-full border-b transition-colors duration-300 ease-in-out",
-    effectiveIsTransparent
+    localIsTransparent
       ? "bg-transparent border-transparent"
       : "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-border"
   );
 
-  const logoColor = effectiveIsTransparent ? "text-white" : "text-primary";
-  const linkTextColor = effectiveIsTransparent ? "text-white" : "text-foreground/80";
-  const linkHoverTextColor = effectiveIsTransparent ? "hover:text-white/80" : "hover:text-primary";
-  const iconColor = effectiveIsTransparent ? "text-white" : "text-foreground/70";
-  const dropdownButtonHoverBg = effectiveIsTransparent ? "hover:bg-white/10" : "hover:bg-accent";
-  const chevronColor = effectiveIsTransparent ? "text-white/70" : "";
+  const logoColor = localIsTransparent ? "text-white" : "text-primary";
+  const linkTextColor = localIsTransparent ? "text-white" : "text-foreground/80";
+  const linkHoverTextColor = localIsTransparent ? "hover:text-white/80" : "hover:text-primary";
+  const iconColor = localIsTransparent ? "text-white" : "text-foreground/70";
+  const dropdownButtonHoverBg = localIsTransparent ? "hover:bg-white/10" : "hover:bg-accent/50"; // Adjusted hover for dropdown
+  const chevronColor = localIsTransparent ? "text-white/70" : "text-foreground/70"; // Chevron color adapts
 
 
   return (
@@ -152,14 +150,14 @@ export default function Header() {
                         "flex items-center space-x-1 px-3 py-2 h-auto text-sm font-medium",
                         linkTextColor,
                         linkHoverTextColor,
-                        dropdownButtonHoverBg
+                        dropdownButtonHoverBg 
                       )}
                     >
                       <span>{item.label}</span>
                       <ChevronDown className={cn("h-4 w-4 opacity-70", chevronColor)} />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="w-56">
+                  <DropdownMenuContent align="start">
                     {item.href && (
                        <DropdownMenuItem asChild>
                         <Link href={item.href} className="w-full">All {item.label}</Link>
@@ -195,13 +193,11 @@ export default function Header() {
             variant="ghost"
             size="icon"
             aria-label="Search"
-            className={cn(iconColor, effectiveIsTransparent ? "hover:bg-white/10" : "hover:bg-accent/50")}
+            className={cn(iconColor, localIsTransparent ? "hover:bg-white/10" : "hover:bg-accent/50")}
           >
             <Search className="h-5 w-5" />
           </Button>
           <Button asChild variant="default" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-            {/* The "I'm New" button uses primary background and foreground, which should contrast well
-                in both transparent and solid states given the theme's primary-foreground is light. */}
             <Link href="/new">I'm New</Link>
           </Button>
         </div>
@@ -209,7 +205,7 @@ export default function Header() {
         <div className="md:hidden">
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="Open menu" className={cn(iconColor, effectiveIsTransparent ? "hover:bg-white/10" : "hover:bg-accent/50")}>
+              <Button variant="ghost" size="icon" aria-label="Open menu" className={cn(iconColor, localIsTransparent ? "hover:bg-white/10" : "hover:bg-accent/50")}>
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>

@@ -6,7 +6,8 @@ import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { 
   Menu, Search, X, MapPin, ChevronDown, Video, Newspaper, 
-  GraduationCap, BookMarked, Church, Disc3, Mic2, Library, Briefcase, Users, HeartHandshake 
+  GraduationCap, BookMarked, Church, Disc3, Mic2, Library, Users, HeartHandshake,
+  BookOpen, ShieldCheck, Users2, HandHeart, CalendarDays, CheckCircle2, Gift
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import NavLink from './NavLink';
@@ -37,11 +38,11 @@ interface NavItem {
   id: string; // Unique ID for managing hover state
   label: string;
   href?: string;
-  icon?: LucideIcon;
+  icon?: LucideIcon; // For direct links in main nav
   subItems?: NavSubItem[];
-  megaMenuItems?: NavSubItem[]; // For the new mega menu structure
+  megaMenuItems?: NavSubItem[]; 
   isDropdown?: boolean;
-  isMegaMenu?: boolean; // Flag for mega menu
+  isMegaMenu?: boolean; 
 }
 
 const navItems: NavItem[] = [
@@ -51,50 +52,60 @@ const navItems: NavItem[] = [
     href: '/about',
     isDropdown: true,
     subItems: [
-      { label: 'Our History', href: '/about/history' },
-      { label: 'Our Beliefs', href: '/about/beliefs' },
-      { label: 'Our Team', href: '/about/leadership' },
+      { label: 'Our Story', href: '/about/history', icon: BookOpen },
+      { label: 'Our Beliefs', href: '/about/beliefs', icon: ShieldCheck },
+      { label: 'Our Team', href: '/about/leadership', icon: Users2 },
     ],
   },
   {
-    id: 'watch-listen-read',
-    label: 'Watch | Listen | Read',
-    href: '/resources',
-    isMegaMenu: true, // Indicate this is a mega menu
+    id: 'ministries',
+    label: 'Ministries',
+    href: '/ministries', // Main overview page
+    isDropdown: true,
+    subItems: [
+      { label: 'Counseling & Family Support', href: '/programs/counseling-family-support', icon: HeartHandshake },
+      { label: 'Youth & Student Empowerment', href: '/programs/youth-student-empowerment', icon: Users },
+      { label: 'Faith & Growth', href: '/programs/faith-growth', icon: GraduationCap },
+      { label: 'Community Outreach', href: '/programs/community-outreach', icon: HandHeart },
+    ],
+  },
+  {
+    id: 'resources',
+    label: 'Resources',
+    href: '/resources', // Main link to overview
+    isMegaMenu: true, 
     megaMenuItems: [
       { category: 'WATCH', label: 'Sermons', href: '/sermons', icon: Church },
       { category: 'WATCH', label: 'Videos', href: '/resources/videos', icon: Video },
       { category: 'LISTEN', label: 'Music', href: '/resources/music', icon: Disc3 },
       { category: 'LISTEN', label: 'Podcasts', href: '/resources/podcasts', icon: Mic2 },
       { category: 'READ', label: 'Articles', href: '/resources/blog', icon: Newspaper },
-      { category: 'READ', label: 'Resources', href: '/resources/guides', icon: Library },
+      { category: 'READ', label: 'Study Guides', href: '/resources/guides', icon: Library },
+      { category: 'READ', label: 'Books', href: '/resources/books', icon: BookMarked },
     ]
+  },
+  {
+    id: 'events',
+    label: 'Events',
+    href: '/events',
+    icon: CalendarDays,
   },
   {
     id: 'visit',
     label: 'Visit',
-    href: '/plan-visit', // Main link
-    isDropdown: true, // Make Visit a dropdown
+    href: '/plan-visit', 
+    isDropdown: true, 
     subItems: [
-        { label: 'Plan Your Visit', href: '/plan-visit'},
+        { label: 'Plan Your Visit', href: '/plan-visit', icon: CheckCircle2},
         { label: 'Locations', href: '/locations', icon: MapPin },
-        // Potentially add "What to Expect", "Times & Directions" if those pages are created
     ]
   },
-  {
-    id: 'ministries',
-    label: 'Ministries', // Renamed from Programs
-    href: '/programs', // Main link to overview page
-    isDropdown: true,
-    subItems: [
-      { label: 'Counseling & Family Support', href: '/programs/counseling-family-support', icon: HeartHandshake },
-      { label: 'Youth & Student Empowerment', href: '/programs/youth-student-empowerment', icon: Users },
-      { label: 'Faith & Growth', href: '/programs/faith-growth', icon: GraduationCap },
-      { label: 'Community Outreach', href: '/programs/community-outreach', icon: Briefcase },
-    ],
+  { 
+    id: 'give', 
+    label: 'Give', 
+    href: '/give',
+    icon: Gift,
   },
-  { id: 'initiatives', label: 'Initiatives', href: '#' }, // Placeholder
-  { id: 'get-involved', label: 'Get Involved', href: '/give' }, // Pointing to give for now
 ];
 
 export default function Header() {
@@ -105,8 +116,7 @@ export default function Header() {
   const menuTimers = useRef<{ [key: string]: NodeJS.Timeout }>({});
 
   const pathname = usePathname();
-  const isHomePage = pathname === '/';
-
+  
   useEffect(() => {
     setHasMounted(true);
   }, []);
@@ -114,18 +124,22 @@ export default function Header() {
   useEffect(() => {
     if (!hasMounted) return;
 
+    const isHomePage = pathname === '/';
+    
     const handleScroll = () => {
-      setIsTransparent(isHomePage && window.scrollY <= 50);
+      if (isHomePage) {
+        setIsTransparent(window.scrollY <= 50);
+      }
     };
 
     if (isHomePage) {
-      handleScroll(); // Set initial state based on scroll
+      handleScroll(); // Set initial state
       window.addEventListener('scroll', handleScroll);
       return () => window.removeEventListener('scroll', handleScroll);
     } else {
       setIsTransparent(false); // Not homepage, so header is solid
     }
-  }, [hasMounted, isHomePage, pathname]);
+  }, [hasMounted, pathname]);
 
 
   const handleMenuEnter = (menuId: string) => {
@@ -138,42 +152,46 @@ export default function Header() {
   const handleMenuLeave = (menuId: string) => {
     menuTimers.current[menuId] = setTimeout(() => {
       setActiveMenu(null);
-    }, 200); // Small delay to allow moving to content
+    }, 200); 
   };
-
+  
+  const currentIsTransparent = isTransparent && hasMounted && pathname === '/';
 
   const headerClasses = cn(
     "sticky top-0 z-50 w-full border-b transition-colors duration-300 ease-in-out",
-    isTransparent && hasMounted
+    currentIsTransparent
       ? "bg-transparent border-transparent"
       : "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-border"
   );
 
-  const baseLinkClasses = "text-sm font-medium";
-  const transparentLinkStyles = "text-white hover:text-white/80";
-  const solidLinkStyles = "text-foreground/80 hover:text-primary";
+  const logoColor = currentIsTransparent ? "text-white" : "text-primary";
   
   const getLinkClasses = () => {
-    return cn(baseLinkClasses, isTransparent && hasMounted ? transparentLinkStyles : solidLinkStyles);
+    return cn(
+      "text-sm font-medium",
+      currentIsTransparent 
+        ? "text-white hover:text-white/80" 
+        : "text-foreground/80 hover:text-primary"
+    );
   };
 
   const getIconColor = () => {
-    return isTransparent && hasMounted ? "text-white" : "text-foreground/70";
+    return currentIsTransparent ? "text-white" : "text-foreground/70";
   };
   
   const getDropdownButtonHoverBg = () => {
-     return isTransparent && hasMounted ? "hover:bg-white/10" : "hover:bg-accent/50";
+     return currentIsTransparent ? "hover:bg-white/10" : "hover:bg-accent/50";
   };
 
   const getChevronColor = () => {
-    return isTransparent && hasMounted ? "text-white/70" : "text-foreground/70";
+    return currentIsTransparent ? "text-white/70" : "text-foreground/70";
   };
 
 
   return (
     <header className={headerClasses}>
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
-        <Link href="/" className={cn("text-2xl font-bold font-headline", isTransparent && hasMounted ? "text-white" : "text-primary")}>
+        <Link href="/" className={cn("text-2xl font-bold font-headline", logoColor)}>
           Family Tent Ministry
         </Link>
 
@@ -227,7 +245,7 @@ export default function Header() {
               {(item.isMegaMenu && item.megaMenuItems) && (
                  <DropdownMenuContent 
                     align="center" 
-                    className="mt-1 p-6 w-[600px] md:w-[700px] lg:w-[800px] bg-background shadow-xl rounded-lg" // Custom width and styling
+                    className="mt-1 p-6 w-[600px] md:w-[700px] lg:w-[800px] bg-background shadow-xl rounded-lg"
                     onPointerEnter={() => handleMenuEnter(item.id)}
                     onPointerLeave={() => handleMenuLeave(item.id)}
                   >
@@ -240,7 +258,7 @@ export default function Header() {
                               <Link
                                 key={subItem.label}
                                 href={subItem.href}
-                                className="group flex items-start space-x-3 p-2 rounded-md hover:bg-accent transition-colors"
+                                className="group flex items-start space-x-3 p-2 rounded-md hover:bg-accent/80 transition-colors"
                                 onClick={() => setActiveMenu(null)}
                               >
                                 {subItem.icon && <subItem.icon className="h-6 w-6 text-accent group-hover:text-primary mt-1 flex-shrink-0" />}
@@ -320,7 +338,8 @@ export default function Header() {
                   }
                   return (
                     <NavLink key={item.href} href={item.href!} icon={item.icon} onClick={() => setMobileMenuOpen(false)} className="text-lg py-3">
-                      {item.label}
+                       {item.icon && <item.icon className="h-5 w-5 mr-0 text-muted-foreground" />}
+                      <span>{item.label}</span>
                     </NavLink>
                   );
                 })}
@@ -339,3 +358,5 @@ export default function Header() {
     </header>
   );
 }
+
+    

@@ -14,12 +14,12 @@ export default function ContactPage() {
         className="bg-secondary/30 text-center"
         titleClassName="text-4xl md:text-5xl"
       />
-      <AnimatedSection className="py-12 md:py-20">
+      <AnimatedSection className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-8 items-start">
+          <div className="grid md:grid-cols-2 gap-10 items-start">
             <div>
               <h2 className="text-2xl font-bold font-headline text-primary mb-8">Get in Touch</h2>
-              <Card className="shadow-lg mb-6">
+              <Card className="shadow-lg mb-8">
                 <CardHeader>
                   <CardTitle className="font-headline text-xl text-accent flex items-center">
                     <Phone className="mr-2 h-5 w-5" /> Phone
@@ -31,7 +31,7 @@ export default function ContactPage() {
                   <p className="text-foreground/80">+234 (0)813 056 1063</p>
                 </CardContent>
               </Card>
-              <Card className="shadow-lg mb-6">
+              <Card className="shadow-lg mb-8">
                 <CardHeader>
                   <CardTitle className="font-headline text-xl text-accent flex items-center">
                     <Mail className="mr-2 h-5 w-5" /> Email

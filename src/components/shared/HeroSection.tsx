@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -40,15 +41,15 @@ export default function HeroSection({
       />
       <div className="absolute inset-0 flex items-center justify-center bg-black/40">
         <AnimatedSection className="container mx-auto px-4 text-center text-primary-foreground">
-          <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl font-headline">
+          <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl font-headline">
             {title}
           </h1>
           {subtitle && (
-            <p className="mb-8 text-lg sm:text-xl md:text-2xl">
+            <p className="mb-10 text-lg sm:text-xl md:text-2xl max-w-3xl mx-auto">
               {subtitle}
             </p>
           )}
-          <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+          <div className="mt-10 flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
             <Button asChild size="lg" className="min-w-[180px] bg-primary hover:bg-primary/90 text-primary-foreground">
               <Link href={primaryActionLink}>{primaryActionText}</Link>
             </Button>

@@ -119,11 +119,11 @@ export default function HomePage() {
 
       <CardGrid title="Featured Program Areas" items={ftmProgramsHighlight} className="bg-background" />
       
-      <AnimatedSection className="py-12 md:py-20 text-center bg-primary text-primary-foreground">
+      <AnimatedSection className="py-16 md:py-24 text-center bg-primary text-primary-foreground">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold font-headline md:text-4xl mb-4">Recent Teachings</h2>
-          <p className="text-lg mb-6">Engage with recent messages from our ministry leaders and events. (Content Coming Soon)</p>
-          <div className="aspect-video max-w-3xl mx-auto bg-muted rounded-lg overflow-hidden shadow-xl mb-6">
+          <h2 className="text-3xl font-bold font-headline md:text-4xl mb-6">Recent Teachings</h2>
+          <p className="text-lg mb-10">Engage with recent messages from our ministry leaders and events. (Content Coming Soon)</p>
+          <div className="aspect-video max-w-3xl mx-auto bg-muted rounded-lg overflow-hidden shadow-xl mb-8">
             <Image src="https://placehold.co/1280x720.png" alt="Latest sermon video placeholder" data-ai-hint="sermon teaching video" width={1280} height={720} className="w-full h-full object-cover"/>
           </div>
           <Button asChild size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
@@ -134,11 +134,11 @@ export default function HomePage() {
 
       <CardGrid title="Explore Resources" items={resourceItems} />
       
-      <AnimatedSection className="py-12 md:py-20 text-center">
+      <AnimatedSection className="py-16 md:py-24 text-center">
         <div className="container mx-auto px-4">
-           <h2 className="text-3xl font-bold font-headline text-primary md:text-4xl mb-10">Upcoming Events & Seminars</h2>
-           <p className="text-lg text-foreground/80 mb-8">Stay connected and join us for our upcoming events, seminars, and club meetings.</p>
-           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+           <h2 className="text-3xl font-bold font-headline text-primary md:text-4xl mb-12">Upcoming Events & Seminars</h2>
+           <p className="text-lg text-foreground/80 mb-10">Stay connected and join us for our upcoming events, seminars, and club meetings.</p>
+           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               { title: "Family Life Seminar (FLS)", date: "Quarterly (Apr, Jul, Nov)", hint: "family conference poster" },
               { title: "Adolescent & Singles Club", date: "1st Saturday Monthly", hint: "youth event poster" },
@@ -148,7 +148,7 @@ export default function HomePage() {
                     <div className="relative h-40 w-full">
                          <Image src={`https://placehold.co/600x300.png`} alt={event.title} layout="fill" objectFit="cover" data-ai-hint={event.hint} className="rounded-t-lg"/>
                     </div>
-                    <CardHeader className="pb-2 pt-4">
+                    <CardHeader className="pb-3 pt-5">
                         <CardTitle className="font-headline text-xl text-accent mb-1">{event.title}</CardTitle>
                     </CardHeader>
                     <CardContent className="flex-grow">
@@ -158,7 +158,7 @@ export default function HomePage() {
                 </Card>
             ))}
            </div>
-           <Button asChild size="lg" className="mt-10 bg-primary hover:bg-primary/90 text-primary-foreground">
+           <Button asChild size="lg" className="mt-12 bg-primary hover:bg-primary/90 text-primary-foreground">
             <Link href="/events">View All Events</Link>
           </Button>
         </div>

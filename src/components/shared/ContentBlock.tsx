@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -34,26 +35,28 @@ export default function ContentBlock({
   const hasImage = imageUrl && imageAlt;
 
   return (
-    <AnimatedSection className={cn("py-12 md:py-20", className)}>
+    <AnimatedSection className={cn("py-16 md:py-24", className)}>
       <div className="container mx-auto px-4">
         <div className={cn(
           "grid items-center gap-8 md:gap-12",
           hasImage ? "md:grid-cols-2" : "md:grid-cols-1"
         )}>
           <div className={cn(
-            "space-y-4 text-center md:text-left",
+            "space-y-6 text-center md:text-left", // Increased default space-y
             hasImage && imagePosition === 'right' ? 'md:order-1' : 'md:order-2'
           )}>
             <h2 className={cn("text-3xl font-bold font-headline text-primary md:text-4xl", titleClassName)}>
               {title}
             </h2>
-            <div className={cn("text-lg text-foreground/80", textClassName)}>
+            <div className={cn("text-lg text-foreground/80", textClassName, actionText && actionLink ? "mb-2" : "")}> 
               {typeof text === 'string' ? <p>{text}</p> : text}
             </div>
             {actionText && actionLink && (
-              <Button asChild size="lg" className="mt-6 bg-accent hover:bg-accent/90 text-accent-foreground">
-                <Link href={actionLink}>{actionText}</Link>
-              </Button>
+              <div className="pt-2"> {/* Added pt-2 for button spacing */}
+                <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                  <Link href={actionLink}>{actionText}</Link>
+                </Button>
+              </div>
             )}
           </div>
           {hasImage && (

@@ -4,10 +4,10 @@
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import { 
-  Menu, Search, X, MapPin, ChevronDown, Video, Newspaper, 
+import {
+  Menu, Search, X, MapPin, ChevronDown, Video, Newspaper,
   GraduationCap, BookMarked, Church, Disc3, Mic2, Library, Users, HeartHandshake,
-  BookOpen, ShieldCheck, Users2, HandHeart, CalendarDays, CheckCircle2, Gift
+  BookOpen, ShieldCheck, Users2, HandHeart, CalendarDays, CheckCircle2, Gift, LayoutDashboard
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import NavLink from './NavLink';
@@ -40,9 +40,9 @@ interface NavItem {
   href?: string;
   icon?: LucideIcon; // For direct links in main nav
   subItems?: NavSubItem[];
-  megaMenuItems?: NavSubItem[]; 
+  megaMenuItems?: NavSubItem[];
   isDropdown?: boolean;
-  isMegaMenu?: boolean; 
+  isMegaMenu?: boolean;
 }
 
 const navItems: NavItem[] = [
@@ -60,9 +60,10 @@ const navItems: NavItem[] = [
   {
     id: 'ministries',
     label: 'Ministries',
-    href: '/ministries', // Main overview page
+    href: '/ministries',
     isDropdown: true,
     subItems: [
+      { label: 'All Ministries', href: '/ministries', icon: LayoutDashboard },
       { label: 'Counseling & Family Support', href: '/programs/counseling-family-support', icon: HeartHandshake },
       { label: 'Youth & Student Empowerment', href: '/programs/youth-student-empowerment', icon: Users },
       { label: 'Faith & Growth', href: '/programs/faith-growth', icon: GraduationCap },
@@ -72,8 +73,8 @@ const navItems: NavItem[] = [
   {
     id: 'resources',
     label: 'Resources',
-    href: '/resources', // Main link to overview
-    isMegaMenu: true, 
+    href: '/resources',
+    isMegaMenu: true,
     megaMenuItems: [
       { category: 'WATCH', label: 'Sermons', href: '/sermons', icon: Church },
       { category: 'WATCH', label: 'Videos', href: '/resources/videos', icon: Video },
@@ -93,16 +94,16 @@ const navItems: NavItem[] = [
   {
     id: 'visit',
     label: 'Visit',
-    href: '/plan-visit', 
-    isDropdown: true, 
+    href: '/plan-visit',
+    isDropdown: true,
     subItems: [
         { label: 'Plan Your Visit', href: '/plan-visit', icon: CheckCircle2},
         { label: 'Locations', href: '/locations', icon: MapPin },
     ]
   },
-  { 
-    id: 'give', 
-    label: 'Give', 
+  {
+    id: 'give',
+    label: 'Give',
     href: '/give',
     icon: Gift,
   },
@@ -116,7 +117,7 @@ export default function Header() {
   const menuTimers = useRef<{ [key: string]: NodeJS.Timeout }>({});
 
   const pathname = usePathname();
-  
+
   useEffect(() => {
     setHasMounted(true);
   }, []);
@@ -124,21 +125,26 @@ export default function Header() {
   useEffect(() => {
     if (!hasMounted) return;
 
-    const isHomePage = pathname === '/';
-    
+    const isHomePageCurrently = pathname === '/';
+
     const handleScroll = () => {
-      if (isHomePage) {
+      if (isHomePageCurrently) {
         setIsTransparent(window.scrollY <= 50);
       }
     };
 
-    if (isHomePage) {
-      handleScroll(); // Set initial state
+    if (isHomePageCurrently) {
+      handleScroll(); // Set initial state based on scroll position after mount
       window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
     } else {
       setIsTransparent(false); // Not homepage, so header is solid
     }
+
+    return () => {
+      if (isHomePageCurrently) {
+        window.removeEventListener('scroll', handleScroll);
+      }
+    };
   }, [hasMounted, pathname]);
 
 
@@ -152,39 +158,39 @@ export default function Header() {
   const handleMenuLeave = (menuId: string) => {
     menuTimers.current[menuId] = setTimeout(() => {
       setActiveMenu(null);
-    }, 200); 
+    }, 200);
   };
-  
-  const currentIsTransparent = isTransparent && hasMounted && pathname === '/';
+
+  const currentIsTransparentEffective = isTransparent && hasMounted && pathname === '/';
 
   const headerClasses = cn(
     "sticky top-0 z-50 w-full border-b transition-colors duration-300 ease-in-out",
-    currentIsTransparent
+    currentIsTransparentEffective
       ? "bg-transparent border-transparent"
       : "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-border"
   );
 
-  const logoColor = currentIsTransparent ? "text-white" : "text-primary";
-  
+  const logoColor = currentIsTransparentEffective ? "text-white" : "text-primary";
+
   const getLinkClasses = () => {
     return cn(
       "text-sm font-medium",
-      currentIsTransparent 
-        ? "text-white hover:text-white/80" 
+      currentIsTransparentEffective
+        ? "text-white hover:text-white/80"
         : "text-foreground/80 hover:text-primary"
     );
   };
 
   const getIconColor = () => {
-    return currentIsTransparent ? "text-white" : "text-foreground/70";
+    return currentIsTransparentEffective ? "text-white" : "text-foreground/70";
   };
-  
+
   const getDropdownButtonHoverBg = () => {
-     return currentIsTransparent ? "hover:bg-white/10" : "hover:bg-accent/50";
+     return currentIsTransparentEffective ? "hover:bg-white/10" : "hover:bg-accent/50";
   };
 
   const getChevronColor = () => {
-    return currentIsTransparent ? "text-white/70" : "text-foreground/70";
+    return currentIsTransparentEffective ? "text-white/70" : "text-foreground/70";
   };
 
 
@@ -221,8 +227,8 @@ export default function Header() {
                 )}
               </DropdownMenuTrigger>
               {(item.isDropdown && item.subItems) && (
-                <DropdownMenuContent 
-                  align="start" 
+                <DropdownMenuContent
+                  align="start"
                   className="mt-1"
                   onPointerEnter={() => handleMenuEnter(item.id)}
                   onPointerLeave={() => handleMenuLeave(item.id)}
@@ -243,12 +249,23 @@ export default function Header() {
                 </DropdownMenuContent>
               )}
               {(item.isMegaMenu && item.megaMenuItems) && (
-                 <DropdownMenuContent 
-                    align="center" 
+                 <DropdownMenuContent
+                    align="center"
                     className="mt-1 p-6 w-[600px] md:w-[700px] lg:w-[800px] bg-background shadow-xl rounded-lg"
                     onPointerEnter={() => handleMenuEnter(item.id)}
                     onPointerLeave={() => handleMenuLeave(item.id)}
                   >
+                    {item.href && ( // Optional: Link to main resources page from mega menu header
+                        <div className="mb-4 pb-2 border-b border-border">
+                            <Link 
+                                href={item.href} 
+                                className="font-semibold text-lg text-primary hover:underline"
+                                onClick={() => setActiveMenu(null)}
+                            >
+                                Explore All {item.label}
+                            </Link>
+                        </div>
+                    )}
                     <div className="grid grid-cols-3 gap-x-6 gap-y-8">
                       {(['WATCH', 'LISTEN', 'READ'] as const).map(category => (
                         <div key={category} className="space-y-3">
@@ -258,7 +275,7 @@ export default function Header() {
                               <Link
                                 key={subItem.label}
                                 href={subItem.href}
-                                className="group flex items-start space-x-3 p-2 rounded-md hover:bg-accent/80 transition-colors"
+                                className="group flex items-start space-x-3 p-2 rounded-md hover:bg-accent/10 transition-colors"
                                 onClick={() => setActiveMenu(null)}
                               >
                                 {subItem.icon && <subItem.icon className="h-6 w-6 text-accent group-hover:text-primary mt-1 flex-shrink-0" />}
@@ -319,7 +336,7 @@ export default function Header() {
                           </AccordionTrigger>
                           <AccordionContent className="pt-1 pb-0 pl-4">
                             <nav className="flex flex-col space-y-2 mt-1">
-                              {item.href && (
+                              {item.href && ( // Main link for the section
                                 <NavLink href={item.href} onClick={() => setMobileMenuOpen(false)} className="text-base font-semibold py-1">
                                   All {item.label}
                                 </NavLink>
@@ -338,13 +355,13 @@ export default function Header() {
                   }
                   return (
                     <NavLink key={item.href} href={item.href!} icon={item.icon} onClick={() => setMobileMenuOpen(false)} className="text-lg py-3">
-                       {item.icon && <item.icon className="h-5 w-5 mr-0 text-muted-foreground" />}
+                       {item.icon && <item.icon className="h-5 w-5 mr-2 text-muted-foreground" />}
                       <span>{item.label}</span>
                     </NavLink>
                   );
                 })}
                  <Button variant="ghost" className="flex items-center justify-start space-x-2 text-lg py-3 px-0">
-                    <Search className="h-5 w-5" />
+                    <Search className="h-5 w-5 mr-2 text-muted-foreground" />
                     <span>Search</span>
                   </Button>
                 <Button asChild variant="default" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg mt-4" onClick={() => setMobileMenuOpen(false)}>
@@ -358,5 +375,3 @@ export default function Header() {
     </header>
   );
 }
-
-    

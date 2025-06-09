@@ -76,56 +76,67 @@ const navItems: NavItem[] = [
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
+  // isTransparent will determine if transparent styles should be applied.
+  // Default to false, so server and initial client render are solid.
+  const [isTransparent, setIsTransparent] = useState(false); 
+
   const pathname = usePathname();
-  const isHomePage = pathname === '/';
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    setHasMounted(true);
+  }, []);
 
-    if (isHomePage) {
+  useEffect(() => {
+    if (!hasMounted) {
+      return; // Don't run on server or before client mount
+    }
+
+    const isHomePageCurrently = pathname === '/';
+
+    if (isHomePageCurrently) {
+      const handleScroll = () => {
+        // Transparent if at top of homepage, otherwise solid
+        setIsTransparent(window.scrollY <= 50);
+      };
+      
+      // Set initial state based on scroll position after mount
+      handleScroll(); 
+      
       window.addEventListener('scroll', handleScroll);
-      handleScroll(); // Check initial scroll position
-    } else {
-      setIsScrolled(true); // Non-home pages always have solid header
-    }
-
-    return () => {
-      if (isHomePage) {
+      return () => {
         window.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, [isHomePage]);
-  
-  // Reset scroll state when navigating to homepage from another page
-  useEffect(() => {
-    if (isHomePage) {
-      setIsScrolled(window.scrollY > 50);
+      };
     } else {
-      setIsScrolled(true);
+      // Not on homepage, so header should be solid
+      setIsTransparent(false);
     }
-  }, [pathname, isHomePage]);
+  }, [hasMounted, pathname]); // Rerun when pathname changes or after mount
 
+  // Determine effective transparency for styling
+  // On server and initial client render, hasMounted is false, so effectiveIsTransparent is false (solid)
+  // After mount, effectiveIsTransparent depends on the isTransparent state driven by scroll/route
+  const effectiveIsTransparent = hasMounted && isTransparent;
 
-  const isTransparentHeader = isHomePage && !isScrolled;
+  const headerClasses = cn(
+    "sticky top-0 z-50 w-full border-b transition-colors duration-300 ease-in-out",
+    effectiveIsTransparent
+      ? "bg-transparent border-transparent"
+      : "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-border"
+  );
 
-  const linkTextColor = isTransparentHeader ? "text-white" : "text-foreground/80";
-  const linkHoverTextColor = isTransparentHeader ? "hover:text-white/80" : "hover:text-primary";
-  const iconColor = isTransparentHeader ? "text-white" : "text-foreground/70";
-  const dropdownButtonHoverBg = isTransparentHeader ? "hover:bg-white/10" : "hover:bg-accent";
+  const logoColor = effectiveIsTransparent ? "text-white" : "text-primary";
+  const linkTextColor = effectiveIsTransparent ? "text-white" : "text-foreground/80";
+  const linkHoverTextColor = effectiveIsTransparent ? "hover:text-white/80" : "hover:text-primary";
+  const iconColor = effectiveIsTransparent ? "text-white" : "text-foreground/70";
+  const dropdownButtonHoverBg = effectiveIsTransparent ? "hover:bg-white/10" : "hover:bg-accent";
+  const chevronColor = effectiveIsTransparent ? "text-white/70" : "";
+
 
   return (
-    <header className={cn(
-      "sticky top-0 z-50 w-full border-b transition-colors duration-300 ease-in-out",
-      isTransparentHeader ? "bg-transparent border-transparent" : "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-border"
-    )}>
+    <header className={headerClasses}>
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
-        <Link href="/" className={cn(
-          "text-2xl font-bold font-headline",
-          isTransparentHeader ? "text-white" : "text-primary"
-        )}>
+        <Link href="/" className={cn("text-2xl font-bold font-headline", logoColor)}>
           Family Tent Ministry
         </Link>
 
@@ -135,17 +146,17 @@ export default function Header() {
               return (
                 <DropdownMenu key={item.label}>
                   <DropdownMenuTrigger asChild>
-                    <Button 
-                      variant="ghost" 
+                    <Button
+                      variant="ghost"
                       className={cn(
-                        "flex items-center space-x-1 px-3 py-2 h-auto text-sm font-medium transition-colors",
+                        "flex items-center space-x-1 px-3 py-2 h-auto text-sm font-medium",
                         linkTextColor,
                         linkHoverTextColor,
                         dropdownButtonHoverBg
                       )}
                     >
                       <span>{item.label}</span>
-                      <ChevronDown className={cn("h-4 w-4 opacity-70", isTransparentHeader ? "text-white/70" : "")} />
+                      <ChevronDown className={cn("h-4 w-4 opacity-70", chevronColor)} />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="start" className="w-56">
@@ -167,10 +178,10 @@ export default function Header() {
               );
             }
             return (
-              <NavLink 
-                key={item.href} 
-                href={item.href!} 
-                icon={item.icon} 
+              <NavLink
+                key={item.href}
+                href={item.href!}
+                icon={item.icon}
                 className={cn("px-3 py-2", linkTextColor, linkHoverTextColor)}
               >
                 {item.label}
@@ -180,15 +191,17 @@ export default function Header() {
         </nav>
 
         <div className="hidden items-center space-x-4 md:flex">
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            aria-label="Search" 
-            className={cn(iconColor, isTransparentHeader ? "hover:bg-white/10" : "")}
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Search"
+            className={cn(iconColor, effectiveIsTransparent ? "hover:bg-white/10" : "hover:bg-accent/50")}
           >
             <Search className="h-5 w-5" />
           </Button>
           <Button asChild variant="default" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+            {/* The "I'm New" button uses primary background and foreground, which should contrast well
+                in both transparent and solid states given the theme's primary-foreground is light. */}
             <Link href="/new">I'm New</Link>
           </Button>
         </div>
@@ -196,7 +209,7 @@ export default function Header() {
         <div className="md:hidden">
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="Open menu" className={cn(iconColor, isTransparentHeader ? "hover:bg-white/10" : "")}>
+              <Button variant="ghost" size="icon" aria-label="Open menu" className={cn(iconColor, effectiveIsTransparent ? "hover:bg-white/10" : "hover:bg-accent/50")}>
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>

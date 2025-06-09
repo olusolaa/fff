@@ -66,13 +66,43 @@ const navItems: NavItem[] = [
     href: '/ministries', 
     isMegaMenu: true,
     megaMenuItems: [
-      { label: 'Adolescent & Singles Club', href: '/ministries/adolescent-singles-club', icon: Users, category: 'CLUB' },
-      { label: 'School Outreaches', href: '/ministries/school-outreaches', icon: School, category: 'OUTREACH' },
-      { label: 'Counseling Services', href: '/programs/counseling-family-support', icon: HeartHandshake, category: 'SUPPORT' },
-      { label: 'Family Life Seminars', href: '/ministries/family-life-seminars', icon: CalendarDays, category: 'SEMINAR' },
-      { label: 'Marriage Forum', href: '/programs/counseling-family-support', icon: Users2, category: 'FORUM' },
-      { label: 'Discipleship Classes', href: '/programs/faith-growth', icon: BookOpen, category: 'GROWTH' },
-      { label: 'Community Outreach', href: '/programs/community-outreach', icon: HandHeart, category: 'SERVICE' },
+      { 
+        label: 'All Ministries Overview', 
+        href: '/ministries', 
+        icon: LayoutDashboard, 
+        category: 'MEGA_HEADER', 
+        isFullWidthLink: true 
+      },
+      { 
+        label: 'Adolescent & Singles Club', 
+        href: '/ministries/adolescent-singles-club', 
+        icon: Users, 
+      },
+      { 
+        label: 'School Outreaches', 
+        href: '/ministries/school-outreaches', 
+        icon: School, 
+      },
+      { 
+        label: 'Counseling Services', 
+        href: '/programs/counseling-family-support', 
+        icon: HeartHandshake,
+      },
+      { 
+        label: 'Family Life Seminars', 
+        href: '/ministries/family-life-seminars', 
+        icon: CalendarDays, 
+      },
+      { 
+        label: 'Marriage Forum', 
+        href: '/programs/counseling-family-support', // Points to parent as specific content is there
+        icon: Users2, 
+      },
+      { 
+        label: 'Discipleship Classes', 
+        href: '/programs/faith-growth', // Points to parent as specific content is there
+        icon: BookOpen,
+      },
     ]
   },
   {
@@ -100,7 +130,7 @@ const navItems: NavItem[] = [
   {
     id: 'visit',
     label: 'Visit',
-    href: '/plan-visit',
+    href: '/plan-visit', 
     isDropdown: true,
     subItems: [
         { label: 'Plan Your Visit', href: '/plan-visit', icon: CheckCircle2},
@@ -140,10 +170,10 @@ export default function Header() {
     };
 
     if (isHomePageCurrently) {
-      setIsTransparent(window.scrollY <= 50); // Set initial state
+      setIsTransparent(window.scrollY <= 50); 
       window.addEventListener('scroll', handleScroll);
     } else {
-      setIsTransparent(false); // Not on homepage, header is solid
+      setIsTransparent(false); 
     }
 
     return () => {
@@ -176,21 +206,21 @@ export default function Header() {
       : "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-border"
   );
 
-  const logoColor = cn(currentIsTransparent ? "text-white" : "text-primary");
-  const linkTextColorBase = "text-foreground/80 hover:text-primary";
-  const linkTextColorTransparent = "text-white hover:text-white/80";
-  const iconColorBase = "text-foreground/70";
-  const iconColorTransparent = "text-white";
-  const dropdownButtonHoverBgBase = "hover:bg-accent/50";
-  const dropdownButtonHoverBgTransparent = "hover:bg-white/10";
-  const chevronColorBase = "text-foreground/70";
-  const chevronColorTransparent = "text-white/70";
+  const getLinkClasses = (isTransparentOverride = currentIsTransparent) => ({
+    logoColor: cn(isTransparentOverride ? "text-white" : "text-primary"),
+    linkTextColor: cn(isTransparentOverride ? "text-white hover:text-white/80" : "text-foreground/80 hover:text-primary"),
+    iconColor: cn(isTransparentOverride ? "text-white" : "text-foreground/70"),
+    dropdownButtonHoverBg: cn(isTransparentOverride ? "hover:bg-white/10" : "hover:bg-accent/50"),
+    chevronColor: cn(isTransparentOverride ? "text-white/70" : "text-foreground/70"),
+  });
+
+  const linkStyles = getLinkClasses();
 
 
   return (
     <header className={headerClasses}>
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
-        <Link href="/" className={cn("text-2xl font-bold font-headline", logoColor)}>
+        <Link href="/" className={cn("text-2xl font-bold font-headline", linkStyles.logoColor)}>
           Family Tent Ministry
         </Link>
 
@@ -206,19 +236,19 @@ export default function Header() {
                     variant="ghost"
                     className={cn(
                       "flex items-center space-x-1 px-3 py-2 h-auto",
-                      currentIsTransparent ? linkTextColorTransparent : linkTextColorBase,
-                      currentIsTransparent ? dropdownButtonHoverBgTransparent : dropdownButtonHoverBgBase
+                      linkStyles.linkTextColor,
+                      linkStyles.dropdownButtonHoverBg
                     )}
                   >
                     <span>{item.label}</span>
-                    <ChevronDown className={cn("h-4 w-4 opacity-70", currentIsTransparent ? chevronColorTransparent : chevronColorBase)} />
+                    <ChevronDown className={cn("h-4 w-4 opacity-70", linkStyles.chevronColor)} />
                   </Button>
                 ) : (
                   <NavLink
                     href={item.href!}
-                    className={cn("px-3 py-2", currentIsTransparent ? linkTextColorTransparent : linkTextColorBase)}
+                    className={cn("px-3 py-2", linkStyles.linkTextColor)}
                   >
-                     {item.icon && <item.icon className={cn("h-5 w-5 mr-1", currentIsTransparent ? iconColorTransparent : iconColorBase, currentIsTransparent ? linkTextColorTransparent : linkTextColorBase)} />}
+                     {item.icon && <item.icon className={cn("h-5 w-5 mr-1", linkStyles.iconColor, linkStyles.linkTextColor)} />}
                     <span>{item.label}</span>
                   </NavLink>
                 )}
@@ -250,7 +280,7 @@ export default function Header() {
                     align="center"
                     className={cn(
                       "mt-1 p-6 bg-background shadow-xl rounded-lg",
-                       item.id === 'resources' ? "w-[600px] md:w-[700px] lg:w-[800px]" : "w-[700px] md:w-[800px] lg:w-[900px]" // Adjusted width for Ministries
+                       item.id === 'resources' || item.id === 'ministries' ? "w-[600px] md:w-[700px] lg:w-[800px]" : "w-auto" 
                     )}
                     onPointerEnter={() => handleMenuEnter(item.id)}
                     onPointerLeave={() => handleMenuLeave(item.id)}
@@ -270,18 +300,16 @@ export default function Header() {
                        ))
                     )}
                     
-                    {/* Ministries Mega Menu Specific Layout */}
                     {item.id === 'ministries' && (
-                      <div className="grid grid-cols-3 gap-x-4 gap-y-6">
+                      <div className="grid grid-cols-2 gap-x-6 gap-y-4">
                         {item.megaMenuItems!.filter(sub => !sub.isFullWidthLink).map((subItem) => (
                            <Link
                               key={subItem.label}
                               href={subItem.href}
-                              className="group flex flex-col items-center text-center p-3 rounded-md hover:bg-accent/10 transition-colors"
+                              className="group flex items-center space-x-3 p-2 rounded-md hover:bg-accent/10 transition-colors"
                               onClick={() => setActiveMenu(null)}
                             >
-                              {subItem.icon && <subItem.icon className="h-10 w-10 text-accent group-hover:text-primary mb-2" />}
-                              {subItem.category && <p className="text-xs uppercase font-semibold text-muted-foreground mb-1">{subItem.category}</p>}
+                              {subItem.icon && <subItem.icon className="h-6 w-6 text-accent group-hover:text-primary flex-shrink-0" />}
                               <p className="text-sm font-medium text-foreground group-hover:text-primary">{subItem.label}</p>
                             </Link>
                         ))}
@@ -322,7 +350,7 @@ export default function Header() {
             variant="ghost"
             size="icon"
             aria-label="Search"
-            className={cn(currentIsTransparent ? iconColorTransparent : iconColorBase, currentIsTransparent ? dropdownButtonHoverBgTransparent : dropdownButtonHoverBgBase, "hover:text-primary")}
+            className={cn(linkStyles.iconColor, linkStyles.dropdownButtonHoverBg, "hover:text-primary")}
           >
             <Search className="h-5 w-5" />
           </Button>
@@ -334,7 +362,7 @@ export default function Header() {
         <div className="md:hidden">
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="Open menu" className={cn(currentIsTransparent ? iconColorTransparent : iconColorBase, currentIsTransparent ? dropdownButtonHoverBgTransparent : dropdownButtonHoverBgBase)}>
+              <Button variant="ghost" size="icon" aria-label="Open menu" className={cn(linkStyles.iconColor, linkStyles.dropdownButtonHoverBg)}>
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
@@ -350,19 +378,23 @@ export default function Header() {
               <nav className="flex flex-col space-y-1">
                 {navItems.map((item) => {
                   if (item.isDropdown || item.isMegaMenu) {
-                    const itemsToDisplay = item.isMegaMenu ? item.megaMenuItems?.filter(mItem => !mItem.isFullWidthLink) : item.subItems;
+                    const itemsToDisplay = item.megaMenuItems?.filter(mItem => !mItem.isFullWidthLink) || item.subItems;
                     return (
                       <Accordion key={item.id} type="single" collapsible className="w-full">
                         <AccordionItem value={item.id} className="border-b-0">
                           <AccordionTrigger 
                             className="text-lg font-medium text-foreground/80 hover:text-primary hover:no-underline py-3 px-0 data-[state=open]:text-primary [&[data-state=open]>svg]:text-primary"
                             onClick={(e) => {
-                              // If it's a mega menu with a direct link, navigate instead of just toggling
-                              if (item.isMegaMenu && item.href && item.id !== 'resources' && item.id !== 'ministries') { // prevent navigation for main mega menu triggers
+                              if (item.href && !(item.isMegaMenu && item.megaMenuItems && item.megaMenuItems.length > 0)) {
                                 e.preventDefault();
-                                // router.push(item.href); // Would need to import useRouter
                                 setMobileMenuOpen(false); 
-                                window.location.href = item.href; // simple navigation
+                                window.location.href = item.href;
+                              } else if (item.isMegaMenu && item.href && item.megaMenuItems?.find(m => m.isFullWidthLink && m.href === item.href)) {
+                                // Allow toggle for mega menus that also have a main link
+                              } else if (item.href && !item.isDropdown && !item.isMegaMenu) {
+                                e.preventDefault();
+                                setMobileMenuOpen(false); 
+                                window.location.href = item.href;
                               }
                             }}
                           >
@@ -370,7 +402,7 @@ export default function Header() {
                           </AccordionTrigger>
                           <AccordionContent className="pt-1 pb-0 pl-4">
                             <nav className="flex flex-col space-y-2 mt-1">
-                              {item.href && ( // For main link of the section
+                              {item.href && (
                                 <NavLink href={item.href} onClick={() => setMobileMenuOpen(false)} className="text-base font-semibold py-1 hover:text-primary">
                                   All {item.label}
                                 </NavLink>
@@ -378,7 +410,6 @@ export default function Header() {
                               {itemsToDisplay?.map(subItem => (
                                  <NavLink key={subItem.href} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary">
                                   {item.id === 'resources' && subItem.category && !subItem.isFullWidthLink && <span className="text-xs uppercase text-muted-foreground mr-1">{subItem.category}:</span>}
-                                  {item.id === 'ministries' && subItem.category && <span className="text-xs uppercase text-muted-foreground mr-1">{subItem.category} - </span>}
                                   {subItem.label}
                                 </NavLink>
                               ))}

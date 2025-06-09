@@ -2,6 +2,7 @@
 import ContentBlock from '@/components/shared/ContentBlock';
 import CardGrid, { type CardGridItem } from '@/components/shared/CardGrid';
 import AnimatedSection from '@/components/shared/AnimatedSection';
+import { Briefcase, GraduationCap, HandHeart, HeartHandshake, Users } from 'lucide-react'; // Added icons
 
 const ftmProgramCategories: CardGridItem[] = [
   {
@@ -12,7 +13,7 @@ const ftmProgramCategories: CardGridItem[] = [
     imageAlt: 'Supportive group session',
     imageHint: 'support group family',
     actionText: 'Learn More',
-    actionLink: '/programs/counseling-family-support',
+    actionLink: '/programs/counseling-family-support', // Link to the detailed page for this category
   },
   {
     id: 'youth-student-empowerment',
@@ -22,7 +23,7 @@ const ftmProgramCategories: CardGridItem[] = [
     imageAlt: 'Students learning together',
     imageHint: 'youth students learning',
     actionText: 'Learn More',
-    actionLink: '/programs/youth-student-empowerment',
+    actionLink: '/programs/youth-student-empowerment', // Link to the detailed page
   },
   {
     id: 'faith-growth',
@@ -32,7 +33,7 @@ const ftmProgramCategories: CardGridItem[] = [
     imageAlt: 'Person studying a book',
     imageHint: 'bible study growth',
     actionText: 'Learn More',
-    actionLink: '/programs/faith-growth',
+    actionLink: '/programs/faith-growth', // Link to the detailed page
   },
    {
     id: 'community-outreach',
@@ -42,15 +43,16 @@ const ftmProgramCategories: CardGridItem[] = [
     imageAlt: 'Community members working together',
     imageHint: 'community service helping',
     actionText: 'Learn More',
-    actionLink: '/programs/community-outreach',
+    actionLink: '/programs/community-outreach', // Link to the detailed page
   },
 ];
 
-export default function ProgramsPage() {
+// Renamed ProgramsPage to MinistriesPage
+export default function MinistriesPage() {
   return (
     <div>
       <ContentBlock
-        title="Our Programs"
+        title="Our Ministries" // Title updated
         text="Family Tent Ministry offers a variety of programs designed to foster spiritual growth, strengthen families, and equip individuals with values for purposeful living. Explore our main program areas below."
         className="bg-secondary/30 text-center"
         titleClassName="text-4xl md:text-5xl"
@@ -60,7 +62,7 @@ export default function ProgramsPage() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold font-headline text-primary md:text-4xl mb-4">Find Your Place to Grow</h2>
           <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-            No matter your age or stage of life, there's a program area at Family Tent Ministry designed to support your journey. We encourage you to connect and grow with us.
+            No matter your age or stage of life, there's a ministry area at Family Tent Ministry designed to support your journey. We encourage you to connect and grow with us.
           </p>
         </div>
       </AnimatedSection>

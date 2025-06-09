@@ -1,12 +1,13 @@
+
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react'; // Added React import
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Menu, Search, X, MapPin, ChevronDown, Video, Newspaper,
   GraduationCap, BookMarked, Church, Disc3, Mic2, Library, Users, HeartHandshake,
-  BookOpen, ShieldCheck, Users2, HandHeart, CalendarDays, CheckCircle2, Gift, LayoutDashboard
+  BookOpen, ShieldCheck, Users2, HandHeart, CalendarDays, CheckCircle2, Gift, LayoutDashboard, School
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import NavLink from './NavLink';
@@ -30,10 +31,10 @@ interface NavSubItem {
   label: string;
   href: string;
   icon?: LucideIcon;
-  category?: string;
-  description?: string;
-  isFullWidthLink?: boolean;
-  subPrograms?: Array<{ label: string; href: string; icon?: LucideIcon; description?: string; }>;
+  category?: string; // For Resources mega menu
+  description?: string; // For Ministries mega menu (no longer used for ministries, but kept for Resources)
+  isFullWidthLink?: boolean; // For mega menu headers
+  subPrograms?: Array<{ label: string; href: string; icon?: LucideIcon; description?: string; }>; // For Ministries sub-items if needed (not used in current flat structure)
 }
 
 interface NavItem {
@@ -41,8 +42,8 @@ interface NavItem {
   label: string;
   href?: string;
   icon?: LucideIcon;
-  subItems?: NavSubItem[];
-  megaMenuItems?: NavSubItem[];
+  subItems?: NavSubItem[]; // For simple dropdowns
+  megaMenuItems?: NavSubItem[]; // For mega menus
   isDropdown?: boolean;
   isMegaMenu?: boolean;
 }
@@ -62,30 +63,15 @@ const navItems: NavItem[] = [
   {
     id: 'ministries',
     label: 'Ministries',
-    href: '/ministries',
-    isMegaMenu: true,
-    megaMenuItems: [
-      { label: 'All Ministries Overview', href: '/ministries', icon: LayoutDashboard, isFullWidthLink: true },
-      {
-        label: 'Youth & Student Empowerment',
-        href: '/programs/youth-student-empowerment',
-        icon: Users,
-        subPrograms: [
-          { label: 'Adolescent & Singles Club (ASC)', href: '/ministries/adolescent-singles-club' },
-          { label: 'School Outreaches', href: '/ministries/school-outreaches' },
-        ]
-      },
-      {
-        label: 'Counseling & Family Support',
-        href: '/programs/counseling-family-support',
-        icon: HeartHandshake,
-        subPrograms: [
-          { label: 'Counseling Services', href: '/programs/counseling-family-support' },
-          { label: 'Family Life Seminars (FLS)', href: '/ministries/family-life-seminars' },
-          { label: 'Marriage Forum', href: '/programs/counseling-family-support' },
-        ]
-      },
-      { label: 'Faith & Growth', href: '/programs/faith-growth', icon: GraduationCap },
+    href: '/ministries', // Links to the overview page
+    isDropdown: true, // Changed from isMegaMenu
+    subItems: [ // Direct list of programs
+      { label: 'Adolescent & Singles Club (ASC)', href: '/programs/youth-student-empowerment', icon: Users },
+      { label: 'School Outreaches', href: '/ministries/school-outreaches', icon: School },
+      { label: 'Counseling Services', href: '/programs/counseling-family-support', icon: HeartHandshake },
+      { label: 'Family Life Seminars (FLS)', href: '/ministries/family-life-seminars', icon: CalendarDays },
+      { label: 'Marriage Forum', href: '/programs/counseling-family-support', icon: HeartHandshake }, // Points to broader page
+      { label: 'Discipleship Classes', href: '/programs/faith-growth', icon: BookOpen },
       { label: 'Community Outreach', href: '/programs/community-outreach', icon: HandHeart },
     ],
   },
@@ -114,10 +100,10 @@ const navItems: NavItem[] = [
   {
     id: 'visit',
     label: 'Visit',
-    href: '/plan-visit',
+    href: '/plan-visit', // Main link for the tab itself
     isDropdown: true,
     subItems: [
-        { label: 'Plan Your Visit', href: '/plan-visit', icon: CheckCircle2},
+        { label: 'Plan Your Visit', href: '/plan-visit', icon: CheckCircle2}, // Specific action
         { label: 'Locations', href: '/locations', icon: MapPin },
     ]
   },
@@ -132,7 +118,7 @@ const navItems: NavItem[] = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
-  const [isTransparent, setIsTransparent] = useState(false);
+  const [isTransparent, setIsTransparent] = useState(false); // Initial state for transparency
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const menuTimers = useRef<{ [key: string]: NodeJS.Timeout }>({});
 
@@ -152,10 +138,10 @@ export default function Header() {
     };
 
     if (isHomePageCurrently) {
-      handleScroll(); // Set initial state based on scroll
+      handleScroll(); // Set initial state based on scroll for homepage
       window.addEventListener('scroll', handleScroll);
     } else {
-      setIsTransparent(false);
+      setIsTransparent(false); // Not on homepage, header is solid
     }
 
     return () => {
@@ -179,7 +165,8 @@ export default function Header() {
     }, 200); // 200ms delay before closing
   };
 
-  const currentIsTransparent = isTransparent && hasMounted && pathname === '/';
+  // Determine effective styles based on mounted status and transparency state
+  const currentIsTransparent = hasMounted && isTransparent && pathname === '/';
 
   const headerClasses = cn(
     "sticky top-0 z-50 w-full border-b transition-colors duration-300 ease-in-out",
@@ -189,11 +176,14 @@ export default function Header() {
   );
 
   const logoColor = cn(currentIsTransparent ? "text-white" : "text-primary");
-  const linkTextColor = cn(currentIsTransparent ? "text-white hover:text-white/80" : "text-foreground/80 hover:text-primary");
-  const iconColor = cn(currentIsTransparent ? "text-white" : "text-foreground/70");
-  const dropdownButtonHoverBg = cn(currentIsTransparent ? "hover:bg-white/10" : "hover:bg-accent/50");
-  const chevronColor = cn(currentIsTransparent ? "text-white/70" : "text-foreground/70");
-
+  const linkTextColorBase = "text-foreground/80 hover:text-primary";
+  const linkTextColorTransparent = "text-white hover:text-white/80";
+  const iconColorBase = "text-foreground/70";
+  const iconColorTransparent = "text-white";
+  const dropdownButtonHoverBgBase = "hover:bg-accent/50";
+  const dropdownButtonHoverBgTransparent = "hover:bg-white/10";
+  const chevronColorBase = "text-foreground/70";
+  const chevronColorTransparent = "text-white/70";
 
   return (
     <header className={headerClasses}>
@@ -212,17 +202,21 @@ export default function Header() {
                 {item.isDropdown || item.isMegaMenu ? (
                   <Button
                     variant="ghost"
-                    className={cn("flex items-center space-x-1 px-3 py-2 h-auto", linkTextColor, dropdownButtonHoverBg)}
+                    className={cn(
+                      "flex items-center space-x-1 px-3 py-2 h-auto",
+                      currentIsTransparent ? linkTextColorTransparent : linkTextColorBase,
+                      currentIsTransparent ? dropdownButtonHoverBgTransparent : dropdownButtonHoverBgBase
+                    )}
                   >
                     <span>{item.label}</span>
-                    <ChevronDown className={cn("h-4 w-4 opacity-70", chevronColor)} />
+                    <ChevronDown className={cn("h-4 w-4 opacity-70", currentIsTransparent ? chevronColorTransparent : chevronColorBase)} />
                   </Button>
                 ) : (
                   <NavLink
                     href={item.href!}
-                    className={cn("px-3 py-2", linkTextColor)}
+                    className={cn("px-3 py-2", currentIsTransparent ? linkTextColorTransparent : linkTextColorBase)}
                   >
-                     {item.icon && <item.icon className={cn("h-5 w-5", iconColor, linkTextColor)} />}
+                     {item.icon && <item.icon className={cn("h-5 w-5", currentIsTransparent ? iconColorTransparent : iconColorBase, currentIsTransparent ? linkTextColorTransparent : linkTextColorBase)} />}
                     <span>{item.label}</span>
                   </NavLink>
                 )}
@@ -230,18 +224,18 @@ export default function Header() {
               {(item.isDropdown && item.subItems) && (
                 <DropdownMenuContent
                   align="start"
-                  className="mt-1"
+                  className="mt-1" // Adjusted from w-56 to allow natural width
                   onPointerEnter={() => handleMenuEnter(item.id)}
                   onPointerLeave={() => handleMenuLeave(item.id)}
                 >
-                  {item.href && (
+                  {item.href && ( // Add link to the main page of the dropdown section
                      <DropdownMenuItem asChild>
-                      <Link href={item.href} className="w-full font-semibold">All {item.label}</Link>
+                      <Link href={item.href} className="w-full font-semibold text-primary hover:bg-accent/10">All {item.label}</Link>
                     </DropdownMenuItem>
                   )}
                   {item.subItems.map((subItem) => (
                     <DropdownMenuItem key={subItem.label} asChild>
-                      <Link href={subItem.href} className="flex items-center space-x-2 w-full">
+                      <Link href={subItem.href} className="flex items-center space-x-2 w-full" onClick={() => setActiveMenu(null)}>
                         {subItem.icon && <subItem.icon className="h-4 w-4 text-muted-foreground" />}
                         <span>{subItem.label}</span>
                       </Link>
@@ -254,13 +248,13 @@ export default function Header() {
                     align="center"
                     className={cn(
                       "mt-1 p-6 bg-background shadow-xl rounded-lg",
-                       item.id === 'resources' ? "w-[600px] md:w-[700px] lg:w-[800px]" : "w-[550px] md:w-[600px]"
+                       item.id === 'resources' ? "w-[600px] md:w-[700px] lg:w-[800px]" : "w-[550px] md:w-[600px]" // Default width for other mega menus
                     )}
                     onPointerEnter={() => handleMenuEnter(item.id)}
                     onPointerLeave={() => handleMenuLeave(item.id)}
                   >
-                    {item.megaMenuItems!.find(sub => sub.isFullWidthLink) && (
-                       item.megaMenuItems!.filter(sub => sub.isFullWidthLink).map(subItem => (
+                    {item.megaMenuItems!.find(sub => sub.isFullWidthLink && sub.category === 'MEGA_HEADER') && (
+                       item.megaMenuItems!.filter(sub => sub.isFullWidthLink && sub.category === 'MEGA_HEADER').map(subItem => (
                         <div key={`${subItem.label}-header`} className="mb-4 pb-3 border-b border-border">
                             <Link
                                 href={subItem.href}
@@ -296,37 +290,6 @@ export default function Header() {
                         ))}
                       </div>
                     )}
-
-                    {item.id === 'ministries' && (
-                       <div className="grid grid-cols-2 gap-x-6 gap-y-4 mt-4">
-                        {item.megaMenuItems!.filter(sub => !sub.isFullWidthLink).map((mainMinistryItem) => (
-                          <div key={mainMinistryItem.label}>
-                            <Link
-                              href={mainMinistryItem.href}
-                              className="group flex items-center space-x-2 p-2 rounded-md hover:bg-accent/10 transition-colors mb-1"
-                              onClick={() => setActiveMenu(null)}
-                            >
-                              {mainMinistryItem.icon && <mainMinistryItem.icon className="h-5 w-5 text-accent group-hover:text-primary flex-shrink-0" />}
-                              <p className="text-sm font-semibold text-foreground group-hover:text-primary">{mainMinistryItem.label}</p>
-                            </Link>
-                            {mainMinistryItem.subPrograms && mainMinistryItem.subPrograms.length > 0 && (
-                              <div className="pl-4 space-y-1">
-                                {mainMinistryItem.subPrograms.map(subProgram => (
-                                  <Link
-                                    key={subProgram.label}
-                                    href={subProgram.href}
-                                    className="group flex items-center space-x-2 py-1 px-2 rounded-md hover:bg-accent/5 transition-colors"
-                                    onClick={() => setActiveMenu(null)}
-                                  >
-                                    <p className="text-xs text-foreground/80 group-hover:text-primary">{subProgram.label}</p>
-                                  </Link>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    )}
                   </DropdownMenuContent>
               )}
             </DropdownMenu>
@@ -338,7 +301,7 @@ export default function Header() {
             variant="ghost"
             size="icon"
             aria-label="Search"
-            className={cn(iconColor, dropdownButtonHoverBg, "hover:text-primary")}
+            className={cn(currentIsTransparent ? iconColorTransparent : iconColorBase, currentIsTransparent ? dropdownButtonHoverBgTransparent : dropdownButtonHoverBgBase, "hover:text-primary")}
           >
             <Search className="h-5 w-5" />
           </Button>
@@ -350,7 +313,7 @@ export default function Header() {
         <div className="md:hidden">
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="Open menu" className={cn(iconColor, dropdownButtonHoverBg)}>
+              <Button variant="ghost" size="icon" aria-label="Open menu" className={cn(currentIsTransparent ? iconColorTransparent : iconColorBase, currentIsTransparent ? dropdownButtonHoverBgTransparent : dropdownButtonHoverBgBase)}>
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
@@ -374,30 +337,26 @@ export default function Header() {
                           </AccordionTrigger>
                           <AccordionContent className="pt-1 pb-0 pl-4">
                             <nav className="flex flex-col space-y-2 mt-1">
-                              {item.href && (
-                                <NavLink href={item.href} onClick={() => setMobileMenuOpen(false)} className="text-base font-semibold py-1">
+                              {item.href && ( // For main link of the section
+                                <NavLink href={item.href} onClick={() => setMobileMenuOpen(false)} className="text-base font-semibold py-1 hover:text-primary">
                                   All {item.label}
                                 </NavLink>
                               )}
+                              {item.isDropdown && item.subItems?.map(subItem => (
+                                 <NavLink key={subItem.href} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary">
+                                  {subItem.label}
+                                </NavLink>
+                              ))}
                               {item.isMegaMenu && item.megaMenuItems?.map(megaItem => (
                                 <React.Fragment key={megaItem.label}>
-                                  {!megaItem.isFullWidthLink && megaItem.category !== 'MEGA_HEADER' && (
-                                    <NavLink href={megaItem.href} icon={megaItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1">
+                                  {/* For Resources Mega Menu in Mobile */}
+                                  {item.id === 'resources' && !megaItem.isFullWidthLink && megaItem.category !== 'MEGA_HEADER' && (
+                                    <NavLink href={megaItem.href} icon={megaItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary">
                                       {megaItem.category && <span className="text-xs uppercase text-muted-foreground mr-1">{megaItem.category}:</span>}
                                       {megaItem.label}
                                     </NavLink>
                                   )}
-                                  {megaItem.subPrograms && megaItem.subPrograms.map(subProg => (
-                                    <NavLink key={subProg.label} href={subProg.href} onClick={() => setMobileMenuOpen(false)} className="text-sm py-1 pl-6">
-                                      {subProg.label}
-                                    </NavLink>
-                                  ))}
                                 </React.Fragment>
-                              ))}
-                              {item.isDropdown && item.subItems?.map(subItem => (
-                                 <NavLink key={subItem.href} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1">
-                                  {subItem.label}
-                                </NavLink>
                               ))}
                             </nav>
                           </AccordionContent>
@@ -405,8 +364,9 @@ export default function Header() {
                       </Accordion>
                     );
                   }
+                  // For direct nav links like Events, Give
                   return (
-                    <NavLink key={item.href} href={item.href!} icon={item.icon} onClick={() => setMobileMenuOpen(false)} className="text-lg py-3 flex items-center">
+                    <NavLink key={item.href} href={item.href!} icon={item.icon} onClick={() => setMobileMenuOpen(false)} className="text-lg py-3 flex items-center hover:text-primary">
                        {item.icon && <item.icon className="h-5 w-5 mr-3 text-muted-foreground" />}
                       <span>{item.label}</span>
                     </NavLink>

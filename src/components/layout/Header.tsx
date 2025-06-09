@@ -15,7 +15,6 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem, // Kept for potential future use or standard dropdowns
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -31,10 +30,9 @@ interface NavSubItem {
   label: string;
   href: string;
   icon?: LucideIcon;
-  category?: string; // Used in Resources mega menu
-  description?: string; // Used in Ministries mega menu
+  category?: string; // Used in Resources mega menu & Ministries
+  description?: string; // No longer used in Ministries mega menu directly
   isFullWidthLink?: boolean; // For top links in mega menus
-  subPrograms?: Array<{ label: string; href: string; icon?: LucideIcon; description?: string; }>; // For Ministries sub-categories
 }
 
 interface NavItem {
@@ -50,34 +48,34 @@ const navItems: NavItem[] = [
   {
     id: 'about',
     label: 'About',
-    href: '/about', // Main link for the tab itself
+    href: '/about',
     isMegaMenu: true,
     megaMenuItems: [
       { label: 'Learn More About Us', href: '/about', icon: Info, isFullWidthLink: true },
-      { label: 'Our Story', href: '/about/history', icon: BookOpen },
-      { label: 'Our Beliefs', href: '/about/beliefs', icon: ShieldCheck },
-      { label: 'Our Team', href: '/about/leadership', icon: Users2 },
+      { label: 'Our Story', href: '/about/history', icon: BookOpen, category: 'ABOUT' },
+      { label: 'Our Beliefs', href: '/about/beliefs', icon: ShieldCheck, category: 'ABOUT' },
+      { label: 'Our Team', href: '/about/leadership', icon: Users2, category: 'ABOUT' },
     ],
   },
   {
     id: 'ministries',
     label: 'Ministries',
-    href: '/ministries', // Main link for the tab itself
+    href: '/ministries',
     isMegaMenu: true,
     megaMenuItems: [
         { label: 'All Ministries Overview', href: '/ministries', icon: LayoutDashboard, isFullWidthLink: true },
-        { label: 'Adolescent & Singles Club', href: '/ministries/adolescent-singles-club', icon: Users },
-        { label: 'School Outreaches', href: '/ministries/school-outreaches', icon: School },
-        { label: 'Counseling Services', href: '/programs/counseling-family-support', icon: HeartHandshake }, // Points to category page
-        { label: 'Family Life Seminars', href: '/ministries/family-life-seminars', icon: CalendarDays },
-        { label: 'Marriage Forum', href: '/programs/counseling-family-support', icon: Users2 }, // Points to category page
-        { label: 'Discipleship Classes', href: '/programs/faith-growth', icon: BookOpen }, // Points to category page
+        { label: 'Adolescent & Singles Club', href: '/ministries/adolescent-singles-club', icon: Users, category: 'MINISTRY'},
+        { label: 'School Outreaches', href: '/ministries/school-outreaches', icon: School, category: 'MINISTRY' },
+        { label: 'Counseling Services', href: '/programs/counseling-family-support', icon: HeartHandshake, category: 'MINISTRY' },
+        { label: 'Family Life Seminars', href: '/ministries/family-life-seminars', icon: CalendarDays, category: 'MINISTRY' },
+        { label: 'Marriage Forum', href: '/programs/counseling-family-support', icon: Users2, category: 'MINISTRY' }, // Points to category page
+        { label: 'Discipleship Classes', href: '/programs/faith-growth', icon: BookOpen, category: 'MINISTRY' }, // Points to category page
     ]
   },
   {
     id: 'resources',
     label: 'Resources',
-    href: '/resources', // Main link for the tab itself
+    href: '/resources',
     isMegaMenu: true,
     megaMenuItems: [
       { label: 'Explore All Resources', href: '/resources', icon: LayoutDashboard, isFullWidthLink: true },
@@ -115,7 +113,6 @@ export default function Header() {
 
   useEffect(() => {
     setHasMounted(true);
-    // Cleanup all timers when the component unmounts
     return () => {
       Object.values(menuTimers.current).forEach(clearTimeout);
     };
@@ -123,7 +120,6 @@ export default function Header() {
 
   useEffect(() => {
     if (!hasMounted) return;
-
     const isHomePageCurrently = pathname === '/';
 
     const handleScroll = () => {
@@ -146,45 +142,34 @@ export default function Header() {
     };
   }, [hasMounted, pathname]);
 
-
   const handleMenuEnter = (menuId: string) => {
-    // Clear any existing timer for THIS menuId if one exists (e.g., if mouse left and quickly re-entered)
-    if (menuTimers.current[menuId]) {
-      clearTimeout(menuTimers.current[menuId]);
-      delete menuTimers.current[menuId];
-    }
-
-    // Clear timers for OTHER menus to ensure smooth transition when moving between triggers
     Object.keys(menuTimers.current).forEach(timerId => {
-      if (menuTimers.current[timerId] && timerId !== menuId) {
+      if (menuTimers.current[timerId] && timerId !== menuId) { // Clear timers for OTHER menus
         clearTimeout(menuTimers.current[timerId]);
         delete menuTimers.current[timerId];
       }
     });
+    if (menuTimers.current[menuId]) { // Clear timer for THIS menu if re-entering quickly
+      clearTimeout(menuTimers.current[menuId]);
+      delete menuTimers.current[menuId];
+    }
     setActiveMenu(menuId);
   };
 
   const handleMenuLeave = (menuId: string) => {
-    // Clear any existing timer for this menuId before setting a new one
-    // This handles rapid mouse out/in of the same trigger/content
     if (menuTimers.current[menuId]) {
       clearTimeout(menuTimers.current[menuId]);
       delete menuTimers.current[menuId];
     }
-
     menuTimers.current[menuId] = setTimeout(() => {
-        // Only close if this menu is still considered active
-        if (activeMenu === menuId) {
-            setActiveMenu(null);
-        }
-        // It's important to delete the timer after it has executed or been cleared.
-        delete menuTimers.current[menuId];
-    }, 200); // 200ms delay
+      if (activeMenu === menuId) {
+        setActiveMenu(null);
+      }
+      delete menuTimers.current[menuId]; // Clean up the timer after execution or if cleared
+    }, 200);
   };
 
-
   const currentHeaderIsTransparent = isTransparent && hasMounted && pathname === '/';
-
   const headerClasses = cn(
     "fixed top-0 left-0 right-0 z-50 w-full border-b transition-colors duration-300 ease-in-out",
     currentHeaderIsTransparent
@@ -201,7 +186,6 @@ export default function Header() {
   });
 
   const linkStyles = getLinkStyles(currentHeaderIsTransparent);
-
 
   return (
     <header className={headerClasses}>
@@ -220,33 +204,30 @@ export default function Header() {
                   onPointerLeave={() => handleMenuLeave(item.id)}
                 >
                   <Button
+                    asChild // Ensures Button passes props to Link
                     variant="ghost"
                     className={cn(
                       "flex items-center space-x-1 px-3 py-2 h-auto",
                       linkStyles.linkTextColor,
                       linkStyles.dropdownButtonHoverBg
                     )}
-                    // Wrap Link inside Button if asChild is true, or use Link directly if styled.
-                    // For consistency, if item.href exists, use it for the main tab link.
                   >
                     <Link href={item.href || '#'}>
                       <span>{item.label}</span>
+                      <ChevronDown className={cn("h-4 w-4 opacity-70", linkStyles.chevronColor)} />
                     </Link>
-                    <ChevronDown className={cn("h-4 w-4 opacity-70", linkStyles.chevronColor)} />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                     align="center"
-                    sideOffset={5} // Explicitly set sideOffset
+                    sideOffset={5}
                     className={cn(
-                      "p-6 bg-background shadow-xl rounded-lg", // Removed mt-1
-                      // Consistent width for all mega menus
+                      "p-6 bg-background shadow-xl rounded-lg",
                       (item.id === 'about' || item.id === 'ministries' || item.id === 'resources') && "w-[600px] md:w-[700px] lg:w-[800px]"
                     )}
                     onPointerEnter={() => handleMenuEnter(item.id)}
                     onPointerLeave={() => handleMenuLeave(item.id)}
                   >
-                    {/* Mega Menu Header Link (e.g., "Learn More About Us") */}
                     {item.megaMenuItems?.find(sub => sub.isFullWidthLink) && (
                        item.megaMenuItems.filter(sub => sub.isFullWidthLink).map(subItem => (
                         <div key={`${subItem.label}-header`} className="mb-4 pb-3 border-b border-border">
@@ -262,7 +243,6 @@ export default function Header() {
                        ))
                     )}
 
-                    {/* About Mega Menu Grid (3 columns) */}
                     {item.id === 'about' && (
                       <div className="grid grid-cols-3 gap-x-4 gap-y-3">
                         {item.megaMenuItems!.filter(sub => !sub.isFullWidthLink).map((subItem) => (
@@ -279,24 +259,22 @@ export default function Header() {
                       </div>
                     )}
                     
-                    {/* Ministries Mega Menu Grid (2 columns for items) */}
                     {item.id === 'ministries' && (
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-3">
-                        {item.megaMenuItems!.filter(sub => !sub.isFullWidthLink).map((subItem) => (
-                          <Link
-                            key={subItem.label}
-                            href={subItem.href}
-                            className="group flex items-center space-x-3 p-2 rounded-md hover:bg-accent/10 transition-colors"
-                            onClick={() => setActiveMenu(null)}
-                          >
-                            {subItem.icon && <subItem.icon className="h-6 w-6 text-accent group-hover:text-primary flex-shrink-0" />}
-                            <p className="text-sm font-medium text-foreground group-hover:text-primary">{subItem.label}</p>
-                          </Link>
-                        ))}
-                      </div>
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-3">
+                            {item.megaMenuItems!.filter(sub => !sub.isFullWidthLink).map((subItem) => (
+                                <Link
+                                    key={subItem.label}
+                                    href={subItem.href}
+                                    className="group flex items-center space-x-3 p-2 rounded-md hover:bg-accent/10 transition-colors"
+                                    onClick={() => setActiveMenu(null)}
+                                >
+                                    {subItem.icon && <subItem.icon className="h-6 w-6 text-accent group-hover:text-primary flex-shrink-0" />}
+                                    <p className="text-sm font-medium text-foreground group-hover:text-primary">{subItem.label}</p>
+                                </Link>
+                            ))}
+                        </div>
                     )}
 
-                    {/* Resources Mega Menu Grid (3 columns with categories) */}
                     {item.id === 'resources' && (
                       <div className="grid grid-cols-3 gap-x-6 gap-y-4">
                         {(['WATCH', 'LISTEN', 'READ'] as const).map(category => (
@@ -321,7 +299,7 @@ export default function Header() {
                     )}
                   </DropdownMenuContent>
               </DropdownMenu>
-              ) : item.href ? ( // Direct links like Events, Give
+              ) : item.href ? (
                 <Button
                   key={item.id}
                   asChild
@@ -381,22 +359,30 @@ export default function Header() {
                     return (
                       <Accordion key={item.id} type="single" collapsible className="w-full">
                         <AccordionItem value={item.id} className="border-b-0">
-                          <AccordionTrigger
-                            className="text-lg font-medium text-foreground/80 hover:text-primary hover:no-underline py-3 px-0 data-[state=open]:text-primary [&[data-state=open]>svg]:text-primary"
-                            onClick={item.href ? (e) => {
-                              // Allow accordion to toggle, but also navigate if it's a direct link
-                              // This might need adjustment if direct navigation + accordion toggle is not desired.
-                              // For now, let's assume primary action is accordion toggle.
-                              // If you want the main item to navigate, it shouldn't be an AccordionTrigger directly.
-                            } : undefined}
-                          >
-                             <Link href={item.href || '#'} onClick={(e) => { if (!item.megaMenuItems || item.megaMenuItems.length === 0) setMobileMenuOpen(false); else e.preventDefault();}} className="flex-1">
-                              {item.label}
-                            </Link>
-                          </AccordionTrigger>
+                           <AccordionTrigger asChild
+                              className={cn(
+                                "text-lg font-medium text-foreground/80 hover:text-primary hover:no-underline py-3 px-0 data-[state=open]:text-primary [&[data-state=open]>svg]:text-primary",
+                                "[&>svg]:ml-auto" 
+                              )}
+                            >
+                              <Link
+                                href={item.href || '#'}
+                                onClick={(e) => {
+                                  // If it's a parent of a mega menu, prevent default navigation to allow accordion toggle
+                                  if (item.megaMenuItems && item.megaMenuItems.length > 0) {
+                                     // Let accordion toggle, do not navigate via this click on parent
+                                     // If navigation is also desired for the parent, that must be a separate link or handled differently
+                                  } else {
+                                    setMobileMenuOpen(false); // If it's a direct link, close menu
+                                  }
+                                }}
+                                className="flex flex-1 items-center justify-between"
+                              >
+                                <span>{item.label}</span>
+                              </Link>
+                            </AccordionTrigger>
                           <AccordionContent className="pt-1 pb-0 pl-4">
                             <nav className="flex flex-col space-y-2 mt-1">
-                              {/* Top-level link for mega menu in mobile, if exists */}
                               {item.megaMenuItems?.find(m => m.isFullWidthLink) && (
                                 <NavLink 
                                   href={item.megaMenuItems.find(m => m.isFullWidthLink)!.href} 
@@ -407,8 +393,7 @@ export default function Header() {
                                   {item.megaMenuItems.find(m => m.isFullWidthLink)!.label}
                                 </NavLink>
                               )}
-                              {/* Sub-items */}
-                              {item.id === 'resources' ? ( // Special handling for resources categories
+                              {item.id === 'resources' ? (
                                 (['WATCH', 'LISTEN', 'READ'] as const).map(category => (
                                   <React.Fragment key={category}>
                                     <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mt-2 mb-1">{category}</h4>
@@ -419,7 +404,7 @@ export default function Header() {
                                     ))}
                                   </React.Fragment>
                                 ))
-                              ) : ( // Default rendering for other mega menus (About, Ministries)
+                              ) : (
                                 itemsToDisplayInAccordion?.map(subItem => (
                                   <NavLink key={subItem.href} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary">
                                     {subItem.label}
@@ -432,7 +417,6 @@ export default function Header() {
                       </Accordion>
                     );
                   }
-                  // Direct links in mobile menu (Events, Give)
                   return (
                     <NavLink key={item.id} href={item.href!} icon={item.icon} onClick={() => setMobileMenuOpen(false)} className="text-lg py-3 flex items-center hover:text-primary">
                        {item.icon && <item.icon className="h-5 w-5 mr-3 text-muted-foreground" />}

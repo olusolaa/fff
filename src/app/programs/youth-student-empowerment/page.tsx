@@ -52,7 +52,7 @@ export default function YouthStudentEmpowermentPage() {
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="text-2xl md:text-3xl font-bold font-headline text-primary mb-10 text-center">Our Youth & Student Programs</h2>
           
-          <div className="space-y-8">
+          <div className="space-y-10">
             {programs.map((program) => (
               <Card key={program.id} className="shadow-lg">
                 <CardHeader>
@@ -80,7 +80,7 @@ export default function YouthStudentEmpowermentPage() {
           <h2 className="text-3xl font-bold font-headline text-primary md:text-4xl text-center mb-10">
             Impact Stories
           </h2>
-          <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-8 max-w-3xl mx-auto">
+          <div className="grid md:grid-cols-1 gap-8 max-w-3xl mx-auto"> {/* Changed to md:grid-cols-1 since only one story */}
             {impactStories.map((testimonial) => (
               <Card key={testimonial.id} className="shadow-lg">
                 <CardHeader className="items-center pt-6">

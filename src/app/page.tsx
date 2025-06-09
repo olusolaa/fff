@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import Image from 'next/image';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 
 const ftmProgramsHighlight: CardGridItem[] = [
@@ -136,8 +136,8 @@ export default function HomePage() {
       
       <AnimatedSection className="py-12 md:py-20 text-center">
         <div className="container mx-auto px-4">
-           <h2 className="text-3xl font-bold font-headline text-primary md:text-4xl mb-8">Upcoming Events & Seminars</h2>
-           <p className="text-lg text-foreground/80 mb-6">Stay connected and join us for our upcoming events, seminars, and club meetings.</p>
+           <h2 className="text-3xl font-bold font-headline text-primary md:text-4xl mb-10">Upcoming Events & Seminars</h2>
+           <p className="text-lg text-foreground/80 mb-8">Stay connected and join us for our upcoming events, seminars, and club meetings.</p>
            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { title: "Family Life Seminar (FLS)", date: "Quarterly (Apr, Jul, Nov)", hint: "family conference poster" },

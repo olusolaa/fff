@@ -18,7 +18,7 @@ export default function ContactPage() {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div>
-              <h2 className="text-2xl font-bold font-headline text-primary mb-6">Get in Touch</h2>
+              <h2 className="text-2xl font-bold font-headline text-primary mb-8">Get in Touch</h2>
               <Card className="shadow-lg mb-6">
                 <CardHeader>
                   <CardTitle className="font-headline text-xl text-accent flex items-center">
@@ -54,7 +54,7 @@ export default function ContactPage() {
               </Card>
             </div>
             <div>
-              <h2 className="text-2xl font-bold font-headline text-primary mb-6">Send Us a Message</h2>
+              <h2 className="text-2xl font-bold font-headline text-primary mb-8">Send Us a Message</h2>
               <Card className="shadow-lg">
                 <CardHeader>
                   <CardTitle className="font-headline text-xl text-accent">Contact Form</CardTitle>

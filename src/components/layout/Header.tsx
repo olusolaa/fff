@@ -1,8 +1,7 @@
-
 "use client";
 
+import React, { useState, useEffect, useRef } from 'react'; // Added React import
 import Link from 'next/link';
-import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import {
   Menu, Search, X, MapPin, ChevronDown, Video, Newspaper,
@@ -31,16 +30,17 @@ interface NavSubItem {
   label: string;
   href: string;
   icon?: LucideIcon;
-  category?: string; // For mega menu (Resources)
-  description?: string; // For mega menu (Ministries)
-  isFullWidthLink?: boolean; // For mega menu (Ministries)
+  category?: string;
+  description?: string;
+  isFullWidthLink?: boolean;
+  subPrograms?: Array<{ label: string; href: string; icon?: LucideIcon; description?: string; }>;
 }
 
 interface NavItem {
-  id: string; // Unique ID for managing hover state
+  id: string;
   label: string;
   href?: string;
-  icon?: LucideIcon; // For direct links in main nav
+  icon?: LucideIcon;
   subItems?: NavSubItem[];
   megaMenuItems?: NavSubItem[];
   isDropdown?: boolean;
@@ -66,10 +66,27 @@ const navItems: NavItem[] = [
     isMegaMenu: true,
     megaMenuItems: [
       { label: 'All Ministries Overview', href: '/ministries', icon: LayoutDashboard, isFullWidthLink: true },
-      { label: 'Counseling & Family Support', href: '/programs/counseling-family-support', icon: HeartHandshake, description: "Guidance and support for individuals and families." },
-      { label: 'Youth & Student Empowerment', href: '/programs/youth-student-empowerment', icon: Users, description: "Equipping the next generation for purposeful living." },
-      { label: 'Faith & Growth', href: '/programs/faith-growth', icon: GraduationCap, description: "Deepening spiritual understanding and discipleship." },
-      { label: 'Community Outreach', href: '/programs/community-outreach', icon: HandHeart, description: "Serving and impacting the wider community with our values." },
+      {
+        label: 'Youth & Student Empowerment',
+        href: '/programs/youth-student-empowerment',
+        icon: Users,
+        subPrograms: [
+          { label: 'Adolescent & Singles Club (ASC)', href: '/ministries/adolescent-singles-club' },
+          { label: 'School Outreaches', href: '/ministries/school-outreaches' },
+        ]
+      },
+      {
+        label: 'Counseling & Family Support',
+        href: '/programs/counseling-family-support',
+        icon: HeartHandshake,
+        subPrograms: [
+          { label: 'Counseling Services', href: '/programs/counseling-family-support' },
+          { label: 'Family Life Seminars (FLS)', href: '/ministries/family-life-seminars' },
+          { label: 'Marriage Forum', href: '/programs/counseling-family-support' },
+        ]
+      },
+      { label: 'Faith & Growth', href: '/programs/faith-growth', icon: GraduationCap },
+      { label: 'Community Outreach', href: '/programs/community-outreach', icon: HandHeart },
     ],
   },
   {
@@ -78,8 +95,7 @@ const navItems: NavItem[] = [
     href: '/resources',
     isMegaMenu: true,
     megaMenuItems: [
-      // Top-level link for the mega menu content itself (optional, but good for structure)
-      { category: 'MEGA_HEADER', label: 'Explore All Resources', href: '/resources', isFullWidthLink: true },
+      { category: 'MEGA_HEADER', label: 'Explore All Resources', href: '/resources', isFullWidthLink: true, icon: LayoutDashboard },
       { category: 'WATCH', label: 'Sermons', href: '/sermons', icon: Church },
       { category: 'WATCH', label: 'Videos', href: '/resources/videos', icon: Video },
       { category: 'LISTEN', label: 'Music', href: '/resources/music', icon: Disc3 },
@@ -132,13 +148,11 @@ export default function Header() {
     const isHomePageCurrently = pathname === '/';
 
     const handleScroll = () => {
-      if (isHomePageCurrently) {
-        setIsTransparent(window.scrollY <= 50);
-      }
+      setIsTransparent(isHomePageCurrently && window.scrollY <= 50);
     };
 
     if (isHomePageCurrently) {
-      setIsTransparent(window.scrollY <= 50); // Set initial state
+      handleScroll(); // Set initial state based on scroll
       window.addEventListener('scroll', handleScroll);
     } else {
       setIsTransparent(false);
@@ -162,9 +176,9 @@ export default function Header() {
   const handleMenuLeave = (menuId: string) => {
     menuTimers.current[menuId] = setTimeout(() => {
       setActiveMenu(null);
-    }, 200); // 200ms delay
+    }, 200); // 200ms delay before closing
   };
-  
+
   const currentIsTransparent = isTransparent && hasMounted && pathname === '/';
 
   const headerClasses = cn(
@@ -174,11 +188,11 @@ export default function Header() {
       : "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-border"
   );
 
-  const logoColor = currentIsTransparent ? "text-white" : "text-primary";
-  const linkTextColor = currentIsTransparent ? "text-white hover:text-white/80" : "text-foreground/80 hover:text-primary";
-  const iconColor = currentIsTransparent ? "text-white" : "text-foreground/70";
-  const dropdownButtonHoverBg = currentIsTransparent ? "hover:bg-white/10" : "hover:bg-accent/50";
-  const chevronColor = currentIsTransparent ? "text-white/70" : "text-foreground/70";
+  const logoColor = cn(currentIsTransparent ? "text-white" : "text-primary");
+  const linkTextColor = cn(currentIsTransparent ? "text-white hover:text-white/80" : "text-foreground/80 hover:text-primary");
+  const iconColor = cn(currentIsTransparent ? "text-white" : "text-foreground/70");
+  const dropdownButtonHoverBg = cn(currentIsTransparent ? "hover:bg-white/10" : "hover:bg-accent/50");
+  const chevronColor = cn(currentIsTransparent ? "text-white/70" : "text-foreground/70");
 
 
   return (
@@ -206,7 +220,6 @@ export default function Header() {
                 ) : (
                   <NavLink
                     href={item.href!}
-                    icon={item.icon}
                     className={cn("px-3 py-2", linkTextColor)}
                   >
                      {item.icon && <item.icon className={cn("h-5 w-5", iconColor, linkTextColor)} />}
@@ -217,7 +230,7 @@ export default function Header() {
               {(item.isDropdown && item.subItems) && (
                 <DropdownMenuContent
                   align="start"
-                  className="mt-1" // Standard dropdown width comes from dropdown-menu.tsx (min-w-[16rem])
+                  className="mt-1"
                   onPointerEnter={() => handleMenuEnter(item.id)}
                   onPointerLeave={() => handleMenuLeave(item.id)}
                 >
@@ -241,17 +254,16 @@ export default function Header() {
                     align="center"
                     className={cn(
                       "mt-1 p-6 bg-background shadow-xl rounded-lg",
-                       item.id === 'resources' ? "w-[600px] md:w-[700px] lg:w-[800px]" : "w-[550px] md:w-[600px]" // Conditional width
+                       item.id === 'resources' ? "w-[600px] md:w-[700px] lg:w-[800px]" : "w-[550px] md:w-[600px]"
                     )}
                     onPointerEnter={() => handleMenuEnter(item.id)}
                     onPointerLeave={() => handleMenuLeave(item.id)}
                   >
-                    {/* Mega Menu Header Link */}
-                    {item.megaMenuItems!.find(sub => sub.isFullWidthLink && sub.category !== 'MEGA_HEADER' && item.id !== 'resources') && (
-                       item.megaMenuItems!.filter(sub => sub.isFullWidthLink && sub.category !== 'MEGA_HEADER').map(subItem => (
+                    {item.megaMenuItems!.find(sub => sub.isFullWidthLink) && (
+                       item.megaMenuItems!.filter(sub => sub.isFullWidthLink).map(subItem => (
                         <div key={`${subItem.label}-header`} className="mb-4 pb-3 border-b border-border">
-                            <Link 
-                                href={subItem.href} 
+                            <Link
+                                href={subItem.href}
                                 className="font-semibold text-lg text-primary hover:underline flex items-center space-x-2"
                                 onClick={() => setActiveMenu(null)}
                             >
@@ -261,19 +273,7 @@ export default function Header() {
                         </div>
                        ))
                     )}
-                     {item.id === 'resources' && item.megaMenuItems!.find(sub => sub.category === 'MEGA_HEADER' && sub.isFullWidthLink) && (
-                        <div className="mb-4 pb-3 border-b border-border">
-                            <Link 
-                                href={item.megaMenuItems!.find(sub => sub.category === 'MEGA_HEADER')!.href}
-                                className="font-semibold text-lg text-primary hover:underline"
-                                onClick={() => setActiveMenu(null)}
-                            >
-                                {item.megaMenuItems!.find(sub => sub.category === 'MEGA_HEADER')!.label}
-                            </Link>
-                        </div>
-                    )}
 
-                    {/* Resources Mega Menu Grid */}
                     {item.id === 'resources' && (
                       <div className="grid grid-cols-3 gap-x-6 gap-y-4">
                         {(['WATCH', 'LISTEN', 'READ'] as const).map(category => (
@@ -297,19 +297,33 @@ export default function Header() {
                       </div>
                     )}
 
-                    {/* Ministries Mega Menu Grid (New Layout) */}
                     {item.id === 'ministries' && (
-                       <div className="grid grid-cols-2 gap-x-4 gap-y-3 mt-4">
-                        {item.megaMenuItems!.filter(sub => !sub.isFullWidthLink).map((subItem) => (
-                          <Link
-                            key={subItem.label}
-                            href={subItem.href}
-                            className="group flex items-center space-x-2 p-2 rounded-md hover:bg-accent/10 transition-colors"
-                            onClick={() => setActiveMenu(null)}
-                          >
-                            {subItem.icon && <subItem.icon className="h-5 w-5 text-accent group-hover:text-primary flex-shrink-0" />}
-                            <p className="text-sm font-medium text-foreground group-hover:text-primary">{subItem.label}</p>
-                          </Link>
+                       <div className="grid grid-cols-2 gap-x-6 gap-y-4 mt-4">
+                        {item.megaMenuItems!.filter(sub => !sub.isFullWidthLink).map((mainMinistryItem) => (
+                          <div key={mainMinistryItem.label}>
+                            <Link
+                              href={mainMinistryItem.href}
+                              className="group flex items-center space-x-2 p-2 rounded-md hover:bg-accent/10 transition-colors mb-1"
+                              onClick={() => setActiveMenu(null)}
+                            >
+                              {mainMinistryItem.icon && <mainMinistryItem.icon className="h-5 w-5 text-accent group-hover:text-primary flex-shrink-0" />}
+                              <p className="text-sm font-semibold text-foreground group-hover:text-primary">{mainMinistryItem.label}</p>
+                            </Link>
+                            {mainMinistryItem.subPrograms && mainMinistryItem.subPrograms.length > 0 && (
+                              <div className="pl-4 space-y-1">
+                                {mainMinistryItem.subPrograms.map(subProgram => (
+                                  <Link
+                                    key={subProgram.label}
+                                    href={subProgram.href}
+                                    className="group flex items-center space-x-2 py-1 px-2 rounded-md hover:bg-accent/5 transition-colors"
+                                    onClick={() => setActiveMenu(null)}
+                                  >
+                                    <p className="text-xs text-foreground/80 group-hover:text-primary">{subProgram.label}</p>
+                                  </Link>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                         ))}
                       </div>
                     )}
@@ -352,7 +366,6 @@ export default function Header() {
               <nav className="flex flex-col space-y-1">
                 {navItems.map((item) => {
                   if ((item.isDropdown || item.isMegaMenu) && (item.subItems || item.megaMenuItems)) {
-                    const itemsToDisplay = item.isMegaMenu ? item.megaMenuItems : item.subItems;
                     return (
                       <Accordion key={item.label} type="single" collapsible className="w-full">
                         <AccordionItem value={item.label} className="border-b-0">
@@ -361,25 +374,28 @@ export default function Header() {
                           </AccordionTrigger>
                           <AccordionContent className="pt-1 pb-0 pl-4">
                             <nav className="flex flex-col space-y-2 mt-1">
-                              {/* Main link for the section if it's a mega menu and has a top-level link */}
-                              {item.isMegaMenu && item.megaMenuItems?.find(mi => mi.isFullWidthLink) && (
-                                <NavLink 
-                                  href={item.megaMenuItems.find(mi => mi.isFullWidthLink)!.href} 
-                                  onClick={() => setMobileMenuOpen(false)} 
-                                  className="text-base font-semibold py-1"
-                                >
-                                  {item.megaMenuItems.find(mi => mi.isFullWidthLink)!.label}
-                                </NavLink>
-                              )}
-                               {/* Main link for standard dropdowns */}
-                               {item.isDropdown && item.href && (
+                              {item.href && (
                                 <NavLink href={item.href} onClick={() => setMobileMenuOpen(false)} className="text-base font-semibold py-1">
                                   All {item.label}
                                 </NavLink>
                               )}
-                              {itemsToDisplay!.filter(sub => !sub.isFullWidthLink && sub.category !== 'MEGA_HEADER').map((subItem) => (
-                                <NavLink key={subItem.href} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1">
-                                  {item.isMegaMenu && subItem.category && subItem.category !== 'MEGA_HEADER' && <span className="text-xs uppercase text-muted-foreground mr-1">{subItem.category}:</span>}
+                              {item.isMegaMenu && item.megaMenuItems?.map(megaItem => (
+                                <React.Fragment key={megaItem.label}>
+                                  {!megaItem.isFullWidthLink && megaItem.category !== 'MEGA_HEADER' && (
+                                    <NavLink href={megaItem.href} icon={megaItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1">
+                                      {megaItem.category && <span className="text-xs uppercase text-muted-foreground mr-1">{megaItem.category}:</span>}
+                                      {megaItem.label}
+                                    </NavLink>
+                                  )}
+                                  {megaItem.subPrograms && megaItem.subPrograms.map(subProg => (
+                                    <NavLink key={subProg.label} href={subProg.href} onClick={() => setMobileMenuOpen(false)} className="text-sm py-1 pl-6">
+                                      {subProg.label}
+                                    </NavLink>
+                                  ))}
+                                </React.Fragment>
+                              ))}
+                              {item.isDropdown && item.subItems?.map(subItem => (
+                                 <NavLink key={subItem.href} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1">
                                   {subItem.label}
                                 </NavLink>
                               ))}

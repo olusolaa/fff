@@ -5,9 +5,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  Menu, Search, X, MapPin, ChevronDown, Video, Newspaper,
-  GraduationCap, BookMarked, Church, Disc3, Mic2, Library, Users, HeartHandshake,
-  BookOpen, ShieldCheck, Users2, HandHeart, CalendarDays, CheckCircle2, Gift, LayoutDashboard, School, Info
+  Menu, Search, X, ChevronDown, Video, Newspaper,
+  BookMarked, Church, Disc3, Mic2, Library, Users, HeartHandshake,
+  BookOpen, ShieldCheck, Users2, HandHeart, CalendarDays, Gift, LayoutDashboard, School, Info
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import NavLink from './NavLink';
@@ -31,21 +31,21 @@ interface NavSubItem {
   label: string;
   href: string;
   icon?: LucideIcon;
-  category?: string; // Used in Resources for WATCH/LISTEN/READ or in About/Ministries item blocks
-  description?: string; // Used for Ministries mega menu item descriptions (if any)
-  isFullWidthLink?: boolean; // For the top link in mega menus
-  subPrograms?: Array<{ label: string; href: string; icon?: LucideIcon; description?: string; }>; // For Ministries sub-programs
+  category?: string;
+  description?: string;
+  isFullWidthLink?: boolean;
+  subPrograms?: Array<{ label: string; href: string; icon?: LucideIcon; description?: string; }>;
 }
 
 interface NavItem {
   id: string;
   label: string;
-  href?: string; // Main link for the tab itself
-  icon?: LucideIcon; // Icon for direct links like Events, Give
-  subItems?: NavSubItem[]; // For simple dropdowns
-  megaMenuItems?: NavSubItem[]; // For mega menus
-  isDropdown?: boolean; // Simple click/hover dropdown
-  isMegaMenu?: boolean; // Wide, custom layout hover dropdown
+  href?: string;
+  icon?: LucideIcon;
+  subItems?: NavSubItem[];
+  megaMenuItems?: NavSubItem[];
+  isDropdown?: boolean;
+  isMegaMenu?: boolean;
 }
 
 const navItems: NavItem[] = [
@@ -55,12 +55,7 @@ const navItems: NavItem[] = [
     href: '/about',
     isMegaMenu: true,
     megaMenuItems: [
-      {
-        label: 'Learn More About Us',
-        href: '/about',
-        icon: Info, // Changed from LayoutDashboard for context
-        isFullWidthLink: true
-      },
+      { label: 'Learn More About Us', href: '/about', icon: Info, isFullWidthLink: true },
       { label: 'Our Story', href: '/about/history', icon: BookOpen },
       { label: 'Our Beliefs', href: '/about/beliefs', icon: ShieldCheck },
       { label: 'Our Team', href: '/about/leadership', icon: Users2 },
@@ -72,19 +67,13 @@ const navItems: NavItem[] = [
     href: '/ministries',
     isMegaMenu: true,
     megaMenuItems: [
-      {
-        label: 'All Ministries Overview',
-        href: '/ministries',
-        icon: LayoutDashboard,
-        isFullWidthLink: true
-      },
-      { label: 'Adolescent & Singles Club', href: '/ministries/adolescent-singles-club', icon: Users },
-      { label: 'School Outreaches', href: '/ministries/school-outreaches', icon: School },
-      { label: 'Counseling Services', href: '/programs/counseling-family-support', icon: HeartHandshake },
-      { label: 'Family Life Seminars', href: '/ministries/family-life-seminars', icon: CalendarDays },
-      { label: 'Marriage Forum', href: '/programs/counseling-family-support', icon: Users2 }, // Points to main counseling page
-      { label: 'Discipleship Classes', href: '/programs/faith-growth', icon: BookOpen },
-      // "Community Outreach" was removed as per user request
+        { label: 'All Ministries Overview', href: '/ministries', icon: LayoutDashboard, isFullWidthLink: true },
+        { label: 'Adolescent & Singles Club', href: '/ministries/adolescent-singles-club', icon: Users },
+        { label: 'School Outreaches', href: '/ministries/school-outreaches', icon: School },
+        { label: 'Counseling Services', href: '/programs/counseling-family-support', icon: HeartHandshake },
+        { label: 'Family Life Seminars', href: '/ministries/family-life-seminars', icon: CalendarDays },
+        { label: 'Marriage Forum', href: '/programs/counseling-family-support', icon: Users2 },
+        { label: 'Discipleship Classes', href: '/programs/faith-growth', icon: BookOpen },
     ]
   },
   {
@@ -109,7 +98,6 @@ const navItems: NavItem[] = [
     href: '/events',
     icon: CalendarDays,
   },
-  // "Visit" item removed as per user request
   {
     id: 'give',
     label: 'Give',
@@ -146,7 +134,7 @@ export default function Header() {
     };
 
     if (isHomePageCurrently) {
-      setIsTransparent(window.scrollY <= 50); // Initial check
+      setIsTransparent(window.scrollY <= 50);
       window.addEventListener('scroll', handleScroll, { passive: true });
     } else {
       setIsTransparent(false);
@@ -162,7 +150,7 @@ export default function Header() {
 
   const handleMenuEnter = (menuId: string) => {
     Object.keys(menuTimers.current).forEach(timerId => {
-      if (menuTimers.current[timerId]) { // Check if timer exists before clearing
+      if (menuTimers.current[timerId] && timerId !== menuId) { 
         clearTimeout(menuTimers.current[timerId]);
         delete menuTimers.current[timerId];
       }
@@ -172,10 +160,10 @@ export default function Header() {
 
   const handleMenuLeave = (menuId: string) => {
     menuTimers.current[menuId] = setTimeout(() => {
-      if (activeMenu === menuId) {
-        setActiveMenu(null);
-      }
-      delete menuTimers.current[menuId];
+        if (activeMenu === menuId) {
+            setActiveMenu(null);
+        }
+        delete menuTimers.current[menuId];
     }, 200);
   };
   
@@ -183,7 +171,7 @@ export default function Header() {
   const currentHeaderIsTransparent = isTransparent && hasMounted && pathname === '/';
 
   const headerClasses = cn(
-    "sticky top-0 z-50 w-full border-b transition-colors duration-300 ease-in-out",
+    "fixed top-0 left-0 right-0 z-50 w-full border-b transition-colors duration-300 ease-in-out", // Changed from sticky to fixed
     currentHeaderIsTransparent
       ? "bg-transparent border-transparent"
       : "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-border"
@@ -210,7 +198,7 @@ export default function Header() {
         <nav className="hidden items-center space-x-1 md:flex">
           {navItems.map((item) => (
             <React.Fragment key={item.id}>
-            {item.isDropdown || item.isMegaMenu ? (
+            {item.isMegaMenu ? ( // Simplified logic for mega menus
               <DropdownMenu open={activeMenu === item.id} onOpenChange={(isOpen) => !isOpen && setActiveMenu(null)}>
                 <DropdownMenuTrigger asChild
                   onPointerEnter={() => handleMenuEnter(item.id)}
@@ -229,19 +217,17 @@ export default function Header() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
-                    align="center" // Default to center, can be overridden
+                    align="center"
                     className={cn(
                       "mt-1 p-6 bg-background shadow-xl rounded-lg",
-                       // Consistent width for all mega menus
-                      (item.isMegaMenu) ? "w-[600px] md:w-[700px] lg:w-[800px]" : "w-auto", // Standard width for simple dropdowns
-                      item.id === 'visit' ? "min-w-[220px]" : "" // Specific min-width for Visit if it was simple
+                      "w-[600px] md:w-[700px] lg:w-[800px]" // Consistent width for all mega menus
                     )}
                     onPointerEnter={() => handleMenuEnter(item.id)}
                     onPointerLeave={() => handleMenuLeave(item.id)}
                   >
                     {/* Mega Menu Header Link */}
-                    {item.isMegaMenu && item.megaMenuItems?.find(sub => sub.isFullWidthLink && (sub.category === 'MEGA_HEADER' || !sub.category)) && (
-                       item.megaMenuItems.filter(sub => sub.isFullWidthLink && (sub.category === 'MEGA_HEADER' || !sub.category)).map(subItem => (
+                    {item.megaMenuItems?.find(sub => sub.isFullWidthLink) && (
+                       item.megaMenuItems.filter(sub => sub.isFullWidthLink).map(subItem => (
                         <div key={`${subItem.label}-header`} className="mb-4 pb-3 border-b border-border">
                             <Link
                                 href={subItem.href!}
@@ -255,11 +241,11 @@ export default function Header() {
                        ))
                     )}
 
-                    {/* Specific Mega Menu Grids */}
+                    {/* About and Ministries Mega Menu Grid (2 or 3 columns) */}
                     {(item.id === 'about' || item.id === 'ministries') && (
                       <div className={cn(
                         "grid gap-x-6 gap-y-4",
-                        item.id === 'about' ? "grid-cols-3" : "grid-cols-2" // 3 cols for About, 2 for Ministries
+                        item.id === 'about' ? "grid-cols-3" : "grid-cols-2"
                       )}>
                         {item.megaMenuItems!.filter(sub => !sub.isFullWidthLink).map((subItem) => (
                            <Link
@@ -275,6 +261,7 @@ export default function Header() {
                       </div>
                     )}
 
+                    {/* Resources Mega Menu Grid (3 columns with categories) */}
                     {item.id === 'resources' && (
                       <div className="grid grid-cols-3 gap-x-6 gap-y-4">
                         {(['WATCH', 'LISTEN', 'READ'] as const).map(category => (
@@ -294,24 +281,6 @@ export default function Header() {
                               ))}
                             </div>
                           </div>
-                        ))}
-                      </div>
-                    )}
-                     {/* Simple Dropdown Items (e.g. for a restored Visit if needed) */}
-                    {item.isDropdown && item.subItems && (
-                      <div className="py-1"> {/* Added padding for simple dropdown content area */}
-                        {item.href && ( // Optional: if the main dropdown trigger is also a link
-                          <DropdownMenuItem asChild>
-                            <Link href={item.href} className="w-full font-semibold text-primary hover:bg-accent/10" onClick={() => setActiveMenu(null)}>All {item.label}</Link>
-                          </DropdownMenuItem>
-                        )}
-                        {item.subItems.map((subItem) => (
-                          <DropdownMenuItem key={subItem.label} asChild>
-                            <Link href={subItem.href} className="flex items-center space-x-2 w-full" onClick={() => setActiveMenu(null)}>
-                              {subItem.icon && <subItem.icon className="h-4 w-4 text-muted-foreground" />}
-                              <span>{subItem.label}</span>
-                            </Link>
-                          </DropdownMenuItem>
                         ))}
                       </div>
                     )}
@@ -371,12 +340,9 @@ export default function Header() {
               </div>
               <nav className="flex flex-col space-y-1">
                 {navItems.map((item) => {
-                  // Determine items to display in accordion (mega or simple dropdown)
-                  const itemsToDisplayInAccordion = item.isMegaMenu 
-                    ? item.megaMenuItems?.filter(mItem => !mItem.isFullWidthLink) 
-                    : item.subItems;
+                  const itemsToDisplayInAccordion = item.megaMenuItems?.filter(mItem => !mItem.isFullWidthLink);
 
-                  if (item.isDropdown || item.isMegaMenu) {
+                  if (item.isMegaMenu) { // Only mega menus use accordion in mobile for now
                     return (
                       <Accordion key={item.id} type="single" collapsible className="w-full">
                         <AccordionItem value={item.id} className="border-b-0">
@@ -387,19 +353,11 @@ export default function Header() {
                           </AccordionTrigger>
                           <AccordionContent className="pt-1 pb-0 pl-4">
                             <nav className="flex flex-col space-y-2 mt-1">
-                               {/* Top-level link for mega menu */}
-                              {item.isMegaMenu && item.megaMenuItems?.find(m => m.isFullWidthLink) && (
+                              {item.megaMenuItems?.find(m => m.isFullWidthLink) && (
                                 <NavLink href={item.megaMenuItems.find(m => m.isFullWidthLink)!.href} icon={item.megaMenuItems.find(m => m.isFullWidthLink)!.icon} onClick={() => setMobileMenuOpen(false)} className="text-base font-semibold py-1 hover:text-primary">
                                   {item.megaMenuItems.find(m => m.isFullWidthLink)!.label}
                                 </NavLink>
                               )}
-                               {/* Link for simple dropdown's main href, if it exists */}
-                              {item.isDropdown && item.href && (
-                                <NavLink href={item.href} onClick={() => setMobileMenuOpen(false)} className="text-base font-semibold py-1 hover:text-primary">
-                                  All {item.label}
-                                </NavLink>
-                              )}
-                              {/* Sub-items for both mega and simple dropdowns */}
                               {itemsToDisplayInAccordion?.map(subItem => (
                                  <NavLink key={subItem.href} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary">
                                   {item.id === 'resources' && subItem.category && !subItem.isFullWidthLink && <span className="text-xs uppercase text-muted-foreground mr-1">{subItem.category}:</span>}

@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import {
   Menu, Search, X, MapPin, ChevronDown, Video, Newspaper,
   GraduationCap, BookMarked, Church, Disc3, Mic2, Library, Users, HeartHandshake,
-  BookOpen, ShieldCheck, Users2, HandHeart, CalendarDays, CheckCircle2, Gift, LayoutDashboard, School, Briefcase
+  BookOpen, ShieldCheck, Users2, HandHeart, CalendarDays, CheckCircle2, Gift, LayoutDashboard, School, Info
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import NavLink from './NavLink';
@@ -31,9 +31,9 @@ interface NavSubItem {
   label: string;
   href: string;
   icon?: LucideIcon;
-  category?: string; 
-  description?: string; 
-  isFullWidthLink?: boolean; 
+  category?: string;
+  description?: string;
+  isFullWidthLink?: boolean;
   subPrograms?: Array<{ label: string; href: string; icon?: LucideIcon; description?: string; }>;
 }
 
@@ -42,8 +42,8 @@ interface NavItem {
   label: string;
   href?: string;
   icon?: LucideIcon;
-  subItems?: NavSubItem[]; 
-  megaMenuItems?: NavSubItem[]; 
+  subItems?: NavSubItem[];
+  megaMenuItems?: NavSubItem[];
   isDropdown?: boolean;
   isMegaMenu?: boolean;
 }
@@ -53,8 +53,15 @@ const navItems: NavItem[] = [
     id: 'about',
     label: 'About',
     href: '/about',
-    isDropdown: true,
-    subItems: [
+    isMegaMenu: true, // Changed to Mega Menu
+    megaMenuItems: [
+      {
+        label: 'Learn More About Us',
+        href: '/about',
+        icon: Info,
+        category: 'MEGA_HEADER',
+        isFullWidthLink: true
+      },
       { label: 'Our Story', href: '/about/history', icon: BookOpen },
       { label: 'Our Beliefs', href: '/about/beliefs', icon: ShieldCheck },
       { label: 'Our Team', href: '/about/leadership', icon: Users2 },
@@ -63,44 +70,44 @@ const navItems: NavItem[] = [
   {
     id: 'ministries',
     label: 'Ministries',
-    href: '/ministries', 
+    href: '/ministries',
     isMegaMenu: true,
     megaMenuItems: [
-      { 
-        label: 'All Ministries Overview', 
-        href: '/ministries', 
-        icon: LayoutDashboard, 
-        category: 'MEGA_HEADER', 
-        isFullWidthLink: true 
+      {
+        label: 'All Ministries Overview',
+        href: '/ministries',
+        icon: LayoutDashboard,
+        category: 'MEGA_HEADER',
+        isFullWidthLink: true
       },
-      { 
-        label: 'Adolescent & Singles Club', 
-        href: '/ministries/adolescent-singles-club', 
-        icon: Users, 
+      {
+        label: 'Adolescent & Singles Club',
+        href: '/ministries/adolescent-singles-club',
+        icon: Users,
       },
-      { 
-        label: 'School Outreaches', 
-        href: '/ministries/school-outreaches', 
-        icon: School, 
+      {
+        label: 'School Outreaches',
+        href: '/ministries/school-outreaches',
+        icon: School,
       },
-      { 
-        label: 'Counseling Services', 
-        href: '/programs/counseling-family-support', 
+      {
+        label: 'Counseling Services',
+        href: '/programs/counseling-family-support',
         icon: HeartHandshake,
       },
-      { 
-        label: 'Family Life Seminars', 
-        href: '/ministries/family-life-seminars', 
-        icon: CalendarDays, 
+      {
+        label: 'Family Life Seminars',
+        href: '/ministries/family-life-seminars',
+        icon: CalendarDays,
       },
-      { 
-        label: 'Marriage Forum', 
-        href: '/programs/counseling-family-support', // Points to parent as specific content is there
-        icon: Users2, 
+      {
+        label: 'Marriage Forum',
+        href: '/programs/counseling-family-support',
+        icon: Users2,
       },
-      { 
-        label: 'Discipleship Classes', 
-        href: '/programs/faith-growth', // Points to parent as specific content is there
+      {
+        label: 'Discipleship Classes',
+        href: '/programs/faith-growth',
         icon: BookOpen,
       },
     ]
@@ -130,7 +137,7 @@ const navItems: NavItem[] = [
   {
     id: 'visit',
     label: 'Visit',
-    href: '/plan-visit', 
+    href: '/plan-visit',
     isDropdown: true,
     subItems: [
         { label: 'Plan Your Visit', href: '/plan-visit', icon: CheckCircle2},
@@ -156,6 +163,9 @@ export default function Header() {
 
   useEffect(() => {
     setHasMounted(true);
+    return () => { // Cleanup timers on unmount
+      Object.values(menuTimers.current).forEach(clearTimeout);
+    };
   }, []);
 
   useEffect(() => {
@@ -170,10 +180,10 @@ export default function Header() {
     };
 
     if (isHomePageCurrently) {
-      setIsTransparent(window.scrollY <= 50); 
-      window.addEventListener('scroll', handleScroll);
+      setIsTransparent(window.scrollY <= 50);
+      window.addEventListener('scroll', handleScroll, { passive: true });
     } else {
-      setIsTransparent(false); 
+      setIsTransparent(false);
     }
 
     return () => {
@@ -185,18 +195,31 @@ export default function Header() {
 
 
   const handleMenuEnter = (menuId: string) => {
+    // Clear any pending close timers for OTHER menus
+    Object.keys(menuTimers.current).forEach(timerId => {
+      if (timerId !== menuId && menuTimers.current[timerId]) {
+        clearTimeout(menuTimers.current[timerId]);
+        delete menuTimers.current[timerId];
+      }
+    });
+    // Clear pending close timer for THIS menu if re-entering quickly
     if (menuTimers.current[menuId]) {
       clearTimeout(menuTimers.current[menuId]);
+      delete menuTimers.current[menuId];
     }
     setActiveMenu(menuId);
   };
 
   const handleMenuLeave = (menuId: string) => {
     menuTimers.current[menuId] = setTimeout(() => {
-      setActiveMenu(null);
-    }, 200); 
+      // Only close if the active menu is still this one (i.e., mouse hasn't entered another menu)
+      if (activeMenu === menuId) {
+        setActiveMenu(null);
+      }
+      delete menuTimers.current[menuId];
+    }, 200);
   };
-  
+
   const currentIsTransparent = isTransparent && hasMounted && pathname === '/';
 
   const headerClasses = cn(
@@ -206,12 +229,12 @@ export default function Header() {
       : "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-border"
   );
 
-  const getLinkClasses = (isTransparentOverride = currentIsTransparent) => ({
-    logoColor: cn(isTransparentOverride ? "text-white" : "text-primary"),
-    linkTextColor: cn(isTransparentOverride ? "text-white hover:text-white/80" : "text-foreground/80 hover:text-primary"),
-    iconColor: cn(isTransparentOverride ? "text-white" : "text-foreground/70"),
-    dropdownButtonHoverBg: cn(isTransparentOverride ? "hover:bg-white/10" : "hover:bg-accent/50"),
-    chevronColor: cn(isTransparentOverride ? "text-white/70" : "text-foreground/70"),
+  const getLinkClasses = () => ({
+    logoColor: cn(currentIsTransparent ? "text-white" : "text-primary"),
+    linkTextColor: cn(currentIsTransparent ? "text-white hover:text-white/80" : "text-foreground/80 hover:text-primary"),
+    iconColor: cn(currentIsTransparent ? "text-white" : "text-foreground/70"),
+    dropdownButtonHoverBg: cn(currentIsTransparent ? "hover:bg-white/10" : "hover:bg-accent/50"),
+    chevronColor: cn(currentIsTransparent ? "text-white/70" : "text-foreground/70"),
   });
 
   const linkStyles = getLinkClasses();
@@ -256,11 +279,11 @@ export default function Header() {
               {(item.isDropdown && item.subItems) && (
                 <DropdownMenuContent
                   align="start"
-                  className="mt-1" 
+                  className="mt-1"
                   onPointerEnter={() => handleMenuEnter(item.id)}
                   onPointerLeave={() => handleMenuLeave(item.id)}
                 >
-                  {item.href && ( 
+                  {item.href && (
                      <DropdownMenuItem asChild>
                       <Link href={item.href} className="w-full font-semibold text-primary hover:bg-accent/10" onClick={() => setActiveMenu(null)}>All {item.label}</Link>
                     </DropdownMenuItem>
@@ -280,7 +303,7 @@ export default function Header() {
                     align="center"
                     className={cn(
                       "mt-1 p-6 bg-background shadow-xl rounded-lg",
-                       item.id === 'resources' || item.id === 'ministries' ? "w-[600px] md:w-[700px] lg:w-[800px]" : "w-auto" 
+                       (item.id === 'resources' || item.id === 'ministries' || item.id === 'about') ? "w-[600px] md:w-[700px] lg:w-[800px]" : "w-auto"
                     )}
                     onPointerEnter={() => handleMenuEnter(item.id)}
                     onPointerLeave={() => handleMenuLeave(item.id)}
@@ -299,7 +322,23 @@ export default function Header() {
                         </div>
                        ))
                     )}
-                    
+
+                    {item.id === 'about' && (
+                      <div className="grid grid-cols-3 gap-x-6 gap-y-4">
+                        {item.megaMenuItems!.filter(sub => !sub.isFullWidthLink).map((subItem) => (
+                           <Link
+                              key={subItem.label}
+                              href={subItem.href}
+                              className="group flex items-center space-x-3 p-2 rounded-md hover:bg-accent/10 transition-colors"
+                              onClick={() => setActiveMenu(null)}
+                            >
+                              {subItem.icon && <subItem.icon className="h-6 w-6 text-accent group-hover:text-primary flex-shrink-0" />}
+                              <p className="text-sm font-medium text-foreground group-hover:text-primary">{subItem.label}</p>
+                            </Link>
+                        ))}
+                      </div>
+                    )}
+
                     {item.id === 'ministries' && (
                       <div className="grid grid-cols-2 gap-x-6 gap-y-4">
                         {item.megaMenuItems!.filter(sub => !sub.isFullWidthLink).map((subItem) => (
@@ -382,18 +421,18 @@ export default function Header() {
                     return (
                       <Accordion key={item.id} type="single" collapsible className="w-full">
                         <AccordionItem value={item.id} className="border-b-0">
-                          <AccordionTrigger 
+                          <AccordionTrigger
                             className="text-lg font-medium text-foreground/80 hover:text-primary hover:no-underline py-3 px-0 data-[state=open]:text-primary [&[data-state=open]>svg]:text-primary"
                             onClick={(e) => {
                               if (item.href && !(item.isMegaMenu && item.megaMenuItems && item.megaMenuItems.length > 0)) {
                                 e.preventDefault();
-                                setMobileMenuOpen(false); 
+                                setMobileMenuOpen(false);
                                 window.location.href = item.href;
                               } else if (item.isMegaMenu && item.href && item.megaMenuItems?.find(m => m.isFullWidthLink && m.href === item.href)) {
                                 // Allow toggle for mega menus that also have a main link
                               } else if (item.href && !item.isDropdown && !item.isMegaMenu) {
                                 e.preventDefault();
-                                setMobileMenuOpen(false); 
+                                setMobileMenuOpen(false);
                                 window.location.href = item.href;
                               }
                             }}
@@ -402,7 +441,7 @@ export default function Header() {
                           </AccordionTrigger>
                           <AccordionContent className="pt-1 pb-0 pl-4">
                             <nav className="flex flex-col space-y-2 mt-1">
-                              {item.href && (
+                              {item.href && (item.isMegaMenu || item.isDropdown) && ( // Ensure top link is shown for mega menus too
                                 <NavLink href={item.href} onClick={() => setMobileMenuOpen(false)} className="text-base font-semibold py-1 hover:text-primary">
                                   All {item.label}
                                 </NavLink>

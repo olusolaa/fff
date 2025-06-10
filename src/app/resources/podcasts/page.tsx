@@ -2,7 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button'; // Though custom styling is used for vertical buttons
+import { Button } from '@/components/ui/button'; 
 
 export default function PodcastsPage() {
   const verticalNavItems = [
@@ -66,16 +66,15 @@ export default function PodcastsPage() {
               {verticalNavItems.map((item, index) => (
                 <React.Fragment key={item.label}>
                   {index > 0 && <div className="h-6 w-px bg-border my-1"></div>}
-                  <Link href={item.href} passHref legacyBehavior>
-                    <a
-                      className={`[writing-mode:vertical-rl] transform rotate-180 text-xs uppercase tracking-wider py-2 transition-colors ${
-                        item.active
-                          ? 'text-primary font-semibold'
-                          : 'text-muted-foreground hover:text-primary'
-                      }`}
-                    >
-                      {item.label}
-                    </a>
+                  <Link
+                    href={item.href}
+                    className={`[writing-mode:vertical-rl] transform rotate-180 text-xs uppercase tracking-wider py-2 transition-colors ${
+                      item.active
+                        ? 'text-primary font-semibold'
+                        : 'text-muted-foreground hover:text-primary'
+                    }`}
+                  >
+                    {item.label}
                   </Link>
                 </React.Fragment>
               ))}

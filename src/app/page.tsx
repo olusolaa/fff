@@ -82,9 +82,9 @@ export default function HomePage() {
       <HeroSection
         title="Welcome to Family Tent Ministry"
         subtitle="Guiding young people toward becoming healthy, responsible, and spiritually grounded members of society."
-        imageUrl="https://placehold.co/1920x1080.png"
-        imageAlt="Family Tent Ministry gathering or community event"
-        imageHint="community gathering diverse"
+        imageUrl="https://i.postimg.cc/QdMCtd7t/20250622-2011-image.png"
+        imageAlt="A serene landscape with a person looking towards the horizon at sunrise"
+        imageHint="serene landscape sunrise"
         primaryActionText="Our Programs"
         primaryActionLink="/programs"
         secondaryActionText="Partner With Us"

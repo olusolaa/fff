@@ -11,8 +11,8 @@ export default function MusicPage() {
   return (
     <div>
       <ContentBlock
-        title="Austin Stone Worship"
-        text="Listen to music from Austin Stone Worship and find worship resources. Content is coming soon."
+        title="Family Tent Ministry Music"
+        text="Listen to music from Family Tent Ministry and find worship resources. Content is coming soon."
         className="bg-secondary/30 text-center"
         titleClassName="text-4xl md:text-5xl"
       />

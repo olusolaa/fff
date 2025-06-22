@@ -1,3 +1,4 @@
+
 import ContentBlock from '@/components/shared/ContentBlock';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -43,7 +44,7 @@ export default function SermonsPage() {
     <div>
       <ContentBlock
         title="Watch & Listen"
-        text="Engage with teaching from The Austin Stone wherever you are. Explore our latest sermons, browse past series, and find messages that speak to your heart."
+        text="Engage with teaching from Family Tent Ministry wherever you are. Explore our latest sermons, browse past series, and find messages that speak to your heart."
         className="bg-secondary/30 text-center"
         titleClassName="text-4xl md:text-5xl"
       />
@@ -84,7 +85,7 @@ export default function SermonsPage() {
             {recentSermons.map((sermon) => (
               <Card key={sermon.id} className="flex flex-col overflow-hidden shadow-lg">
                 <div className="relative h-48 w-full">
-                  <Image src={sermon.imageUrl} alt={sermon.title} layout="fill" objectFit="cover" data-ai-hint={sermon.imageHint}/>
+                  <Image src={sermon.imageUrl} alt={sermon.title} fill style={{objectFit: "cover"}} data-ai-hint={sermon.imageHint}/>
                 </div>
                 <CardHeader>
                   <CardTitle className="font-headline text-xl text-primary">{sermon.title}</CardTitle>

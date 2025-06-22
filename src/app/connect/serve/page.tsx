@@ -6,7 +6,7 @@ export default function ServePage() {
     <div>
       <ContentBlock
         title="Serve Our City"
-        text="Discover opportunities to serve within our church and in the Austin community. Content is coming soon."
+        text="Discover opportunities to serve within our church and in the community. Content is coming soon."
         className="bg-secondary/30 text-center"
         titleClassName="text-4xl md:text-5xl"
       />

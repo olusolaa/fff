@@ -1,3 +1,4 @@
+
 import ContentBlock from '@/components/shared/ContentBlock';
 import CardGrid, { type CardGridItem } from '@/components/shared/CardGrid';
 import AnimatedSection from '@/components/shared/AnimatedSection';
@@ -6,7 +7,7 @@ const resourceCategories: CardGridItem[] = [
   {
     id: 'sermons',
     title: 'Sermon Archive',
-    description: 'Watch or listen to past sermons and series from The Austin Stone.',
+    description: 'Watch or listen to past sermons and series from Family Tent Ministry.',
     imageUrl: 'https://placehold.co/600x400.png',
     imageAlt: 'Person listening to a sermon on headphones',
     imageHint: 'listening sermon',
@@ -35,8 +36,8 @@ const resourceCategories: CardGridItem[] = [
   },
   {
     id: 'music',
-    title: 'Austin Stone Worship',
-    description: 'Listen to music from Austin Stone Worship and find worship resources.',
+    title: 'Family Tent Ministry Music',
+    description: 'Listen to music from Family Tent Ministry and find worship resources.',
     imageUrl: 'https://placehold.co/600x400.png',
     imageAlt: 'Musical notes and guitar',
     imageHint: 'music worship',

@@ -7,10 +7,11 @@ interface NavLinkProps {
   children: React.ReactNode;
   icon?: LucideIcon;
   className?: string;
+  iconClassName?: string;
   onClick?: () => void;
 }
 
-export default function NavLink({ href, children, icon: Icon, className, onClick }: NavLinkProps) {
+export default function NavLink({ href, children, icon: Icon, className, iconClassName, onClick }: NavLinkProps) {
   return (
     <Link
       href={href}
@@ -20,7 +21,7 @@ export default function NavLink({ href, children, icon: Icon, className, onClick
         className
       )}
     >
-      {Icon && <Icon className="h-4 w-4" />}
+      {Icon && <Icon className={cn("h-4 w-4", iconClassName)} />}
       <span>{children}</span>
     </Link>
   );

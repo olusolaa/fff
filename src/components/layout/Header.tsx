@@ -348,9 +348,6 @@ export default function Header() {
                 <Link href="/" className="text-xl font-bold font-headline text-primary" onClick={() => setMobileMenuOpen(false)}>
                   Family Tent Ministry
                 </Link>
-                <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu">
-                  <X className="h-6 w-6" />
-                </Button>
               </div>
               <nav className="flex flex-col space-y-1">
                 {navItems.map((item) => {
@@ -375,6 +372,7 @@ export default function Header() {
                                   icon={item.megaMenuItems.find(m => m.isFullWidthLink)!.icon} 
                                   onClick={() => setMobileMenuOpen(false)} 
                                   className="text-base font-semibold py-1 hover:text-primary"
+                                  iconClassName="h-5 w-5 text-muted-foreground"
                                 >
                                   {item.megaMenuItems.find(m => m.isFullWidthLink)!.label}
                                 </NavLink>
@@ -384,7 +382,7 @@ export default function Header() {
                                   <React.Fragment key={category}>
                                     <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mt-2 mb-1">{category}</h4>
                                     {item.megaMenuItems!.filter(sub => sub.category === category && !sub.isFullWidthLink).map((subItem) => (
-                                      <NavLink key={subItem.href} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary">
+                                      <NavLink key={subItem.href} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary" iconClassName="h-5 w-5 text-muted-foreground">
                                         {subItem.label}
                                       </NavLink>
                                     ))}
@@ -392,7 +390,7 @@ export default function Header() {
                                 ))
                               ) : (
                                 itemsToDisplayInAccordion?.map(subItem => (
-                                  <NavLink key={subItem.href} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary">
+                                  <NavLink key={subItem.href} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary" iconClassName="h-5 w-5 text-muted-foreground">
                                     {subItem.label}
                                   </NavLink>
                                 ))
@@ -404,14 +402,20 @@ export default function Header() {
                     );
                   }
                   return (
-                    <NavLink key={item.id} href={item.href!} icon={item.icon} onClick={() => setMobileMenuOpen(false)} className="text-lg py-3 flex items-center hover:text-primary">
-                       {item.icon && <item.icon className="h-5 w-5 mr-3 text-muted-foreground" />}
-                      <span>{item.label}</span>
+                    <NavLink 
+                      key={item.id} 
+                      href={item.href!} 
+                      icon={item.icon} 
+                      onClick={() => setMobileMenuOpen(false)} 
+                      className="text-lg py-3 space-x-3"
+                      iconClassName="h-5 w-5 text-muted-foreground"
+                    >
+                      {item.label}
                     </NavLink>
                   );
                 })}
-                 <Button variant="ghost" className="flex items-center justify-start space-x-2 text-lg py-3 px-0 text-foreground/80 hover:text-primary">
-                    <Search className="h-5 w-5 mr-3 text-muted-foreground" />
+                 <Button variant="ghost" className="flex items-center justify-start space-x-3 text-lg py-3 px-0 text-foreground/80 hover:text-primary">
+                    <Search className="h-5 w-5 text-muted-foreground" />
                     <span>Search</span>
                   </Button>
                 <Button asChild variant="default" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg mt-4" onClick={() => setMobileMenuOpen(false)}>

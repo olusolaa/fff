@@ -222,8 +222,7 @@ export default function Header() {
                     align="center"
                     sideOffset={5}
                     className={cn(
-                      "p-6 bg-background shadow-xl rounded-lg",
-                      (item.id === 'about' || item.id === 'ministries' || item.id === 'resources') && "w-[600px] md:w-[700px] lg:w-[800px]"
+                      "p-6 bg-background shadow-xl rounded-lg w-[600px] md:w-[700px] lg:w-[800px]"
                     )}
                     onPointerEnter={() => handleMenuEnter(item.id)}
                     onPointerLeave={() => handleMenuLeave(item.id)}
@@ -382,7 +381,7 @@ export default function Header() {
                                   <React.Fragment key={category}>
                                     <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mt-2 mb-1">{category}</h4>
                                     {item.megaMenuItems!.filter(sub => sub.category === category && !sub.isFullWidthLink).map((subItem) => (
-                                      <NavLink key={subItem.href} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary" iconClassName="h-5 w-5 text-muted-foreground">
+                                      <NavLink key={subItem.label} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary" iconClassName="h-5 w-5 text-muted-foreground">
                                         {subItem.label}
                                       </NavLink>
                                     ))}
@@ -390,7 +389,7 @@ export default function Header() {
                                 ))
                               ) : (
                                 itemsToDisplayInAccordion?.map(subItem => (
-                                  <NavLink key={subItem.href} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary" iconClassName="h-5 w-5 text-muted-foreground">
+                                  <NavLink key={subItem.label} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary" iconClassName="h-5 w-5 text-muted-foreground">
                                     {subItem.label}
                                   </NavLink>
                                 ))
@@ -405,12 +404,11 @@ export default function Header() {
                     <NavLink 
                       key={item.id} 
                       href={item.href!} 
-                      icon={item.icon} 
                       onClick={() => setMobileMenuOpen(false)} 
                       className="text-lg py-3 space-x-3"
-                      iconClassName="h-5 w-5 text-muted-foreground"
                     >
-                      {item.label}
+                      {item.icon && <item.icon className="h-5 w-5 text-muted-foreground" />}
+                      <span>{item.label}</span>
                     </NavLink>
                   );
                 })}

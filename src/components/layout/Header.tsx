@@ -359,27 +359,12 @@ export default function Header() {
                     return (
                       <Accordion key={item.id} type="single" collapsible className="w-full">
                         <AccordionItem value={item.id} className="border-b-0">
-                           <AccordionTrigger asChild
+                           <AccordionTrigger
                               className={cn(
-                                "text-lg font-medium text-foreground/80 hover:text-primary hover:no-underline py-3 px-0 data-[state=open]:text-primary [&[data-state=open]>svg]:text-primary",
-                                "[&>svg]:ml-auto" 
+                                "text-lg font-medium text-foreground/80 hover:text-primary hover:no-underline py-3 px-0 data-[state=open]:text-primary [&[data-state=open]>svg]:text-primary"
                               )}
                             >
-                              <Link
-                                href={item.href || '#'}
-                                onClick={(e) => {
-                                  // If it's a parent of a mega menu, prevent default navigation to allow accordion toggle
-                                  if (item.megaMenuItems && item.megaMenuItems.length > 0) {
-                                     // Let accordion toggle, do not navigate via this click on parent
-                                     // If navigation is also desired for the parent, that must be a separate link or handled differently
-                                  } else {
-                                    setMobileMenuOpen(false); // If it's a direct link, close menu
-                                  }
-                                }}
-                                className="flex flex-1 items-center justify-between"
-                              >
-                                <span>{item.label}</span>
-                              </Link>
+                              {item.label}
                             </AccordionTrigger>
                           <AccordionContent className="pt-1 pb-0 pl-4">
                             <nav className="flex flex-col space-y-2 mt-1">

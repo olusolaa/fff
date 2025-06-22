@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import NavLink from './NavLink';
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTitle, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -343,12 +343,19 @@ export default function Header() {
             </SheetTrigger>
             <SheetContent side="right" className="w-full max-w-xs bg-background p-6 overflow-y-auto">
               <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
-              <div className="mb-6 flex items-center justify-between">
+              <div className="mb-8 flex items-center justify-between">
                 <Link href="/" className="text-xl font-bold font-headline text-primary" onClick={() => setMobileMenuOpen(false)}>
                   Family Tent Ministry
                 </Link>
+                <SheetClose asChild>
+                  <Button variant="ghost" size="icon" className="text-muted-foreground">
+                    <X className="h-5 w-5" />
+                    <span className="sr-only">Close</span>
+                  </Button>
+                </SheetClose>
               </div>
-              <nav className="flex flex-col space-y-1">
+
+              <nav className="flex flex-col space-y-2">
                 {navItems.map((item) => {
                   const itemsToDisplayInAccordion = item.megaMenuItems?.filter(mItem => !mItem.isFullWidthLink);
 
@@ -358,7 +365,7 @@ export default function Header() {
                         <AccordionItem value={item.id} className="border-b-0">
                            <AccordionTrigger
                               className={cn(
-                                "text-lg font-medium text-foreground/80 hover:text-primary hover:no-underline py-3 px-0 data-[state=open]:text-primary [&[data-state=open]>svg]:text-primary"
+                                "text-lg font-medium text-foreground hover:text-primary hover:no-underline py-3 px-0 data-[state=open]:text-primary [&[data-state=open]>svg]:text-primary"
                               )}
                             >
                               {item.label}
@@ -403,18 +410,21 @@ export default function Header() {
                   return (
                     <NavLink 
                       key={item.id} 
-                      href={item.href!} 
+                      href={item.href!}
+                      icon={item.icon}
                       onClick={() => setMobileMenuOpen(false)} 
-                      className="text-lg py-3 space-x-3"
+                      className="text-lg font-medium py-3 px-0 text-foreground hover:text-primary"
+                      iconClassName="h-6 w-6 text-muted-foreground"
                     >
-                      {item.icon && <item.icon className="h-5 w-5 text-muted-foreground" />}
-                      <span>{item.label}</span>
+                      {item.label}
                     </NavLink>
                   );
                 })}
-                 <Button variant="ghost" className="flex items-center justify-start space-x-3 text-lg py-3 px-0 text-foreground/80 hover:text-primary">
-                    <Search className="h-5 w-5 text-muted-foreground" />
-                    <span>Search</span>
+                 <Button asChild variant="ghost" className="flex w-full items-center justify-start space-x-3 text-lg font-medium py-3 px-0 text-foreground hover:text-primary">
+                    <Link href="#" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); }}>
+                      <Search className="h-6 w-6 text-muted-foreground" />
+                      <span>Search</span>
+                    </Link>
                   </Button>
                 <Button asChild variant="default" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg mt-4" onClick={() => setMobileMenuOpen(false)}>
                   <Link href="/new">I'm New</Link>

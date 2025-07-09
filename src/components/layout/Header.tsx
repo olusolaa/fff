@@ -58,6 +58,17 @@ const navItems: NavItem[] = [
     ],
   },
   {
+    id: 'connect',
+    label: 'Connect',
+    isMegaMenu: true,
+    href: '/connect/groups', // Main landing for connect
+    megaMenuItems: [
+        { label: 'Connect in a Group', href: '/connect/groups', icon: Users, isFullWidthLink: true },
+        { label: 'Serve Our City', href: '/connect/serve', icon: HandHeart, category: 'CONNECT'},
+        { label: 'Missions', href: '/connect/missions', icon: Handshake, category: 'CONNECT'},
+    ]
+  },
+  {
     id: 'programs',
     label: 'Programs',
     href: '/programs',
@@ -151,7 +162,7 @@ export default function Header() {
     });
     if (menuTimers.current[menuId]) { // Clear timer for THIS menu if re-entering quickly
       clearTimeout(menuTimers.current[menuId]);
-      delete menuTimers.current[menuId];
+      delete menuTimers.current[timerId];
     }
     setActiveMenu(menuId);
   };
@@ -258,7 +269,7 @@ export default function Header() {
                       </div>
                     )}
                     
-                    {item.id === 'programs' && (
+                    {(item.id === 'programs' || item.id === 'connect') && (
                         <div className="grid grid-cols-2 gap-x-4 gap-y-3">
                             {item.megaMenuItems!.filter(sub => !sub.isFullWidthLink).map((subItem) => (
                                 <Link
@@ -341,12 +352,12 @@ export default function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-full max-w-xs bg-background p-6 overflow-y-auto">
-              <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
               <div className="mb-8 flex items-center justify-between">
+                <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
                 <Link href="/" className="text-xl font-bold font-headline text-primary" onClick={() => setMobileMenuOpen(false)}>
                   Family Tent Ministry
                 </Link>
-                <SheetClose asChild>
+                 <SheetClose asChild>
                   <Button variant="ghost" size="icon" className="text-muted-foreground">
                     <X className="h-5 w-5" />
                     <span className="sr-only">Close</span>
@@ -364,10 +375,11 @@ export default function Header() {
                         <AccordionItem value={item.id} className="border-b-0">
                            <AccordionTrigger
                               className={cn(
-                                "text-lg font-medium text-foreground hover:text-primary hover:no-underline py-3 px-0 data-[state=open]:text-primary [&[data-state=open]>svg]:text-primary"
+                                "text-lg font-medium text-foreground hover:text-primary hover:no-underline py-3 px-0 data-[state=open]:text-primary [&[data-state=open]>svg]:text-primary [&>svg]:ml-auto"
                               )}
                             >
-                              {item.label}
+                               {item.icon && <item.icon className="h-6 w-6 text-muted-foreground mr-3" />}
+                              <span className="mr-auto">{item.label}</span>
                             </AccordionTrigger>
                           <AccordionContent className="pt-1 pb-0 pl-4">
                             <nav className="flex flex-col space-y-2 mt-1">
@@ -408,10 +420,10 @@ export default function Header() {
                     );
                   }
                   return (
-                    <NavLink 
-                      key={item.id} 
+                    <NavLink
+                      key={item.id}
                       href={item.href!}
-                      onClick={() => setMobileMenuOpen(false)} 
+                      onClick={() => setMobileMenuOpen(false)}
                       className="text-lg font-medium py-3 px-0 text-foreground hover:text-primary"
                     >
                       {item.icon && <item.icon className="h-6 w-6 text-muted-foreground" />}

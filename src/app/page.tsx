@@ -1,165 +1,144 @@
 
 import HeroSection from '@/components/shared/HeroSection';
 import ContentBlock from '@/components/shared/ContentBlock';
-import CardGrid, { type CardGridItem } from '@/components/shared/CardGrid';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import Image from 'next/image';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-
-
-const ftmProgramsHighlight: CardGridItem[] = [
-  {
-    id: 'counseling-family',
-    title: 'Counseling & Family Support',
-    description: 'Support for individuals, couples, and families. Includes counseling, family life seminars, and marriage forums.',
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Supportive hands',
-    imageHint: 'family support counseling',
-    actionText: 'Learn More',
-    actionLink: '/programs/counseling-family-support',
-  },
-  {
-    id: 'youth-student',
-    title: 'Youth & Student Empowerment',
-    description: 'Guiding young people and students through clubs (ASC) and school outreaches.',
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Youth group',
-    imageHint: 'youth students learning',
-    actionText: 'Learn More',
-    actionLink: '/programs/youth-student-empowerment',
-  },
-  {
-    id: 'faith-growth',
-    title: 'Faith & Growth',
-    description: 'Deepening spiritual understanding through discipleship classes.',
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Open book',
-    imageHint: 'bible study growth',
-    actionText: 'Learn More',
-    actionLink: '/programs/faith-growth',
-  },
-];
-
-const resourceItems: CardGridItem[] = [
-   {
-    id: 'sermons',
-    title: 'Sermons & Teachings',
-    description: 'Access messages and teachings from Family Tent Ministry events and programs.',
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Sermon graphic',
-    imageHint: 'sermon message teaching',
-    actionText: 'Watch & Listen',
-    actionLink: '/sermons', 
-  },
-  {
-    id: 'guides',
-    title: 'Study Materials',
-    description: 'Find guides and materials to support your spiritual growth and learning.',
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Open book with notes',
-    imageHint: 'study guide book',
-    actionText: 'Find Resources',
-    actionLink: '/resources/guides', 
-  },
-  {
-    id: 'counseling-support-shortcut', 
-    title: 'Counseling Support',
-    description: 'Learn more about our confidential counseling services.',
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageAlt: 'Supportive hands',
-    imageHint: 'support help guidance',
-    actionText: 'Get Support',
-    actionLink: '/programs/counseling-family-support',
-  },
-];
-
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Testimonial from '@/components/shared/Testimonial';
 
 export default function HomePage() {
   return (
     <div>
+      {/* Section 1: The Overture (The Hero) */}
       <HeroSection
-        title="Welcome to Family Tent Ministry"
-        subtitle="Guiding young people toward becoming healthy, responsible, and spiritually grounded members of society."
+        title="A Place to Belong."
+        subtitle="Connecting our community to God, each other, and their purpose."
         imageUrl="https://i.postimg.cc/QdMCtd7t/20250622-2011-image.png"
         imageAlt="A serene landscape with a person looking towards the horizon at sunrise"
+        primaryActionText="Find Your Community"
+        primaryActionLink="/connect/groups"
+        secondaryActionText="Watch a Recent Message"
+        secondaryActionLink="/sermons"
         imageHint="serene landscape sunrise"
-        primaryActionText="Our Programs"
-        primaryActionLink="/programs"
-        secondaryActionText="Partner With Us"
-        secondaryActionLink="/give"
       />
 
-      <ContentBlock
-        title="Who We Are"
-        text={<>
-          <p className="mb-4">Family Tent Ministry is a Christian nonprofit organization dedicated to teaching values and ethics that foster meaningful and purposeful living. We aim to guide young people toward becoming healthy, responsible, and spiritually grounded members of society.</p>
-          <p>Our mission is to collaborate with families, religious institutions, associations, organizations, and communities in promoting values and ethics that will make young people become healthy and responsible members of society.</p>
-        </>}
-        imageUrl="https://placehold.co/800x600.png"
-        imageAlt="Diverse group of people from Family Tent Ministry"
-        imageHint="diverse community FTM"
-        actionText="More About Us"
-        actionLink="/about"
-        imagePosition="right"
-      />
-
-      <ContentBlock
-        title="Our Programs & Gatherings"
-        text="Family Tent Ministry offers a range of programs designed to nurture spiritual growth, strengthen families, and equip individuals for purposeful living. From youth empowerment to faith development and family support, there's a place for everyone to connect and grow."
-        imageUrl="https://placehold.co/800x600.png"
-        imageAlt="People participating in a ministry program"
-        imageHint="community learning FTM"
-        actionText="Explore Our Programs"
-        actionLink="/programs"
-        imagePosition="left"
-        className="bg-secondary/30"
-      />
-
-      <CardGrid title="Featured Program Areas" items={ftmProgramsHighlight} className="bg-background" />
-      
-      <AnimatedSection className="py-16 md:py-24 text-center bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold font-headline md:text-4xl mb-6">Recent Teachings</h2>
-          <p className="text-lg mb-10">Engage with recent messages from our ministry leaders and events. (Content Coming Soon)</p>
-          <div className="aspect-video max-w-3xl mx-auto bg-muted rounded-lg overflow-hidden shadow-xl mb-8">
-            <Image src="https://placehold.co/1280x720.png" alt="Latest sermon video placeholder" data-ai-hint="sermon teaching video" width={1280} height={720} className="w-full h-full object-cover"/>
+      {/* Section 2: The Invitation (Welcome & Gatherings) */}
+      <AnimatedSection className="py-20 md:py-28 text-center bg-background">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <h2 className="text-4xl md:text-5xl font-bold font-headline text-primary mb-6">
+            Welcome Home.
+          </h2>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
+            <Image 
+              src="https://placehold.co/100x100.png" 
+              alt="Lead Pastor"
+              data-ai-hint="pastor portrait"
+              width={80}
+              height={80}
+              className="rounded-full"
+            />
+            <div>
+                <p className="text-lg text-foreground/80">A warm welcome from our community.</p>
+                <p className="font-semibold text-accent">- Pastor Placeholder</p>
+            </div>
           </div>
-          <Button asChild size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
-            <Link href="/sermons">Explore All Teachings</Link>
+          <div className="bg-secondary/30 rounded-lg p-8">
+            <p className="font-bold text-3xl md:text-4xl font-headline text-primary">
+              Sundays at 9:00 AM & 11:00 AM
+            </p>
+          </div>
+          <Button asChild size="lg" className="mt-8 bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Link href="/locations">View Our Locations & Times</Link>
           </Button>
         </div>
       </AnimatedSection>
-
-      <CardGrid title="Explore Resources" items={resourceItems} />
       
-      <AnimatedSection className="py-16 md:py-24 text-center">
+      {/* Section 3: The Heartbeat (Latest Message) */}
+      <AnimatedSection className="py-20 md:py-28 bg-background">
         <div className="container mx-auto px-4">
-           <h2 className="text-3xl font-bold font-headline text-primary md:text-4xl mb-12">Upcoming Events & Seminars</h2>
-           <p className="text-lg text-foreground/80 mb-10">Stay connected and join us for our upcoming events, seminars, and club meetings.</p>
-           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="relative aspect-video w-full overflow-hidden rounded-lg shadow-2xl group cursor-pointer">
+              <Link href="/sermons">
+                <Image 
+                  src="https://placehold.co/1280x720.png" 
+                  alt="Latest Sermon Thumbnail" 
+                  data-ai-hint="sermon graphic art"
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                  <svg className="w-20 h-20 text-white/80 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"></path></svg>
+                </div>
+              </Link>
+            </div>
+            <div className="text-left">
+              <h3 className="text-3xl md:text-4xl font-bold font-headline text-primary mb-4">Finding Joy in the Journey</h3>
+              <p className="text-lg text-accent mb-4">Pastor Jane Smith</p>
+              <p className="text-foreground/80 mb-8">
+                Discover how embracing challenges and finding gratitude can transform your perspective and deepen your faith, no matter the season.
+              </p>
+              <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                <Link href="/sermons">Explore All Messages</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* Section 4: The Pathways (Discover Your Place) */}
+      <AnimatedSection className="py-20 md:py-28 bg-secondary/30">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl md:text-5xl font-bold font-headline text-primary text-center mb-12">
+            Discover Your Place
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
             {[
-              { title: "Family Life Seminar (FLS)", date: "Quarterly (Apr, Jul, Nov)", hint: "family conference poster" },
-              { title: "Adolescent & Singles Club", date: "1st Saturday Monthly", hint: "youth event poster" },
-              { title: "Discipleship Classes", date: "Mondays 5 PM", hint: "study group poster" }
-            ].map((event, i) => (
-                <Card key={`event-${i}`} className="flex flex-col overflow-hidden shadow-lg transition-shadow hover:shadow-xl bg-card">
-                    <div className="relative h-40 w-full">
-                         <Image src={`https://placehold.co/600x300.png`} alt={event.title} layout="fill" objectFit="cover" data-ai-hint={event.hint} className="rounded-t-lg"/>
-                    </div>
-                    <CardHeader className="pb-3 pt-5">
-                        <CardTitle className="font-headline text-xl text-accent mb-1">{event.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex-grow">
-                        <p className="text-sm font-semibold text-primary mb-2">{event.date}</p>
-                        <p className="text-sm text-foreground/70">Details for this event will be available on our events page.</p>
-                    </CardContent>
-                </Card>
+              { title: "Connect in a Group", href: "/connect/groups", image: "https://placehold.co/800x1000.png", hint: "people laughing group" },
+              { title: "Make a Difference", href: "/connect/serve", image: "https://placehold.co/800x1000.png", hint: "volunteers serving community" },
+              { title: "Upcoming Events", href: "/events", image: "https://placehold.co/800x1000.png", hint: "church event vibrant" }
+            ].map(item => (
+              <Link href={item.href} key={item.title} className="group block overflow-hidden rounded-lg shadow-lg relative">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  data-ai-hint={item.hint}
+                  width={800}
+                  height={1000}
+                  className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 p-6">
+                  <h3 className="text-2xl font-bold text-white font-headline">{item.title}</h3>
+                </div>
+              </Link>
             ))}
-           </div>
-           <Button asChild size="lg" className="mt-12 bg-primary hover:bg-primary/90 text-primary-foreground">
-            <Link href="/events">View All Events</Link>
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* Section 5: The Proof (A Story of Life Change) */}
+      <Testimonial
+        quote="I walked in empty and, for the first time in my life, I found a family."
+        attribution="Jessica's Story"
+        imageUrl="https://placehold.co/800x1000.png"
+        imageHint="woman portrait hope"
+        actionLink="/story"
+        actionText="Read Her Story"
+      />
+      
+      {/* Section 6: The Final Handshake (The Onboarding Path) */}
+      <AnimatedSection className="py-20 md:py-28 bg-primary text-primary-foreground">
+        <div className="container mx-auto px-4 text-center max-w-2xl">
+          <h2 className="text-3xl md:text-4xl font-bold font-headline mb-4">
+            New Here?
+          </h2>
+          <p className="text-lg text-primary-foreground/90 mb-8">
+            We'd love to help you get connected. Let us guide you on the next steps in your journey with us.
+          </p>
+          <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+            <Link href="/new">Start Your Journey</Link>
           </Button>
         </div>
       </AnimatedSection>

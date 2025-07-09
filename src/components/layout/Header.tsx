@@ -30,8 +30,8 @@ interface NavSubItem {
   label: string;
   href: string;
   icon?: LucideIcon;
-  category?: string; // Used in Resources mega menu & Ministries
-  description?: string; // No longer used in Ministries mega menu directly
+  category?: string; // Used in Resources mega menu & Programs
+  description?: string; // No longer used in Programs mega menu directly
   isFullWidthLink?: boolean; // For top links in mega menus
 }
 
@@ -58,18 +58,18 @@ const navItems: NavItem[] = [
     ],
   },
   {
-    id: 'ministries',
-    label: 'Ministries',
-    href: '/ministries',
+    id: 'programs',
+    label: 'Programs',
+    href: '/programs',
     isMegaMenu: true,
     megaMenuItems: [
-        { label: 'All Ministries Overview', href: '/ministries', icon: LayoutDashboard, isFullWidthLink: true },
-        { label: 'Adolescent & Singles Club', href: '/ministries/adolescent-singles-club', icon: Users, category: 'MINISTRY'},
-        { label: 'School Outreaches', href: '/ministries/school-outreaches', icon: School, category: 'MINISTRY' },
-        { label: 'Counseling Services', href: '/programs/counseling-family-support', icon: HeartHandshake, category: 'MINISTRY' },
-        { label: 'Family Life Seminars', href: '/ministries/family-life-seminars', icon: CalendarDays, category: 'MINISTRY' },
-        { label: 'Marriage Forum', href: '/programs/counseling-family-support', icon: Users2, category: 'MINISTRY' }, // Points to category page
-        { label: 'Discipleship Classes', href: '/programs/faith-growth', icon: BookOpen, category: 'MINISTRY' }, // Points to category page
+        { label: 'All Programs Overview', href: '/programs', icon: LayoutDashboard, isFullWidthLink: true },
+        { label: 'Adolescent & Singles Club', href: '/programs/youth-student-empowerment', icon: Users, category: 'PROGRAMS'},
+        { label: 'School Outreaches', href: '/programs/school-outreaches', icon: School, category: 'PROGRAMS' },
+        { label: 'Counseling Services', href: '/programs/counseling-family-support', icon: HeartHandshake, category: 'PROGRAMS' },
+        { label: 'Family Life Seminars', href: '/programs/family-life-seminars', icon: CalendarDays, category: 'PROGRAMS' },
+        { label: 'Marriage Forum', href: '/programs/counseling-family-support', icon: Users2, category: 'PROGRAMS' }, // Points to category page
+        { label: 'Discipleship Classes', href: '/programs/faith-growth', icon: BookOpen, category: 'PROGRAMS' }, // Points to category page
     ]
   },
   {
@@ -258,7 +258,7 @@ export default function Header() {
                       </div>
                     )}
                     
-                    {item.id === 'ministries' && (
+                    {item.id === 'programs' && (
                         <div className="grid grid-cols-2 gap-x-4 gap-y-3">
                             {item.megaMenuItems!.filter(sub => !sub.isFullWidthLink).map((subItem) => (
                                 <Link
@@ -311,7 +311,6 @@ export default function Header() {
                   onClick={() => setActiveMenu(null)}
                 >
                   <Link href={item.href}>
-                    {item.icon && <item.icon className={cn("h-5 w-5", linkStyles.iconColor)} />}
                     <span>{item.label}</span>
                   </Link>
                 </Button>
@@ -375,11 +374,10 @@ export default function Header() {
                               {item.megaMenuItems?.find(m => m.isFullWidthLink) && (
                                 <NavLink 
                                   href={item.megaMenuItems.find(m => m.isFullWidthLink)!.href} 
-                                  icon={item.megaMenuItems.find(m => m.isFullWidthLink)!.icon} 
                                   onClick={() => setMobileMenuOpen(false)} 
                                   className="text-base font-semibold py-1 hover:text-primary"
-                                  iconClassName="h-5 w-5 text-muted-foreground"
                                 >
+                                  {item.megaMenuItems.find(m => m.isFullWidthLink)!.icon && <item.megaMenuItems.find(m => m.isFullWidthLink)!.icon className="h-5 w-5 text-muted-foreground" />}
                                   {item.megaMenuItems.find(m => m.isFullWidthLink)!.label}
                                 </NavLink>
                               )}
@@ -388,7 +386,8 @@ export default function Header() {
                                   <React.Fragment key={category}>
                                     <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mt-2 mb-1">{category}</h4>
                                     {item.megaMenuItems!.filter(sub => sub.category === category && !sub.isFullWidthLink).map((subItem) => (
-                                      <NavLink key={subItem.label} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary" iconClassName="h-5 w-5 text-muted-foreground">
+                                      <NavLink key={subItem.label} href={subItem.href} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary">
+                                        {subItem.icon && <subItem.icon className="h-5 w-5 text-muted-foreground" />}
                                         {subItem.label}
                                       </NavLink>
                                     ))}
@@ -396,7 +395,8 @@ export default function Header() {
                                 ))
                               ) : (
                                 itemsToDisplayInAccordion?.map(subItem => (
-                                  <NavLink key={subItem.label} href={subItem.href} icon={subItem.icon} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary" iconClassName="h-5 w-5 text-muted-foreground">
+                                  <NavLink key={subItem.label} href={subItem.href} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary">
+                                    {subItem.icon && <subItem.icon className="h-5 w-5 text-muted-foreground" />}
                                     {subItem.label}
                                   </NavLink>
                                 ))
@@ -411,12 +411,11 @@ export default function Header() {
                     <NavLink 
                       key={item.id} 
                       href={item.href!}
-                      icon={item.icon}
                       onClick={() => setMobileMenuOpen(false)} 
                       className="text-lg font-medium py-3 px-0 text-foreground hover:text-primary"
-                      iconClassName="h-6 w-6 text-muted-foreground"
                     >
-                      {item.label}
+                      {item.icon && <item.icon className="h-6 w-6 text-muted-foreground" />}
+                      <span>{item.label}</span>
                     </NavLink>
                   );
                 })}

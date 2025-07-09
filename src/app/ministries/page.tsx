@@ -47,12 +47,11 @@ const ftmProgramCategories: CardGridItem[] = [
   },
 ];
 
-// Renamed ProgramsPage to MinistriesPage
-export default function MinistriesPage() {
+export default function ProgramsPage() {
   return (
     <div>
       <ContentBlock
-        title="Our Ministries" // Title updated
+        title="Our Programs"
         text="Family Tent Ministry offers a variety of programs designed to foster spiritual growth, strengthen families, and equip individuals with values for purposeful living. Explore our main program areas below."
         className="bg-secondary/30 text-center"
         titleClassName="text-4xl md:text-5xl"

@@ -32,7 +32,7 @@ export default function LeadershipPage() {
             {leadershipTeam.map(leader => (
               <div key={leader.name} className="flex flex-col items-center text-center p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow bg-card">
                 <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden mb-4 shadow-lg">
-                  <Image src={leader.img} alt={leader.name} layout="fill" objectFit="cover" data-ai-hint={leader.hint}/>
+                  <Image src={leader.img} alt={leader.name} fill className="object-cover" data-ai-hint={leader.hint}/>
                 </div>
                 <h3 className="text-xl font-semibold font-headline text-primary mb-1">{leader.name}</h3>
                 <p className="text-md text-accent">{leader.title}</p>

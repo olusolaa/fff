@@ -41,8 +41,8 @@ export default function CardGrid({ title, items, className, gridCols = "md:grid-
                   <Image
                     src={item.imageUrl}
                     alt={item.imageAlt}
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    className="object-cover"
                     data-ai-hint={item.imageHint || "abstract"}
                   />
                 </div>

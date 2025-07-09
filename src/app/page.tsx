@@ -1,11 +1,9 @@
 
 import HeroSection from '@/components/shared/HeroSection';
-import ContentBlock from '@/components/shared/ContentBlock';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import Image from 'next/image';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Testimonial from '@/components/shared/Testimonial';
 
 export default function HomePage() {
@@ -99,13 +97,12 @@ export default function HomePage() {
               { title: "Make a Difference", href: "/connect/serve", image: "https://placehold.co/800x1000.png", hint: "volunteers serving community" },
               { title: "Upcoming Events", href: "/events", image: "https://placehold.co/800x1000.png", hint: "church event vibrant" }
             ].map(item => (
-              <Link href={item.href} key={item.title} className="group block overflow-hidden rounded-lg shadow-lg relative">
+              <Link href={item.href} key={item.title} className="group block overflow-hidden rounded-lg shadow-lg relative h-96">
                 <Image
                   src={item.image}
                   alt={item.title}
                   data-ai-hint={item.hint}
-                  width={800}
-                  height={1000}
+                  fill
                   className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>

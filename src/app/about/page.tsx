@@ -12,6 +12,7 @@ const coreValues: CardGridItem[] = [
     title: 'Christ-Centered Values',
     description: 'Our work is rooted in Christian values and the teachings of the gospel, guiding young people to purposeful living.',
     imageUrl: 'https://placehold.co/600x400.png',
+    imageAlt: 'Gospel symbol',
     imageHint: 'cross symbol open bible'
   },
   {
@@ -19,6 +20,7 @@ const coreValues: CardGridItem[] = [
     title: 'Supportive Community',
     description: 'We foster a supportive community, collaborating with families and institutions to nurture responsible individuals.',
     imageUrl: 'https://placehold.co/600x400.png',
+    imageAlt: 'Community',
     imageHint: 'diverse people talking'
   },
   {
@@ -26,6 +28,7 @@ const coreValues: CardGridItem[] = [
     title: 'Holistic Development',
     description: 'We are dedicated to promoting values and ethics that lead to holistic development and community transformation.',
     imageUrl: 'https://placehold.co/600x400.png',
+    imageAlt: 'Holistic development',
     imageHint: 'growing plant city'
   },
 ];
@@ -91,7 +94,7 @@ export default function AboutPage() {
             ].map((leader, index) => (
               <div key={`${leader.name}-${index}`} className="flex flex-col items-center">
                 <div className="relative w-40 h-40 rounded-full overflow-hidden mb-4 shadow-lg">
-                  <Image src={leader.img} alt={leader.name} layout="fill" objectFit="cover" data-ai-hint={leader.hint}/>
+                  <Image src={leader.img} alt={leader.name} fill className="object-cover" data-ai-hint={leader.hint}/>
                 </div>
                 <h3 className="text-xl font-semibold font-headline text-primary">{leader.name}</h3>
                 <p className="text-md text-accent">{leader.title}</p>

@@ -67,8 +67,8 @@ export default function ContentBlock({
               <Image
                 src={imageUrl}
                 alt={imageAlt}
-                layout="fill"
-                objectFit="cover"
+                fill
+                className="object-cover"
                 data-ai-hint={imageHint || "community gathering"}
               />
             </div>

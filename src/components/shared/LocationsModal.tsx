@@ -55,10 +55,8 @@ export default function LocationsModal({ isOpen, onClose }: LocationsModalProps)
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen && typeof window === 'undefined') {
-    return null;
-  }
-  
+  // Always render the modal structure. CSS will handle visibility.
+  // This prevents the server/client mismatch (hydration error).
   return (
     <>
       <div className="modal-overlay" onClick={onClose}></div>

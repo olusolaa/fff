@@ -38,32 +38,56 @@ export default function LocationsModal({ isOpen, onClose }: LocationsModalProps)
     const handleKeydown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose();
+        return;
+      }
+
+      if (event.key === 'Tab') {
+        if (!modalRef.current) return;
+
+        const focusableElements = Array.from(
+          modalRef.current.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled])'
+          )
+        );
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (event.shiftKey) { // Shift + Tab
+          if (document.activeElement === firstElement) {
+            event.preventDefault();
+            lastElement.focus();
+          }
+        } else { // Tab
+          if (document.activeElement === lastElement) {
+            event.preventDefault();
+            firstElement.focus();
+          }
+        }
       }
     };
 
     if (isOpen) {
       previouslyFocusedElement.current = document.activeElement as HTMLElement;
       document.body.classList.add('modal-is-open');
-      window.addEventListener('keydown', handleKeydown);
       
-      // Focus trapping logic
-      const focusableElements = modalRef.current?.querySelectorAll<HTMLElement>(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-      if (focusableElements && focusableElements.length > 0) {
-        focusableElements[0].focus();
-      }
+      setTimeout(() => {
+        const firstFocusable = modalRef.current?.querySelector<HTMLElement>(
+          'a[href], button:not([disabled])'
+        );
+        firstFocusable?.focus();
+      }, 400); // Aligns with CSS animation duration
 
+      window.addEventListener('keydown', handleKeydown);
     } else {
       document.body.classList.remove('modal-is-open');
-      if (previouslyFocusedElement.current) {
-        previouslyFocusedElement.current.focus();
-      }
     }
 
     return () => {
       window.removeEventListener('keydown', handleKeydown);
       document.body.classList.remove('modal-is-open');
+      if (previouslyFocusedElement.current) {
+        previouslyFocusedElement.current.focus();
+      }
     };
   }, [isOpen, onClose]);
 
@@ -104,8 +128,9 @@ export default function LocationsModal({ isOpen, onClose }: LocationsModalProps)
                 <Image
                   src={location.imageUrl}
                   alt={`The Family Tent Ministry - ${location.name}`}
-                  fill
-                  className="object-cover"
+                  width={600}
+                  height={400}
+                  className="w-full h-full object-cover"
                   data-ai-hint={location.imageHint}
                 />
               </div>

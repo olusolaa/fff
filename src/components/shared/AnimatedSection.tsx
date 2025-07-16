@@ -41,12 +41,12 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, className }
   }, []);
 
   return (
-    <div
+    <section
       ref={sectionRef}
-      className={cn('transition-opacity duration-500 ease-out', isVisible ? 'opacity-100' : 'opacity-0', className, { 'is-visible': isVisible })}
+      className={cn( isVisible ? 'is-visible' : '', className)}
     >
       {children}
-    </div>
+    </section>
   );
 };
 

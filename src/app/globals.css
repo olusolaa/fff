@@ -156,8 +156,8 @@ body {
 
 /* SECTION 2.2: THE PERSONAL WELCOME */
 .pastor-photo {
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
   margin: 0 auto 1.5rem auto;
@@ -170,7 +170,7 @@ body {
   font-family: var(--font-serif);
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 700;
-  color: var(--text-dark-gray);
+  color: hsl(var(--text-dark-gray-hsl));
   margin-bottom: 1rem;
 }
 
@@ -178,7 +178,7 @@ body {
   font-family: var(--font-sans);
   font-size: clamp(1.05rem, 2vw, 1.125rem);
   line-height: 1.7;
-  color: var(--text-dark-gray);
+  color: hsl(var(--text-dark-gray-hsl));
   margin-bottom: 2rem;
 }
 
@@ -196,31 +196,6 @@ body {
 
 .invitation-section.is-visible .divider-line {
   transform: scaleX(1);
-}
-
-.gathering-eyebrow {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--text-dark-gray);
-  opacity: 0.7;
-  margin-bottom: 1rem;
-}
-
-.gathering-times {
-  font-family: var(--font-sans);
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 700;
-  color: var(--text-dark-gray);
-  margin-bottom: 2.5rem;
-}
-
-.gathering-times span {
-  margin: 0 0.5rem;
-  font-weight: 400;
-  color: hsl(var(--accent-olive-green-hsl));
 }
 
 .locations-button {
@@ -246,4 +221,54 @@ body {
   transform: translateY(0);
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   transition-duration: 100ms;
+}
+
+
+/* MODAL STYLES */
+body.modal-open {
+  overflow: hidden;
+}
+
+body.modal-open main {
+  transform: scale(0.95);
+  filter: saturate(0.8) blur(8px);
+  transition: transform 400ms ease-out, filter 400ms ease-out;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(33, 33, 33, 0.3);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 400ms ease-out;
+  pointer-events: none;
+}
+
+body.modal-open .modal-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-window {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  width: 90vw;
+  max-width: 800px;
+  opacity: 0;
+  background: hsl(var(--background-off-white-hsl));
+  border-radius: 1rem;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  z-index: 101;
+  transition: opacity 400ms ease-out, transform 400ms ease-out;
+  pointer-events: none;
+}
+
+body.modal-open .modal-window {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
 }

@@ -1,4 +1,7 @@
 
+'use client';
+
+import { useState } from 'react';
 import HeroSection from '@/components/shared/HeroSection';
 import Testimonial from '@/components/shared/Testimonial';
 import { Button } from '@/components/ui/button';
@@ -7,6 +10,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Play } from 'lucide-react';
 import AnimatedSection from '@/components/shared/AnimatedSection';
+import LocationsModal from '@/components/shared/LocationsModal';
 
 const pathwayItems = [
   {
@@ -30,6 +34,8 @@ const pathwayItems = [
 ];
 
 export default function HomePage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <>
       <HeroSection
@@ -48,10 +54,10 @@ export default function HomePage() {
       <AnimatedSection className="invitation-section">
         <div className="invitation-content-wrapper">
           <Image
-            src="https://placehold.co/80x80.png"
+            src="https://placehold.co/120x120.png"
             alt="Lead Pastor"
-            width={80}
-            height={80}
+            width={120}
+            height={120}
             className="pastor-photo"
             data-ai-hint="pastor portrait"
           />
@@ -60,21 +66,20 @@ export default function HomePage() {
             We believe church is more than a building—it's a family. And we're so glad you've stopped by our digital home. We'd love for you to join us.
           </p>
           
-          {/* Placeholder for animated signature SVG */}
           <div className="pastor-signature-placeholder mb-10">
              <p className="text-lg text-foreground/80 font-serif italic">- Pastor John Doe</p>
           </div>
           
           <div className="divider-line"></div>
-          <p className="gathering-eyebrow">Gathering Times</p>
-          <p className="gathering-times">
-            Sundays <span>&</span> 9:00 AM & 11:00 AM
-          </p>
-          <Link href="/locations" className="locations-button">
-            View Our Locations & Times
-          </Link>
+          
+          <button onClick={() => setIsModalOpen(true)} className="locations-button">
+            View Our Gatherings
+          </button>
         </div>
       </AnimatedSection>
+      
+      <LocationsModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
 
       {/* Section 3: The Heartbeat (Latest Message) */}
       <section className="py-20 md:py-28 bg-background">

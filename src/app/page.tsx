@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Play } from 'lucide-react';
+import AnimatedSection from '@/components/shared/AnimatedSection';
 
 const pathwayItems = [
   {
@@ -44,7 +45,7 @@ export default function HomePage() {
       />
 
       {/* Section 2: The Invitation (Welcome & Gatherings) */}
-      <section className="py-20 md:py-28 text-center bg-background">
+      <AnimatedSection className="py-20 md:py-28 text-center bg-background">
         <div className="container mx-auto px-4 max-w-2xl">
           <h2 className="text-4xl md:text-5xl font-headline text-primary mb-6">Welcome Home.</h2>
           <div className="flex justify-center items-center mb-6">
@@ -68,7 +69,7 @@ export default function HomePage() {
             </Button>
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
       {/* Section 3: The Heartbeat (Latest Message) */}
       <section className="py-20 md:py-28 bg-background">

@@ -225,50 +225,48 @@ body {
 
 
 /* MODAL STYLES */
-body.modal-open {
+body[data-state='open'] {
   overflow: hidden;
 }
 
-body.modal-open main {
+body[data-state='open'] main {
   transform: scale(0.95);
   filter: saturate(0.8) blur(8px);
   transition: transform 400ms ease-out, filter 400ms ease-out;
 }
 
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(33, 33, 33, 0.3);
-  backdrop-filter: blur(10px);
-  z-index: 100;
-  opacity: 0;
-  transition: opacity 400ms ease-out;
-  pointer-events: none;
+@keyframes overlay-show {
+  from { opacity: 0 }
+  to { opacity: 1 }
 }
 
-body.modal-open .modal-overlay {
-  opacity: 1;
-  pointer-events: auto;
+@keyframes overlay-hide {
+  from { opacity: 1 }
+  to { opacity: 0 }
 }
 
-.modal-window {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.9);
-  width: 90vw;
-  max-width: 800px;
-  opacity: 0;
-  background: hsl(var(--background-off-white-hsl));
-  border-radius: 1rem;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-  z-index: 101;
-  transition: opacity 400ms ease-out, transform 400ms ease-out;
-  pointer-events: none;
+.modal-overlay[data-state='open'] {
+  animation: overlay-show 400ms ease-out forwards;
 }
 
-body.modal-open .modal-window {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-  pointer-events: auto;
+.modal-overlay[data-state='closed'] {
+  animation: overlay-hide 400ms ease-out forwards;
+}
+
+@keyframes content-show {
+  from { opacity: 0; transform: translate(-50%, -48%) scale(0.96) }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1) }
+}
+
+@keyframes content-hide {
+  from { opacity: 1; transform: translate(-50%, -50%) scale(1) }
+  to { opacity: 0; transform: translate(-50%, -48%) scale(0.96) }
+}
+
+.modal-window[data-state='open'] {
+  animation: content-show 400ms ease-out forwards;
+}
+
+.modal-window[data-state='closed'] {
+  animation: content-hide 400ms ease-out forwards;
 }

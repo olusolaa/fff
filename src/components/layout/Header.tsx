@@ -65,7 +65,7 @@ const navItems: NavItem[] = [
     megaMenuItems: [
         { label: 'Connect in a Group', href: '/connect/groups', icon: Users, isFullWidthLink: true },
         { label: 'Serve Our City', href: '/connect/serve', icon: HandHeart, category: 'CONNECT'},
-        { label: 'Missions', href: '/connect/missions', icon: Handshake, category: 'CONNECT'},
+        { label: 'Missions', href: '/connect/missions', icon: HeartHandshake, category: 'CONNECT'},
     ]
   },
   {
@@ -162,7 +162,7 @@ export default function Header() {
     });
     if (menuTimers.current[menuId]) { // Clear timer for THIS menu if re-entering quickly
       clearTimeout(menuTimers.current[menuId]);
-      delete menuTimers.current[timerId];
+      delete menuTimers.current[menuId];
     }
     setActiveMenu(menuId);
   };
@@ -383,16 +383,23 @@ export default function Header() {
                             </AccordionTrigger>
                           <AccordionContent className="pt-1 pb-0 pl-4">
                             <nav className="flex flex-col space-y-2 mt-1">
-                              {item.megaMenuItems?.find(m => m.isFullWidthLink) && (
-                                <NavLink 
-                                  href={item.megaMenuItems.find(m => m.isFullWidthLink)!.href} 
-                                  onClick={() => setMobileMenuOpen(false)} 
-                                  className="text-base font-semibold py-1 hover:text-primary"
-                                >
-                                  {item.megaMenuItems.find(m => m.isFullWidthLink)!.icon && <item.megaMenuItems.find(m => m.isFullWidthLink)!.icon className="h-5 w-5 text-muted-foreground" />}
-                                  {item.megaMenuItems.find(m => m.isFullWidthLink)!.label}
-                                </NavLink>
-                              )}
+                              {(() => {
+                                const fullWidthLink = item.megaMenuItems?.find(m => m.isFullWidthLink);
+                                if (!fullWidthLink) return null;
+                                
+                                const IconComponent = fullWidthLink.icon;
+
+                                return (
+                                  <NavLink 
+                                    href={fullWidthLink.href} 
+                                    onClick={() => setMobileMenuOpen(false)} 
+                                    className="text-base font-semibold py-1 hover:text-primary"
+                                  >
+                                    {IconComponent && <IconComponent className="h-5 w-5 text-muted-foreground" />}
+                                    {fullWidthLink.label}
+                                  </NavLink>
+                                );
+                              })()}
                               {item.id === 'resources' ? (
                                 (['WATCH', 'LISTEN', 'READ'] as const).map(category => (
                                   <React.Fragment key={category}>

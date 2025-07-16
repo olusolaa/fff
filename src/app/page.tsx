@@ -45,29 +45,34 @@ export default function HomePage() {
       />
 
       {/* Section 2: The Invitation (Welcome & Gatherings) */}
-      <AnimatedSection className="py-20 md:py-28 text-center bg-background">
-        <div className="container mx-auto px-4 max-w-2xl">
-          <h2 className="text-4xl md:text-5xl font-headline text-primary mb-6">Welcome Home.</h2>
-          <div className="flex justify-center items-center mb-6">
-            <Image
-              src="https://placehold.co/80x80.png"
-              alt="Lead Pastor"
-              width={80}
-              height={80}
-              className="rounded-full"
-              data-ai-hint="pastor portrait"
-            />
-          </div>
-          <p className="text-lg text-foreground/80 mb-8">
-            We're so glad you're here. We believe everyone is looking for a place to belong. Our church is a community of people learning to follow Jesus and love our city together. We'd love for you to join us.
+      <AnimatedSection className="invitation-section">
+        <div className="invitation-content-wrapper">
+          <Image
+            src="https://placehold.co/80x80.png"
+            alt="Lead Pastor"
+            width={80}
+            height={80}
+            className="pastor-photo"
+            data-ai-hint="pastor portrait"
+          />
+          <h2 className="welcome-headline">Welcome Home.</h2>
+          <p className="welcome-paragraph">
+            We believe church is more than a building—it's a family. And we're so glad you've stopped by our digital home. We'd love for you to join us.
           </p>
-          <div>
-            <p className="text-3xl font-bold text-foreground mb-2">Sundays</p>
-            <p className="text-3xl font-bold text-foreground mb-6">9:00 AM & 11:00 AM</p>
-            <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-              <Link href="/locations">View Our Locations & Times</Link>
-            </Button>
+          
+          {/* Placeholder for animated signature SVG */}
+          <div className="pastor-signature-placeholder mb-10">
+             <p className="text-lg text-foreground/80 font-serif italic">- Pastor John Doe</p>
           </div>
+          
+          <div className="divider-line"></div>
+          <p className="gathering-eyebrow">Gathering Times</p>
+          <p className="gathering-times">
+            Sundays <span>&</span> 9:00 AM & 11:00 AM
+          </p>
+          <Link href="/locations" className="locations-button">
+            View Our Locations & Times
+          </Link>
         </div>
       </AnimatedSection>
 

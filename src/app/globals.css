@@ -101,22 +101,6 @@ body {
 }
 
 @layer utilities {
-  .fade-in-load {
-    animation: fadeInAnimation 0.8s ease-out forwards;
-    opacity: 0;
-  }
-
-  @keyframes fadeInAnimation {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
   .animate-fade-in-slow {
     animation: fadeInSlow 2s ease-out forwards;
     opacity: 0;
@@ -140,4 +124,126 @@ body {
       transform: translateY(0);
     }
   }
+}
+
+/* 
+=====================================================================
+  PHASE 2: THE INVITATION (WELCOME & GATHERINGS) CSS BLUEPRINT
+=====================================================================
+*/
+
+/* SECTION 2.1: LAYOUT & ANIMATION */
+.invitation-section {
+  display: flex;
+  justify-content: center;
+  padding: clamp(4rem, 10vw, 8rem) 1.5rem;
+  overflow: hidden;
+}
+
+.invitation-content-wrapper {
+  width: 100%;
+  max-width: 65ch;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1), transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.invitation-section.is-visible .invitation-content-wrapper {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* SECTION 2.2: THE PERSONAL WELCOME */
+.pastor-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 1.5rem auto;
+  border: 1px solid #E9E5E2;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition-delay: 100ms;
+}
+
+.welcome-headline {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--text-dark-gray);
+  margin-bottom: 1rem;
+}
+
+.welcome-paragraph {
+  font-family: var(--font-sans);
+  font-size: clamp(1.05rem, 2vw, 1.125rem);
+  line-height: 1.7;
+  color: var(--text-dark-gray);
+  margin-bottom: 2rem;
+}
+
+/* SECTION 2.3: GATHERING INFORMATION */
+.divider-line {
+  width: 80px;
+  height: 1px;
+  background-color: hsl(var(--accent-olive-green-hsl)); /* Using HSL variable */
+  margin: 0 auto 2.5rem auto;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 700ms cubic-bezier(0.86, 0, 0.07, 1);
+  transition-delay: 500ms; /* Shortened delay */
+}
+
+.invitation-section.is-visible .divider-line {
+  transform: scaleX(1);
+}
+
+.gathering-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-dark-gray);
+  opacity: 0.7;
+  margin-bottom: 1rem;
+}
+
+.gathering-times {
+  font-family: var(--font-sans);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--text-dark-gray);
+  margin-bottom: 2.5rem;
+}
+
+.gathering-times span {
+  margin: 0 0.5rem;
+  font-weight: 400;
+  color: hsl(var(--accent-olive-green-hsl));
+}
+
+.locations-button {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background-color: hsl(var(--accent-olive-green-hsl));
+  color: white;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1), letter-spacing 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.locations-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.15);
+  letter-spacing: 0.02em;
+}
+
+.locations-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition-duration: 100ms;
 }

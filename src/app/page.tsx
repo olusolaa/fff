@@ -1,6 +1,7 @@
 
 'use client';
 
+import { useState } from 'react';
 import HeroSection from '@/components/shared/HeroSection';
 import Testimonial from '@/components/shared/Testimonial';
 import { Button } from '@/components/ui/button';
@@ -33,6 +34,8 @@ const pathwayItems = [
 ];
 
 export default function HomePage() {
+  const [isModalOpen, setModalOpen] = useState(false);
+
   return (
     <>
       <HeroSection
@@ -69,13 +72,13 @@ export default function HomePage() {
           
           <div className="divider-line"></div>
           
-          <LocationsModal>
-            <button className="locations-button">
-              View Our Gatherings
-            </button>
-          </LocationsModal>
+          <button className="locations-button" onClick={() => setModalOpen(true)}>
+            View Our Gatherings
+          </button>
         </div>
       </AnimatedSection>
+      <LocationsModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
+
 
       {/* Section 3: The Heartbeat (Latest Message) */}
       <section className="py-20 md:py-28 bg-background">

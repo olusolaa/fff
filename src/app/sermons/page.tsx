@@ -710,7 +710,7 @@ export default function SanctuaryMediaHub() {
                       <div className="article-shelf">
                           {relatedContent.articles.map(item => (
                               <div key={item.id} className="article-card">
-                                  <Image src={item.image} alt={item.title} data-ai-hint={item.hint} layout="fill" className="article-card-image"/>
+                                  <Image src={item.image} alt={item.title} data-ai-hint={item.hint} fill className="article-card-image"/>
                                   <div className="article-card-overlay"/>
                                   <div className="article-card-content">
                                       <FileText className="article-card-icon"/>
@@ -730,10 +730,11 @@ export default function SanctuaryMediaHub() {
                       <div className="podcast-shelf">
                           {relatedContent.podcasts.map(item => (
                               <div key={item.id} className="podcast-card">
-                                  <Image src={item.image} alt={item.title} data-ai-hint={item.hint} width={400} height={400} className="podcast-card-image"/>
-                                  <div className="podcast-card-overlay"/>
+                                  <div className="podcast-card-image-container">
+                                    <Image src={item.image} alt={item.title} data-ai-hint={item.hint} fill className="podcast-card-image"/>
+                                    <Headphones className="podcast-card-icon"/>
+                                  </div>
                                   <div className="podcast-card-content">
-                                      <Headphones className="podcast-card-icon"/>
                                       <h4 className="podcast-card-title">{item.title}</h4>
                                       <p className="podcast-card-listen-time">{item.listenTime}</p>
                                   </div>
@@ -749,9 +750,9 @@ export default function SanctuaryMediaHub() {
                   <div className="shelf-scroll-container">
                       <div className="book-shelf">
                           {relatedContent.books.map(item => (
-                              <div key={item.id} className="book-card">
-                                  <div className="book-card-image-wrapper">
-                                      <Image src={item.image} alt={item.title} data-ai-hint={item.hint} width={400} height={600} className="book-card-image"/>
+                              <div key={item.id} className="book-card-container">
+                                  <div className="book-card">
+                                    <Image src={item.image} alt={item.title} data-ai-hint={item.hint} fill className="book-card-image"/>
                                   </div>
                               </div>
                           ))}
@@ -814,3 +815,5 @@ export default function SanctuaryMediaHub() {
     </div>
   );
 }
+
+    

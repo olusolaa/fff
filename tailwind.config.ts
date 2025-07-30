@@ -17,8 +17,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        headline: ['Alegreya', 'serif'],
-        body: ['Inter', 'sans-serif'],
+        body: ['inter', 'sans-serif'],
+        headline: ['alegreya', 'serif'],
+        handwriting: ['var(--font-caveat)', 'cursive'],
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -86,8 +87,40 @@ export default {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in-load': 'fadeInAnimation 0.8s ease-out forwards', /* Added from globals.css for consistency */
+      },backgroundImage: {
+        'paper-pattern': "linear-gradient(to bottom, hsla(41, 23%, 64%, 0.7) 1px, transparent 1px)",
       },
+      backgroundSize: {
+        'paper-pattern-size': '100% 2.5rem',
+      },
+      typography: (theme: (arg0: string) => any) => ({
+        DEFAULT: {
+          css: {
+            '--tw-prose-body': theme('colors.foreground / 0.9'),
+            '--tw-prose-headings': theme('colors.primary'),
+            '--tw-prose-lead': theme('colors.foreground'),
+            '--tw-prose-links': theme('colors.accent'),
+            '--tw-prose-bold': theme('colors.foreground'),
+            '--tw-prose-counters': theme('colors.muted.foreground'),
+            '--tw-prose-bullets': theme('colors.primary'),
+            '--tw-prose-hr': theme('colors.border'),
+            '--tw-prose-quotes': theme('colors.accent.foreground'),
+            '--tw-prose-quote-borders': theme('colors.accent'),
+            '--tw-prose-captions': theme('colors.muted.foreground'),
+            '--tw-prose-code': theme('colors.foreground'),
+            '--tw-prose-pre-code': theme('colors.foreground'),
+            '--tw-prose-pre-bg': theme('colors.muted'),
+            '--tw-prose-th-borders': theme('colors.border'),
+            '--tw-prose-td-borders': theme('colors.border'),
+            '--tw-prose-invert-body': theme('colors.foreground'),
+            '--tw-prose-invert-headings': theme('colors.primary'),
+            '--tw-prose-invert-lead': theme('colors.foreground'),
+            '--tw-prose-invert-links': theme('colors.accent'),
+            '--tw-prose-invert-bold': theme('colors.foreground'),
+          },
+        },
+      }),
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
 } satisfies Config;

@@ -678,9 +678,9 @@ export default function SanctuaryMediaHub() {
       {/* Section 4: The Discovery Library */}
        <section className="discovery-library-section">
           <div className="container mx-auto">
-              <h2 className="discovery-headline">Explore More on the Nature of Grace</h2>
+              <h2 className="discovery-headline">Explore More on the Heart of Grace</h2>
               
-              {/* Shelf 1: Related Messages */}
+              {/* Shelf 1: More from the Pulpit */}
               <div className="discovery-shelf">
                   <h3 className="shelf-title">More from the Pulpit</h3>
                   <div className="shelf-scroll-container">
@@ -752,9 +752,6 @@ export default function SanctuaryMediaHub() {
                               <div key={item.id} className="book-card">
                                   <div className="book-card-image-wrapper">
                                       <Image src={item.image} alt={item.title} data-ai-hint={item.hint} width={400} height={600} className="book-card-image"/>
-                                  </div>
-                                  <div className="book-card-content">
-                                    <h4 className="book-card-title">{item.title}</h4>
                                   </div>
                               </div>
                           ))}

@@ -677,7 +677,7 @@ export default function SanctuaryMediaHub() {
 
       {/* Section 4: The Discovery Library */}
        <section className="discovery-library-section">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto">
               <h2 className="discovery-headline">Explore More on the Nature of Grace</h2>
               
               {/* Shelf 1: Related Messages */}
@@ -689,7 +689,9 @@ export default function SanctuaryMediaHub() {
                               <div key={item.id} className="sermon-card">
                                   <div className="sermon-card-waveform">
                                       {/* Placeholder for AI Waveform */}
-                                      <div className="w-full h-full bg-primary/10"></div>
+                                      <div className="w-full h-full bg-primary/10 flex items-center justify-center">
+                                        <AudioLines className="w-16 h-16 text-primary/20"/>
+                                      </div>
                                   </div>
                                   <div className="sermon-card-content">
                                       <h4 className="sermon-card-title">{item.title}</h4>
@@ -770,8 +772,8 @@ export default function SanctuaryMediaHub() {
                   <Button asChild size="lg" variant="outline" className="crossroads-button">
                       <Link href="/connect/groups?topic=grace">Discuss This in Community</Link>
                   </Button>
-                  <Button asChild size="lg" className="crossroads-button">
-                      <Link href="/connect/prayer">Talk About This Confidentially</Link>
+                  <Button asChild size="lg" className="bg-accent hover:bg-accent/90 crossroads-button">
+                      <Link href="/contact?subject=prayer">Talk About This Confidentially</Link>
                   </Button>
               </div>
           </div>

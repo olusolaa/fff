@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Alegreya', serif;
+  font-family: 'Alegreya', Arial, Helvetica, sans-serif;
 }
 
 @layer base {
@@ -113,6 +113,16 @@ body {
     animation: fadeInSlow 2s ease-out 1s forwards;
     opacity: 0;
   }
+
+  .cross-fade-enter {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
+
+  .cross-fade-exit {
+    opacity: 1;
+    animation: fadeOut 0.5s ease-in-out forwards;
+  }
   
   @keyframes fadeInSlow {
     from {
@@ -123,6 +133,18 @@ body {
       opacity: 1;
       transform: translateY(0);
     }
+  }
+  @keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }
 

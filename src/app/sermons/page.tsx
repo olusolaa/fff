@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { useState, useRef, useEffect, useMemo, FormEvent } from 'react';
+import React, from 'react';
 import Image from 'next/image';
 import { AnimatePresence, motion, useAnimation } from 'framer-motion';
 import {
@@ -109,10 +109,10 @@ const seriesSermons: Sermon[] = [
 
 const relatedContent = {
     messages: [
-        { id: 2, title: 'The Architect of Hope', speaker: 'Rev. Michael Chen', thumbnail: 'https://placehold.co/600x400/1a2a1a/f5f5f0', hint: 'hope architecture' },
-        { id: 3, title: 'Whispers of the Divine', speaker: 'Dr. Evelyn Reed', thumbnail: 'https://placehold.co/600x400/1a2a1a/f5f5f0', hint: 'divine nature' },
-        { id: 4, title: 'A Tapestry of Faith', speaker: 'Pastor Sarah Jones', thumbnail: 'https://placehold.co/600x400/1a2a1a/f5f5f0', hint: 'faith tapestry' },
-        { id: 5, title: 'The Courage to Begin Again', speaker: 'Dr. Evelyn Reed', thumbnail: 'https://placehold.co/600x400/1a2a1a/f5f5f0', hint: 'courage sunrise' },
+        { id: 2, title: 'The Architect of Hope', speaker: 'Rev. Michael Chen' },
+        { id: 3, title: 'Whispers of the Divine', speaker: 'Dr. Evelyn Reed' },
+        { id: 4, title: 'A Tapestry of Faith', speaker: 'Pastor Sarah Jones' },
+        { id: 5, title: 'The Courage to Begin Again', speaker: 'Dr. Evelyn Reed' },
     ],
     articles: [
         { id: 1, title: 'Grace is More Than a Get-Out-of-Jail-Free Card', image: 'https://placehold.co/800x600.png', hint: 'writing journal', readTime: '5 min read' },
@@ -149,7 +149,7 @@ const TabContent = ({ isVisible, children }: { isVisible: boolean; children: Rea
 const AudioVisualizer = ({ data, progress, isPlaying }: { data: number[], progress: number, isPlaying: boolean }) => {
     const controls = useAnimation();
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (isPlaying) {
             controls.start("playing");
         } else {
@@ -246,30 +246,30 @@ PlayerControls.displayName = 'PlayerControls';
 
 
 export default function SanctuaryMediaHub() {
-  const [activeTab, setActiveTab] = useState<Tab>('notes');
-  const [isPlayerHovered, setPlayerHovered] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isAudioOnly, setIsAudioOnly] = useState(true);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [isDocked, setIsDocked] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [userInput, setUserInput] = useState('');
-  const [isAiResponding, setIsAiResponding] = useState(false);
-  const [notesContent, setNotesContent] = useState('');
-  const [currentSermon, setCurrentSermon] = useState<Sermon>(initialSermon);
+  const [activeTab, setActiveTab] = React.useState<Tab>('notes');
+  const [isPlayerHovered, setPlayerHovered] = React.useState(false);
+  const [isPlaying, setIsPlaying] = React.useState(false);
+  const [isAudioOnly, setIsAudioOnly] = React.useState(true);
+  const [currentTime, setCurrentTime] = React.useState(0);
+  const [isDocked, setIsDocked] = React.useState(false);
+  const [messages, setMessages] = React.useState<Message[]>([]);
+  const [userInput, setUserInput] = React.useState('');
+  const [isAiResponding, setIsAiResponding] = React.useState(false);
+  const [notesContent, setNotesContent] = React.useState('');
+  const [currentSermon, setCurrentSermon] = React.useState<Sermon>(initialSermon);
   
-  const videoRef = useRef<HTMLDivElement>(null);
-  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const videoRef = React.useRef<HTMLDivElement>(null);
+  const chatContainerRef = React.useRef<HTMLDivElement>(null);
   const { toast } = useToast();
-  const waveformData = useMemo(() => Array.from({ length: 150 }, () => Math.random() * 0.8 + 0.2), [currentSermon.id]);
+  const waveformData = React.useMemo(() => Array.from({ length: 150 }, () => Math.random() * 0.8 + 0.2), [currentSermon.id]);
 
-  const activeTranscriptIndex = useMemo(() => {
+  const activeTranscriptIndex = React.useMemo(() => {
     const reversedIndex = currentSermon.transcript.slice().reverse().findIndex(item => item.time <= currentTime);
     if (reversedIndex === -1) return -1;
     return currentSermon.transcript.length - 1 - reversedIndex;
   }, [currentTime, currentSermon.transcript]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const handleScroll = () => {
         if (videoRef.current) {
             const { bottom } = videoRef.current.getBoundingClientRect();
@@ -280,7 +280,7 @@ export default function SanctuaryMediaHub() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     let interval: NodeJS.Timeout;
     if (isPlaying) {
       interval = setInterval(() => {
@@ -296,7 +296,7 @@ export default function SanctuaryMediaHub() {
     return () => clearInterval(interval);
   }, [isPlaying, currentSermon.duration]);
   
-  useEffect(() => {
+  React.useEffect(() => {
       setNotesContent('');
       if (activeTab === 'notes') {
         let index = 0;
@@ -313,7 +313,7 @@ export default function SanctuaryMediaHub() {
       }
     }, [activeTab, currentSermon.id]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (chatContainerRef.current) {
         chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
@@ -353,7 +353,7 @@ export default function SanctuaryMediaHub() {
     if (!isPlaying) setIsPlaying(true);
   };
 
-  const handleAskAI = async (e: FormEvent) => {
+  const handleAskAI = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!userInput.trim() || isAiResponding) return;
     

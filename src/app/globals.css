@@ -161,7 +161,7 @@ body {
 =====================================================================
 */
 
-/* --- Section 2: Speaker's Study --- */
+/* --- Section 2: The Speaker's Study --- */
 .speaker-study-section {
     padding: clamp(4rem, 10vw, 8rem) 1.5rem;
     background-color: hsl(var(--background));

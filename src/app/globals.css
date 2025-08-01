@@ -146,7 +146,19 @@ body {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+  
+  .book-card-container {
+    perspective: 1000px;
+  }
+  .book-card {
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+  }
+  .book-card-container:hover .book-card {
+    transform: rotateY(-30deg) rotateX(5deg) scale(1.05);
+  }
 }
+
 
 /* 
 =====================================================================

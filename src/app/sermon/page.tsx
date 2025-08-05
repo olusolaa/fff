@@ -1,8 +1,10 @@
 
+
 'use client';
 
-import React, { useState, useRef, useEffect, useMemo, FormEvent } from 'react';
+import React, { useState, useRef, useEffect, useMemo, FormEvent, Suspense } from 'react';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import { AnimatePresence, motion, useAnimation } from 'framer-motion';
 import {
   Share2,
@@ -27,6 +29,8 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ScrollPaperTextarea } from '@/components/ui/neumorphic';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Card, CardContent } from '@/components/ui/card';
+import { SermonCard } from '@/components/shared/sermon-card';
+import { AudioVisualizer } from '@/components/ui/audio-visualizer';
 
 
 type Tab = 'notes' | 'transcript' | 'discuss';
@@ -191,17 +195,13 @@ We are called not just to be recipients of grace, but conduits. How can you be a
         seriesPart: 3,
         hint: 'grace banquet'
     },
-];
-
-const seriesData: SermonSeries[] = [
-    {
-        id: 1,
-        title: 'The Echo of Grace',
-        description: 'This series explores the profound and persistent nature of God\'s grace. It\'s not just a single act, but a continuous, resonant echo that shapes our past, present, and future. We will journey through scripture to understand how this amazing grace saves us, sustains us, and sends us out to be echoes of that same love in the world.',
-        graphic: 'https://placehold.co/1600x900/1a2a1a/f5f5f0',
-        sermons: sermonData.filter(s => s.seriesId === 1),
-        topic: 'the Nature of Grace',
-    }
+    { id: 10, title: 'Beyond Deserving', speaker: 'Rev. Michael Chen', date: 'May 14, 2023', thumbnail: 'https://placehold.co/1280x720/a7d1ab/1a2a1a', duration: 2500, notes: '', transcript: [], seriesId: 2, seriesPart: 1, hint: 'grace abstract' },
+    { id: 11, title: 'The Currency of Heaven', speaker: 'Pastor Sarah Jones', date: 'June 1, 2023', thumbnail: 'https://placehold.co/1280x720/a7d1ab/1a2a1a', duration: 2900, notes: '', transcript: [], seriesId: 3, seriesPart: 1, hint: 'heavenly light' },
+    { id: 12, title: 'Held, Not Perfect', speaker: 'Dr. Evelyn Reed', date: 'July 22, 2023', thumbnail: 'https://placehold.co/1280x720/a7d1ab/1a2a1a', duration: 2600, notes: '', transcript: [], seriesId: 4, seriesPart: 1, hint: 'gentle hands' },
+    { id: 13, title: 'The Scandal of Mercy', speaker: 'Rev. Michael Chen', date: 'August 5, 2023', thumbnail: 'https://placehold.co/1280x720/a7d1ab/1a2a1a', duration: 3100, notes: '', transcript: [], seriesId: 2, seriesPart: 2, hint: 'mercy justice' },
+    { id: 14, title: 'Freely Given, Freely Give', speaker: 'Pastor Sarah Jones', date: 'September 10, 2023', thumbnail: 'https://placehold.co/1280x720/a7d1ab/1a2a1a', duration: 2400, notes: '', transcript: [], seriesId: 3, seriesPart: 2, hint: 'giving hands' },
+    { id: 15, title: 'The Strongest Weakness', speaker: 'Dr. Evelyn Reed', date: 'October 1, 2023', thumbnail: 'https://placehold.co/1280x720/a7d1ab/1a2a1a', duration: 2750, notes: '', transcript: [], seriesId: 4, seriesPart: 2, hint: 'strength hope' },
+    { id: 16, title: 'Grace in the Ruins', speaker: 'Rev. Michael Chen', date: 'October 15, 2023', thumbnail: 'https://placehold.co/1280x720/a7d1ab/1a2a1a', duration: 2850, notes: '', transcript: [], seriesId: 2, seriesPart: 3, hint: 'ruins hope' },
 ];
 
 const relatedPulpitData: Sermon[] = [
@@ -212,6 +212,44 @@ const relatedPulpitData: Sermon[] = [
   { id: 14, title: 'Freely Given, Freely Give', speaker: 'Pastor Sarah Jones', date: 'September 10, 2023', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 2400, notes: '', transcript: [], seriesId: 3, seriesPart: 2, hint: 'giving hands' },
   { id: 15, title: 'The Strongest Weakness', speaker: 'Dr. Evelyn Reed', date: 'October 1, 2023', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 2750, notes: '', transcript: [], seriesId: 4, seriesPart: 2, hint: 'strength hope' },
   { id: 16, title: 'Grace in the Ruins', speaker: 'Rev. Michael Chen', date: 'October 15, 2023', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 2850, notes: '', transcript: [], seriesId: 2, seriesPart: 3, hint: 'ruins hope' },
+];
+
+const allSermons = [...sermonData];
+
+
+const seriesData: SermonSeries[] = [
+    {
+        id: 1,
+        title: 'The Echo of Grace',
+        description: 'This series explores the profound and persistent nature of God\'s grace. It\'s not just a single act, but a continuous, resonant echo that shapes our past, present, and future. We will journey through scripture to understand how this amazing grace saves us, sustains us, and sends us out to be echoes of that same love in the world.',
+        graphic: 'https://placehold.co/1600x900/1a2a1a/f5f5f0',
+        sermons: allSermons.filter(s => s.seriesId === 1),
+        topic: 'the Nature of Grace',
+    },
+    {
+        id: 2,
+        title: 'Foundations',
+        description: 'What are the unshakable pillars of our faith? This series goes back to the basics, exploring the foundational truths that anchor us in a shifting world. From the nature of God to the authority of Scripture, these messages are designed to build a solid foundation for a lasting faith.',
+        graphic: 'https://placehold.co/1600x900/a7d1ab/1a2a1a',
+        sermons: allSermons.filter(s => s.seriesId === 2),
+        topic: 'Core Christian Beliefs',
+    },
+    {
+        id: 3,
+        title: 'Kingdom Economics',
+        description: 'Jesus had a lot to say about money and possessions. This series confronts our modern assumptions about wealth and generosity, exploring the radical, upside-down economy of the Kingdom of God. It\'s a call to view our resources not as our own, but as tools for a greater purpose.',
+        graphic: 'https://placehold.co/1600x900/a7d1ab/1a2a1a',
+        sermons: allSermons.filter(s => s.seriesId === 3),
+        topic: 'Generosity and Stewardship',
+    },
+    {
+        id: 4,
+        title: 'Paradox',
+        description: 'The way of Jesus is often a paradox: the first shall be last, the weak are strong, and we find our life by losing it. This series dives into the beautiful and challenging paradoxes of the Christian faith, finding profound truth in apparent contradictions.',
+        graphic: 'https://placehold.co/1600x900/a7d1ab/1a2a1a',
+        sermons: allSermons.filter(s => s.seriesId === 4),
+        topic: 'the Paradoxes of Faith',
+    }
 ];
 
 const blogData: BlogPost[] = [
@@ -249,64 +287,19 @@ const TabContent = ({ isVisible, children }: { isVisible: boolean; children: Rea
     </motion.div>
 );
 
-const AudioVisualizer = ({ data, progress, isPlaying }: { data: number[], progress: number, isPlaying: boolean }) => {
-    const controls = useAnimation();
+function SanctuaryMediaHubContent() {
+  const searchParams = useSearchParams();
+  const sermonId = searchParams.get('sermonId');
 
-    useEffect(() => {
-        if (isPlaying) {
-            controls.start("playing");
-        } else {
-            controls.stop();
-            controls.set("paused");
-        }
-    }, [isPlaying, controls]);
+  const initialSermon = useMemo(() => {
+    if (sermonId) {
+      const selectedSermon = allSermons.find(s => s.id === parseInt(sermonId));
+      return selectedSermon || sermonData[0];
+    }
+    return sermonData[0];
+  }, [sermonId]);
 
-    return (
-        <div className="w-full h-full flex items-center justify-center p-8 bg-primary/10">
-            <div className="w-full h-full flex items-center justify-center gap-px">
-                {data.map((amplitude, index) => {
-                    const barProgress = index / data.length;
-                    const hasBeenPlayed = progress >= barProgress;
-                    
-                    return (
-                        <motion.div
-                            key={index}
-                            className={cn(
-                                "w-full rounded-full transition-colors duration-300",
-                                hasBeenPlayed ? "bg-accent" : "bg-primary/30"
-                            )}
-                            style={{ 
-                                height: `${amplitude * 100}%`,
-                            }}
-                            variants={{
-                                playing: {
-                                    scaleY: [1, 1.15, 0.85, 1],
-                                    opacity: [0.6, 0.8, 0.7, 0.6],
-                                    transition: {
-                                        duration: 1 + Math.random(),
-                                        repeat: Infinity,
-                                        repeatType: 'mirror',
-                                        ease: 'easeInOut',
-                                        delay: index * 0.01,
-                                    },
-                                },
-                                paused: {
-                                    scaleY: 1,
-                                    opacity: 0.6,
-                                },
-                            }}
-                            animate={controls}
-                        />
-                    );
-                })}
-            </div>
-        </div>
-    );
-};
-
-
-export default function SanctuaryMediaHub() {
-  const [currentSermon, setCurrentSermon] = useState<Sermon>(sermonData[0]);
+  const [currentSermon, setCurrentSermon] = useState<Sermon>(initialSermon);
   const [activeTab, setActiveTab] = useState<Tab>('notes');
   const [isPlayerHovered, setPlayerHovered] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -316,14 +309,19 @@ export default function SanctuaryMediaHub() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [userInput, setUserInput] = useState('');
   const [isAiResponding, setIsAiResponding] = useState(false);
-  const [notesContent, setNotesContent] = useState('');
+  const [notesContent, setNotesContent] = useState(currentSermon.notes || '');
+  const [waveformData, setWaveformData] = useState<number[]>([]);
 
   const currentSeries = useMemo(() => seriesData.find(s => s.id === currentSermon.seriesId), [currentSermon]);
   
   const videoRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
-  const waveformData = useMemo(() => Array.from({ length: 150 }, () => Math.random() * 0.8 + 0.2), [currentSermon.id]);
+  
+  useEffect(() => {
+    setWaveformData(Array.from({ length: 150 }, () => Math.random() * 0.8 + 0.2));
+  }, [currentSermon.id]);
+
 
   const activeTranscriptIndex = useMemo(() => {
     const reversedIndex = currentSermon.transcript.slice().reverse().findIndex(item => item.time <= currentTime);
@@ -359,27 +357,38 @@ export default function SanctuaryMediaHub() {
   }, [isPlaying, currentSermon.duration]);
   
   useEffect(() => {
-      setNotesContent('');
-      if (activeTab === 'notes') {
-        let index = 0;
-        const words = currentSermon.notes.split(' ');
-        const interval = setInterval(() => {
-          if (index < words.length) {
-            setNotesContent(prev => prev + (prev ? ' ' : '') + words[index]);
-            index++;
-          } else {
-            clearInterval(interval);
-          }
-        }, 50); 
-        return () => clearInterval(interval);
+    setNotesContent('');
+    if (activeTab === 'notes') {
+      if (!currentSermon.notes || currentSermon.notes.trim() === '') {
+        setNotesContent('No notes available for this sermon.');
+        return;
       }
-    }, [activeTab, currentSermon.id, currentSermon.notes]);
+      let index = 0;
+      const words = currentSermon.notes.split(' ');
+      const interval = setInterval(() => {
+        if (index < words.length) {
+          setNotesContent(prev => prev + (prev ? ' ' : '') + words[index]);
+          index++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 50);
+      return () => clearInterval(interval);
+    }
+  }, [activeTab, currentSermon.id, currentSermon.notes]);
 
   useEffect(() => {
     if (chatContainerRef.current) {
         chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [messages])
+  
+  useEffect(() => {
+    const newSermon = sermonId ? allSermons.find(s => s.id === parseInt(sermonId)) || sermonData[0] : sermonData[0];
+    setCurrentSermon(newSermon);
+    setNotesContent(newSermon.notes || '');
+  }, [sermonId]);
+
 
   const handleSermonClick = (sermon: Sermon) => {
     setCurrentSermon(sermon);
@@ -452,7 +461,7 @@ export default function SanctuaryMediaHub() {
 
   return (
     <div className={cn("bg-background text-foreground min-h-screen transition-all duration-700 ease-in-out", { 'pb-28 md:pb-24': isDocked })}>
-      <main className="container mx-auto mt-20 px-4 py-8">
+      <main className="mt-20 container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
           {/* Left Column: Video Player and Info */}
           <div className="lg:col-span-3 space-y-4 mt-8">
@@ -465,8 +474,6 @@ export default function SanctuaryMediaHub() {
               <div className={cn("aspect-video w-full cursor-pointer overflow-hidden rounded-xl shadow-2xl group", { 'ring-4 ring-primary/50': isPlaying })}>
                 {isAudioOnly ? (
                   <AudioVisualizer 
-                    data={waveformData} 
-                    progress={currentTime / currentSermon.duration}
                     isPlaying={isPlaying}
                   />
                 ) : (
@@ -497,7 +504,7 @@ export default function SanctuaryMediaHub() {
                 </AnimatePresence>
 
                 <AnimatePresence>
-                    {isPlayerHovered && (
+                    {(isPlayerHovered) && (
                         <PlayerControls 
                             isAudioOnly={isAudioOnly} 
                             onToggleAudio={() => setIsAudioOnly(p => !p)} 
@@ -655,7 +662,7 @@ export default function SanctuaryMediaHub() {
         {currentSeries && (
         <section className="mt-24 container mx-auto px-4">
             <div className="relative aspect-[16/7] w-full overflow-hidden rounded-xl">
-                <Image src={currentSeries.graphic} alt={`${currentSeries.title} series graphic`} fill objectFit="cover" data-ai-hint="abstract spiritual" />
+                <Image src={currentSeries.graphic} alt={`${currentSeries.title} series graphic`} layout="fill" objectFit="cover" data-ai-hint="abstract spiritual" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex flex-col justify-end items-center text-center p-8">
                     <div className="max-w-4xl">
                         <h2 className="font-headline text-4xl md:text-5xl font-bold text-white drop-shadow-lg">{currentSeries.title}</h2>
@@ -704,17 +711,7 @@ export default function SanctuaryMediaHub() {
                     <div className="flex overflow-x-auto space-x-4 pb-4 -mx-4 px-4 scrollbar-hide">
                         {relatedPulpitData.map((item) => (
                             <div key={item.id} className="flex-shrink-0 w-80 md:w-1/3 lg:w-1/4">
-                                <Card className="overflow-hidden group cursor-pointer h-full" onClick={() => handleSermonClick(item)}>
-                                    <CardContent className="p-0 flex flex-col h-full">
-                                        <div className="aspect-video overflow-hidden bg-primary/10">
-                                            <AudioVisualizer data={Array.from({ length: 60 }, () => Math.random())} progress={0} isPlaying={false}/>
-                                        </div>
-                                        <div className="p-4 flex-grow">
-                                            <h3 className="font-bold text-md text-primary group-hover:text-accent transition-colors truncate">{item.title}</h3>
-                                            <p className="text-sm text-muted-foreground">{item.speaker}</p>
-                                        </div>
-                                    </CardContent>
-                                </Card>
+                               <SermonCard sermon={item} onSermonClick={handleSermonClick} />
                             </div>
                         ))}
                     </div>
@@ -844,4 +841,12 @@ export default function SanctuaryMediaHub() {
       </AnimatePresence>
     </div>
   );
+}
+
+export default function SanctuaryMediaHub() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <SanctuaryMediaHubContent />
+        </Suspense>
+    )
 }

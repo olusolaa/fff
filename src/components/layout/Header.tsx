@@ -90,7 +90,7 @@ const navItems: NavItem[] = [
     isMegaMenu: true,
     megaMenuItems: [
       { label: 'Explore All Resources', href: '/resources', icon: LayoutDashboard, isFullWidthLink: true },
-      { category: 'WATCH', label: 'Sermons', href: '/sermons', icon: Church },
+      { category: 'WATCH', label: 'Sermons', href: '/archive', icon: Church },
       { category: 'WATCH', label: 'Videos', href: '/resources/videos', icon: Video },
       { category: 'LISTEN', label: 'Music', href: '/resources/music', icon: Disc3 },
       { category: 'LISTEN', label: 'Podcasts', href: '/resources/podcasts', icon: Mic2 },

@@ -44,6 +44,14 @@ body {
     --ring: var(--primary-dark-green-hsl);
 
     --radius: 0.5rem;
+
+     /* Reader variables */
+     --reader-bg-light: 48 33% 96%;
+     --reader-text-light: 30 5% 25%;
+     --reader-bg-sepia: 45 33% 84%;
+     --reader-text-sepia: 45 15% 28%;
+     --reader-bg-dark: 0 0% 10%;
+     --reader-text-dark: 0 0% 82%;
   }
 
   .dark {
@@ -97,6 +105,9 @@ body {
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-headline;
+  }
+  .prose {
+    color: var(--tw-prose-body);
   }
 }
 

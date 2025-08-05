@@ -152,7 +152,7 @@ export default function BooksPage() {
 
 
     return (
-        <div className="mt-20 bg-background text-foreground min-h-screen">
+        <div className="bg-background text-foreground min-h-screen">
             <main className="container mx-auto px-4 py-12 md:py-20">
                 <header className="text-center mb-20">
                     <h1 className="font-headline text-5xl md:text-6xl font-bold text-primary">The Library</h1>

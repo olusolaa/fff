@@ -80,14 +80,14 @@ const BookCard = ({ book, onOpenBook }: { book: Book, onOpenBook: (book: Book) =
 
     return (
         <div 
-            className="book-card-container w-40 h-60 md:w-48 md:h-72 cursor-pointer"
+            className="book-card-container w-40 h-60 md:w-48 md:h-72 flex-shrink-0"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             onClick={() => onOpenBook(book)}
         >
             <motion.div
                 layoutId={`book-cover-${book.id}`}
-                className="book-card w-full h-full relative"
+                className="book-card w-full h-full relative cursor-pointer"
                 whileHover={{
                     y: -10,
                     scale: 1.05,
@@ -130,9 +130,11 @@ const BookShelf = ({ title, books, onOpenBook }: { title: string, books: Book[],
             <h2 className="text-2xl font-bold text-foreground/80 font-headline">{title}</h2>
             <div className="flex-grow h-px bg-border ml-6"></div>
         </div>
-        <div className="flex flex-wrap gap-x-12 gap-y-16 md:gap-x-16 md:gap-y-24 items-start justify-center lg:justify-start pl-4">
+        <div className="flex overflow-x-auto gap-8 pb-4 -mx-4 px-4 scrollbar-hide lg:grid lg:grid-cols-4 lg:overflow-visible lg:mx-0 lg:px-0 lg:gap-16">
            {books.map(book => (
-               <BookCard key={book.id} book={book} onOpenBook={onOpenBook} />
+               <div key={book.id} className="lg:flex lg:justify-center">
+                   <BookCard book={book} onOpenBook={onOpenBook} />
+               </div>
            ))}
         </div>
     </div>
@@ -152,8 +154,8 @@ export default function BooksPage() {
 
 
     return (
-        <div className="mt-20 bg-background text-foreground min-h-screen">
-            <main className="container mx-auto px-4 py-12 md:py-20">
+        <div className="bg-background text-foreground min-h-screen">
+            <main className="mt-20 container mx-auto px-4 py-12 md:py-20">
                 <header className="text-center mb-20">
                     <h1 className="font-headline text-5xl md:text-6xl font-bold text-primary">The Library</h1>
                     <p className="mt-4 text-lg text-foreground/80 max-w-2xl mx-auto">A quiet, well-lit space filled with curated wisdom. Each volume is a treasure—discover, open, and read.</p>

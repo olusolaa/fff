@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Share2, Loader2 } from 'lucide-react';
+import { Share2, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ReaderControls } from '@/components/shared/reader-controls';
 import { cn } from '@/lib/utils';
@@ -132,11 +132,14 @@ export default function BookReaderPage() {
 
     if (!book) {
         return (
-            <div className="fixed inset-0 bg-background z-50 flex items-center justify-center">
-                <p>Book not found.</p>
-                <Button variant="ghost" size="icon" onClick={() => router.back()} className="absolute top-4 right-4">
-                    <X size={24} />
-                </Button>
+            <div 
+                className="fixed inset-0 bg-background z-50 flex items-center justify-center cursor-pointer"
+                onClick={() => router.back()}
+            >
+                <div className="text-center">
+                    <p>Book not found.</p>
+                    <p className="text-sm text-muted-foreground mt-2">Click anywhere to go back.</p>
+                </div>
             </div>
         );
     }
@@ -155,6 +158,7 @@ export default function BookReaderPage() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5, ease: 'easeInOut' }}
+                onClick={() => router.back()}
                 onMouseMove={(e) => {
                     if (e.clientY < 100) {
                         setControlsVisible(true);
@@ -172,6 +176,7 @@ export default function BookReaderPage() {
                 
                 <motion.div
                     className="w-full h-full max-w-7xl mx-auto flex items-center justify-center p-4 md:p-8"
+                    onClick={(e) => e.stopPropagation()}
                 >
                     <div className="relative flex w-full h-full gap-8">
                         {/* Book Cover */}
@@ -254,14 +259,6 @@ export default function BookReaderPage() {
 
                 </motion.div>
                 
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => router.back()}
-                    className="absolute top-6 right-6 text-foreground/70 hover:text-foreground z-20 rounded-full bg-background/50 hover:bg-background/80"
-                >
-                    <X size={24} />
-                </Button>
             </motion.div>
             
             <AlertDialog open={isModalOpen} onOpenChange={setIsModalOpen}>

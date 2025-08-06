@@ -113,7 +113,7 @@ export default function SermonArchivePage() {
 
 
     return (
-        <div className="bg-background text-foreground min-h-screen">
+        <div className="mt-20 bg-background text-foreground min-h-screen">
             <main>
                 {/* Section 1: Featured Current Series */}
                 <section className="bg-muted/30">

@@ -76,9 +76,8 @@ const libraryBooks: Book[] = [
 ];
 
 const BookCard = ({ book, onOpenBook }: { book: Book, onOpenBook: (book: Book) => void }) => {
-    const [isHovered, setIsHovered] = useState(false);
-
     return (
+
         <div 
             className="book-card-container w-40 h-60 md:w-48 md:h-72 flex-shrink-0"
             onMouseEnter={() => setIsHovered(true)}
@@ -121,6 +120,7 @@ const BookCard = ({ book, onOpenBook }: { book: Book, onOpenBook: (book: Book) =
                 </AnimatePresence>
             </motion.div>
         </div>
+
     );
 };
 

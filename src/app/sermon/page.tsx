@@ -18,6 +18,7 @@ import {
   Video,
   AudioLines,
   Headphones,
+  Play,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -253,23 +254,23 @@ const seriesData: SermonSeries[] = [
 ];
 
 const blogData: BlogPost[] = [
-  { id: 1, title: 'Grace Isn\'t Fair, and That\'s the Point', image: 'https://placehold.co/800x600/cdb38b/f5f5f0', readTime: '5 min read', },
-  { id: 2, title: 'When You Don\'t Feel Forgiven: A Practical Guide', image: 'https://placehold.co/800x600/cdb38b/f5f5f0', readTime: '7 min read', },
-  { id: 3, title: 'The Three Words that Change Everything', image: 'https://placehold.co/800x600/cdb38b/f5f5f0', readTime: '4 min read', },
-  { id: 4, title: 'A Theology of Second Chances', image: 'https://placehold.co/800x600/cdb38b/f5f5f0', readTime: '6 min read', },
+  { id: 1, title: 'Grace Isn\'t Fair, and That\'s the Point', image: 'https://placehold.co/800x600/2D5A3D/f5f5f0?text=Grace', readTime: '5 min read', },
+  { id: 2, title: 'When You Don\'t Feel Forgiven: A Practical Guide', image: 'https://placehold.co/800x600/4A6FA5/f5f5f0?text=Forgiveness', readTime: '7 min read', },
+  { id: 3, title: 'The Three Words that Change Everything', image: 'https://placehold.co/800x600/7B4397/f5f5f0?text=Hope', readTime: '4 min read', },
+  { id: 4, title: 'A Theology of Second Chances', image: 'https://placehold.co/800x600/C97B84/f5f5f0?text=Renewal', readTime: '6 min read', },
 ];
 
 const podcastData: PodcastEpisode[] = [
-    { id: 1, title: 'Evelyn Reed on the Weight of Grace', coverArt: 'https://placehold.co/600x600/3a4a3a/f5f5f0', duration: '28 min listen' },
-    { id: 2, title: 'How to Parent with Grace (and Not Lose Your Mind)', coverArt: 'https://placehold.co/600x600/3a4a3a/f5f5f0', duration: '45 min listen' },
-    { id: 3, title: 'Roundtable: Grace, Justice, and the Modern Church', coverArt: 'https://placehold.co/600x600/3a4a3a/f5f5f0', duration: '52 min listen' },
-    { id: 4, title: 'A Story of Radical Forgiveness', coverArt: 'https://placehold.co/600x600/3a4a3a/f5f5f0', duration: '18 min listen' },
+    { id: 1, title: 'Evelyn Reed on the Weight of Grace', coverArt: 'https://placehold.co/400x400/1A535C/f5f5f0?text=Podcast', duration: '28 min listen' },
+    { id: 2, title: 'How to Parent with Grace (and Not Lose Your Mind)', coverArt: 'https://placehold.co/400x400/4ECDC4/1a2a1a?text=Family', duration: '45 min listen' },
+    { id: 3, title: 'Roundtable: Grace, Justice, and the Modern Church', coverArt: 'https://placehold.co/400x400/F7FFF7/1a2a1a?text=Discussion', duration: '52 min listen' },
+    { id: 4, title: 'A Story of Radical Forgiveness', coverArt: 'https://placehold.co/400x400/FF6B6B/f5f5f0?text=Stories', duration: '18 min listen' },
 ];
 
 const bookData: Book[] = [
-    { id: 1, title: 'The Echo of Grace', coverImage: 'https://placehold.co/400x600/1a2a1a/f5f5f0', chapter: 'Chapter 1: The First Sound' },
-    { id: 2, title: 'Hope in the Ruins', coverImage: 'https://placehold.co/400x600/1a2a1a/f5f5f0' },
-    { id: 3, title: 'A Faith That Lasts', coverImage: 'https://placehold.co/400x600/1a2a1a/f5f5f0', chapter: 'Chapter 5: Everyday Mercy' },
+    { id: 1, title: 'The Echo of Grace', coverImage: 'https://placehold.co/400x600/22577A/f5f5f0?text=GRACE', chapter: 'Chapter 1: The First Sound' },
+    { id: 2, title: 'Hope in the Ruins', coverImage: 'https://placehold.co/400x600/38A3A5/f5f5f0?text=HOPE' },
+    { id: 3, title: 'A Faith That Lasts', coverImage: 'https://placehold.co/400x600/57CC99/1a2a1a?text=FAITH', chapter: 'Chapter 5: Everyday Mercy' },
 ];
 
 const TabContent = ({ isVisible, children }: { isVisible: boolean; children: React.ReactNode }) => (
@@ -699,15 +700,15 @@ function SanctuaryMediaHubContent() {
         )}
 
         {/* Section 4: The Discovery Library */}
-        <section className="mt-24 py-16 bg-muted/30">
+        <section className="mt-24 py-24 bg-muted/30">
             <div className="container mx-auto px-4">
-                <h2 className="font-headline text-3xl font-bold text-primary mb-12 text-center">
+                <h2 className="font-headline text-4xl font-bold text-primary mb-16 text-center">
                     Explore More on {currentSeries?.topic || "Faith"}
                 </h2>
 
                 {/* Shelf 1: More from the Pulpit */}
                 <div>
-                    <h3 className="text-xl font-bold text-foreground/80 mb-4">More from the Pulpit</h3>
+                    <h3 className="text-2xl font-bold text-foreground mb-6">More from the Pulpit</h3>
                     <div className="flex overflow-x-auto space-x-4 pb-4 -mx-4 px-4 scrollbar-hide">
                         {relatedPulpitData.map((item) => (
                             <div key={item.id} className="flex-shrink-0 w-80 md:w-1/3 lg:w-1/4">
@@ -718,68 +719,138 @@ function SanctuaryMediaHubContent() {
                 </div>
 
                  {/* Shelf 2: Deeper Readings */}
-                 <div className="mt-16">
-                    <h3 className="text-xl font-bold text-foreground/80 mb-4">Deeper Readings</h3>
+                 <div className="mt-32">
+                    <h3 className="text-2xl font-bold text-foreground mb-6">Deeper Readings</h3>
                     <div className="flex overflow-x-auto space-x-6 pb-4 -mx-4 px-4 scrollbar-hide">
                         {blogData.map((post) => (
-                            <div key={post.id} className="flex-shrink-0 w-80 sm:w-1/2 md:w-1/3 lg:w-1/4">
-                                <Card className="overflow-hidden group cursor-pointer h-full">
-                                    <CardContent className="p-0 relative">
-                                        <div className="aspect-[4/3] overflow-hidden">
-                                            <Image src={post.image} alt={post.title} width={800} height={600} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint="reading book"/>
-                                        </div>
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                                        <div className="absolute bottom-0 left-0 p-4 text-white">
-                                            <h3 className="font-bold text-lg group-hover:underline">{post.title}</h3>
-                                            <div className="flex items-center gap-2 mt-1 text-sm opacity-80">
-                                                <BookOpen size={14}/>
+                            <motion.div 
+                                key={post.id} 
+                                className="flex-shrink-0 w-96 lg:w-[480px]"
+                                whileHover={{ scale: 1.02 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <div className="relative overflow-hidden rounded-lg cursor-pointer h-full shadow-md hover:shadow-xl transition-all duration-300 group">
+                                    <div className="aspect-[8/6] relative">
+                                        <Image 
+                                            src={post.image} 
+                                            alt={post.title} 
+                                            fill
+                                            className="object-cover transition-transform duration-700 group-hover:scale-110" 
+                                            data-ai-hint="reading book"
+                                        />
+                                        
+                                        {/* Hover Gradient Overlay */}
+                                        <motion.div 
+                                            className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                        />
+                                        
+                                        {/* Title and Read Time - Hidden by default, shown on hover */}
+                                        <motion.div 
+                                            className="absolute bottom-0 left-0 p-6 text-white"
+                                            initial={{ opacity: 0, y: 20 }}
+                                            whileHover={{ opacity: 1, y: 0 }}
+                                            transition={{ duration: 0.3, delay: 0.1 }}
+                                        >
+                                            <h3 className="font-bold text-xl">{post.title}</h3>
+                                            <div className="flex items-center gap-2 mt-2 text-sm opacity-90">
+                                                <BookOpen size={16}/>
                                                 <span>{post.readTime}</span>
                                             </div>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            </div>
+                                        </motion.div>
+                                    </div>
+                                </div>
+                            </motion.div>
                         ))}
                     </div>
                 </div>
 
                 {/* Shelf 3: Continue the Conversation */}
-                <div className="mt-16">
-                    <h3 className="text-xl font-bold text-foreground/80 mb-4">Continue the Conversation</h3>
+                <div className="mt-32">
+                    <h3 className="text-2xl font-bold text-foreground mb-6">Continue the Conversation</h3>
                      <div className="flex overflow-x-auto space-x-6 pb-4 -mx-4 px-4 scrollbar-hide">
                         {podcastData.map((episode) => (
-                            <div key={episode.id} className="group cursor-pointer flex-shrink-0 w-64 sm:w-1/3 md:w-1/4 lg:w-1/5">
-                                <Card className="overflow-hidden aspect-square">
-                                    <CardContent className="p-0">
-                                        <Image src={episode.coverArt} alt={episode.title} width={600} height={600} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint="podcast microphone"/>
-                                    </CardContent>
-                                </Card>
-                                <div className="mt-2">
-                                    <h3 className="font-bold text-primary group-hover:text-accent transition-colors">{episode.title}</h3>
-                                    <div className="flex items-center gap-1.5 mt-1 text-sm text-muted-foreground">
-                                        <Headphones size={14} />
-                                        <span>{episode.duration}</span>
-                                    </div>
+                            <motion.div 
+                                key={episode.id} 
+                                className="flex-shrink-0 w-72"
+                                whileHover={{ scale: 1.02 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <div className="relative aspect-square overflow-hidden rounded-lg cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 group">
+                                    <Image 
+                                        src={episode.coverArt} 
+                                        alt={episode.title} 
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110" 
+                                        data-ai-hint="podcast microphone"
+                                    />
+                                    
+                                    {/* Dark Overlay on Hover */}
+                                    <motion.div 
+                                        className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                    />
+                                    
+                                    {/* Play Icon - Hidden by default, shown on hover */}
+                                    <motion.div 
+                                        className="absolute inset-0 flex flex-col items-center justify-center text-white"
+                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        whileHover={{ opacity: 1, scale: 1 }}
+                                        transition={{ duration: 0.3, delay: 0.1 }}
+                                    >
+                                        <div className="bg-accent rounded-full p-4 mb-4">
+                                            <Play size={32} fill="white" className="ml-1" />
+                                        </div>
+                                        <h3 className="font-bold text-lg text-center px-4 line-clamp-2">{episode.title}</h3>
+                                        <div className="flex items-center gap-2 mt-2 text-sm opacity-90">
+                                            <Headphones size={16} />
+                                            <span>{episode.duration}</span>
+                                        </div>
+                                    </motion.div>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </div>
                 
                  {/* Shelf 4: From Our Library */}
-                <div className="mt-16">
-                    <h3 className="text-xl font-bold text-foreground/80 mb-4">From Our Library</h3>
-                    <div className="flex overflow-x-auto space-x-6 pb-4 -mx-4 px-4 scrollbar-hide">
+                <div className="mt-32 mb-8">
+                    <h3 className="text-2xl font-bold text-foreground mb-6">From Our Library</h3>
+                    <div className="flex overflow-x-auto space-x-8 pb-4 -mx-4 px-4 scrollbar-hide">
                         {bookData.map((book) => (
-                            <div key={book.id} className="group cursor-pointer text-center flex-shrink-0 w-48 sm:w-1/4 md:w-1/5 lg:w-1/6 book-card-container">
-                                <div className="book-card">
-                                  <Image src={book.coverImage} alt={book.title} width={400} height={600} className="w-full h-auto object-contain rounded-md shadow-lg" data-ai-hint="book cover"/>
+                            <motion.div 
+                                key={book.id} 
+                                className="flex-shrink-0 w-56"
+                                whileHover={{ scale: 1.05, z: 10 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <div className="relative cursor-pointer group">
+                                    <div className="book-3d-container relative">
+                                        <Image 
+                                            src={book.coverImage} 
+                                            alt={book.title} 
+                                            width={400} 
+                                            height={600} 
+                                            className="w-full h-auto object-contain rounded-r-sm shadow-2xl" 
+                                            data-ai-hint="book cover"
+                                        />
+                                        
+                                        {/* Dark Overlay with Book Info on Hover */}
+                                        <motion.div 
+                                            className="absolute inset-0 bg-black/80 rounded-r-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6"
+                                            initial={{ opacity: 0 }}
+                                            whileHover={{ opacity: 1 }}
+                                            transition={{ duration: 0.3 }}
+                                        >
+                                            <h3 className="font-bold text-xl text-white mb-2">{book.title}</h3>
+                                            <p className="text-white/80 text-sm mb-3">by Dr. Evelyn Reed</p>
+                                            <p className="text-white/70 text-xs line-clamp-3">
+                                                A profound exploration of grace that echoes through every aspect of our lives, 
+                                                revealing how God's unmerited favor transforms our past, present, and future.
+                                            </p>
+                                            {book.chapter && <p className="text-accent text-sm mt-3 font-medium">{book.chapter}</p>}
+                                        </motion.div>
+                                    </div>
                                 </div>
-                                <div className="mt-4">
-                                    <h3 className="font-bold text-primary group-hover:text-accent transition-colors">{book.title}</h3>
-                                    {book.chapter && <p className="text-sm text-muted-foreground">{book.chapter}</p>}
-                                </div>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </div>

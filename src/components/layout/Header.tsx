@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import {
   Menu, Search, X, ChevronDown, Video, Newspaper,
   BookMarked, Church, Disc3, Mic2, Library, Users, HeartHandshake,
-  BookOpen, ShieldCheck, Users2, HandHeart, CalendarDays, Gift, LayoutDashboard, School, Info
+  BookOpen, ShieldCheck, Users2, HandHeart, CalendarDays, Gift, LayoutDashboard, School, Info, ArrowRight
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import NavLink from './NavLink';
@@ -233,73 +233,74 @@ export default function Header() {
                     align="center"
                     sideOffset={5}
                     className={cn(
-                      "p-6 bg-background shadow-xl rounded-lg w-[600px] md:w-[700px] lg:w-[800px]"
+                      "p-6 bg-background/95 backdrop-blur-md shadow-lg rounded-lg w-[600px] md:w-[700px] lg:w-[800px] border border-border/50 animate-in fade-in-0 slide-in-from-top-2 duration-300"
                     )}
                     onPointerEnter={() => handleMenuEnter(item.id)}
                     onPointerLeave={() => handleMenuLeave(item.id)}
                   >
                     {item.megaMenuItems?.find(sub => sub.isFullWidthLink) && (
                        item.megaMenuItems.filter(sub => sub.isFullWidthLink).map(subItem => (
-                        <div key={`${subItem.label}-header`} className="mb-4 pb-3 border-b border-border">
+                        <div key={`${subItem.label}-header`} className="mb-6 pb-4 border-b border-border/30">
                             <Link
                                 href={subItem.href!}
-                                className="font-semibold text-lg text-primary hover:underline flex items-center space-x-2"
+                                className="font-semibold text-xl text-primary hover:text-accent transition-colors flex items-center space-x-3 group"
                                 onClick={() => setActiveMenu(null)}
                             >
-                                {subItem.icon && <subItem.icon className="h-5 w-5 text-primary" />}
+                                {subItem.icon && <subItem.icon className="h-6 w-6 text-primary group-hover:text-accent transition-colors" />}
                                 <span>{subItem.label}</span>
+                                <ArrowRight className="h-5 w-5 text-primary/50 group-hover:text-accent group-hover:translate-x-1 transition-all ml-auto" />
                             </Link>
                         </div>
                        ))
                     )}
 
                     {item.id === 'about' && (
-                      <div className="grid grid-cols-3 gap-x-4 gap-y-3">
+                      <div className="grid grid-cols-3 gap-x-6 gap-y-4">
                         {item.megaMenuItems!.filter(sub => !sub.isFullWidthLink).map((subItem) => (
                            <Link
                               key={subItem.label}
                               href={subItem.href}
-                              className="group flex items-center space-x-3 p-2 rounded-md hover:bg-accent/10 transition-colors"
+                              className="group flex items-center space-x-3 p-3 rounded-lg hover:bg-accent/10 transition-all duration-200"
                               onClick={() => setActiveMenu(null)}
                             >
-                              {subItem.icon && <subItem.icon className="h-6 w-6 text-accent group-hover:text-primary flex-shrink-0" />}
-                              <p className="text-sm font-medium text-foreground group-hover:text-primary">{subItem.label}</p>
+                              {subItem.icon && <subItem.icon className="h-6 w-6 text-accent group-hover:text-primary flex-shrink-0 transition-colors" />}
+                              <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{subItem.label}</p>
                             </Link>
                         ))}
                       </div>
                     )}
                     
                     {(item.id === 'programs' || item.id === 'connect') && (
-                        <div className="grid grid-cols-2 gap-x-4 gap-y-3">
+                        <div className="grid grid-cols-2 gap-x-6 gap-y-4">
                             {item.megaMenuItems!.filter(sub => !sub.isFullWidthLink).map((subItem) => (
                                 <Link
                                     key={subItem.label}
                                     href={subItem.href}
-                                    className="group flex items-center space-x-3 p-2 rounded-md hover:bg-accent/10 transition-colors"
+                                    className="group flex items-center space-x-3 p-3 rounded-lg hover:bg-accent/10 transition-all duration-200"
                                     onClick={() => setActiveMenu(null)}
                                 >
-                                    {subItem.icon && <subItem.icon className="h-6 w-6 text-accent group-hover:text-primary flex-shrink-0" />}
-                                    <p className="text-sm font-medium text-foreground group-hover:text-primary">{subItem.label}</p>
+                                    {subItem.icon && <subItem.icon className="h-6 w-6 text-accent group-hover:text-primary flex-shrink-0 transition-colors" />}
+                                    <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{subItem.label}</p>
                                 </Link>
                             ))}
                         </div>
                     )}
 
                     {item.id === 'resources' && (
-                      <div className="grid grid-cols-3 gap-x-6 gap-y-4">
+                      <div className="grid grid-cols-3 gap-x-8 gap-y-6">
                         {(['WATCH', 'LISTEN', 'READ'] as const).map(category => (
-                          <div key={category} className="space-y-3">
-                            <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">{category}</h3>
-                            <div className="space-y-2">
+                          <div key={category} className="space-y-4">
+                            <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">{category}</h3>
+                            <div className="space-y-3">
                               {item.megaMenuItems!.filter(sub => sub.category === category && !sub.isFullWidthLink).map((subItem) => (
                                 <Link
                                   key={subItem.label}
                                   href={subItem.href}
-                                  className="group flex items-center space-x-3 p-2 rounded-md hover:bg-accent/10 transition-colors"
+                                  className="group flex items-center space-x-3 p-3 rounded-lg hover:bg-accent/10 transition-all duration-200"
                                   onClick={() => setActiveMenu(null)}
                                 >
-                                  {subItem.icon && <subItem.icon className="h-6 w-6 text-accent group-hover:text-primary flex-shrink-0" />}
-                                  <p className="text-sm font-medium text-foreground group-hover:text-primary">{subItem.label}</p>
+                                  {subItem.icon && <subItem.icon className="h-6 w-6 text-accent group-hover:text-primary flex-shrink-0 transition-colors" />}
+                                  <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{subItem.label}</p>
                                 </Link>
                               ))}
                             </div>

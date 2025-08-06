@@ -76,51 +76,43 @@ const libraryBooks: Book[] = [
 ];
 
 const BookCard = ({ book, onOpenBook }: { book: Book, onOpenBook: (book: Book) => void }) => {
-    const [isHovered, setIsHovered] = useState(false);
-
     return (
-        <div 
-            className="book-card-container w-40 h-60 md:w-48 md:h-72 cursor-pointer"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+        <motion.div 
+            className="flex-shrink-0 w-48 md:w-56"
+            whileHover={{ scale: 1.05, z: 10 }}
+            transition={{ duration: 0.3 }}
             onClick={() => onOpenBook(book)}
         >
-            <motion.div
-                layoutId={`book-cover-${book.id}`}
-                className="book-card w-full h-full relative"
-                whileHover={{
-                    y: -10,
-                    scale: 1.05,
-                    rotateX: 10,
-                    boxShadow: '0px 20px 30px rgba(0,0,0,0.3)',
-                }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            >
-                <Image
-                    src={book.coverImage}
-                    alt={`${book.title} cover`}
-                    width={400}
-                    height={600}
-                    className="w-full h-full object-cover rounded-md shadow-lg"
-                    data-ai-hint={book.aiHint}
-                />
-                 <AnimatePresence>
-                    {isHovered && (
-                         <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.3, ease: 'easeInOut' }}
-                            className="absolute inset-0 w-full h-full p-4 flex flex-col justify-end bg-black/70 backdrop-blur-sm rounded-lg text-white"
-                         >
-                            <h3 className="font-headline text-xl font-bold text-white">{book.title}</h3>
-                            <p className="text-sm font-bold text-white/80 mb-2">{book.author}</p>
-                            <p className="text-sm text-white/90 line-clamp-4">{book.synopsis}</p>
-                         </motion.div>
-                    )}
-                </AnimatePresence>
-            </motion.div>
-        </div>
+            <div className="relative cursor-pointer group">
+                <motion.div
+                    layoutId={`book-cover-${book.id}`}
+                    className="book-3d-container relative"
+                >
+                    <Image 
+                        src={book.coverImage}
+                        alt={`${book.title} cover`}
+                        width={400} 
+                        height={600} 
+                        className="w-full h-auto object-contain rounded-r-sm shadow-2xl" 
+                        data-ai-hint={book.aiHint}
+                    />
+                    
+                    {/* Dark Overlay with Book Info on Hover */}
+                    <motion.div 
+                        className="absolute inset-0 bg-black/80 rounded-r-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6"
+                        initial={{ opacity: 0 }}
+                        whileHover={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <h3 className="font-bold text-xl text-white mb-2">{book.title}</h3>
+                        <p className="text-white/80 text-sm mb-3">{book.author}</p>
+                        <p className="text-white/70 text-xs line-clamp-4">
+                            {book.synopsis}
+                        </p>
+                    </motion.div>
+                </motion.div>
+            </div>
+        </motion.div>
     );
 };
 

@@ -77,42 +77,50 @@ const libraryBooks: Book[] = [
 
 const BookCard = ({ book, onOpenBook }: { book: Book, onOpenBook: (book: Book) => void }) => {
     return (
-        <motion.div 
-            className="flex-shrink-0 w-48 md:w-56"
-            whileHover={{ scale: 1.05, z: 10 }}
-            transition={{ duration: 0.3 }}
+
+        <div 
+            className="book-card-container w-40 h-60 md:w-48 md:h-72 flex-shrink-0"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
             onClick={() => onOpenBook(book)}
         >
-            <div className="relative cursor-pointer group">
-                <motion.div
-                    layoutId={`book-cover-${book.id}`}
-                    className="book-3d-container relative"
-                >
-                    <Image 
-                        src={book.coverImage}
-                        alt={`${book.title} cover`}
-                        width={400} 
-                        height={600} 
-                        className="w-full h-auto object-contain rounded-r-sm shadow-2xl" 
-                        data-ai-hint={book.aiHint}
-                    />
-                    
-                    {/* Dark Overlay with Book Info on Hover */}
-                    <motion.div 
-                        className="absolute inset-0 bg-black/80 rounded-r-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6"
-                        initial={{ opacity: 0 }}
-                        whileHover={{ opacity: 1 }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        <h3 className="font-bold text-xl text-white mb-2">{book.title}</h3>
-                        <p className="text-white/80 text-sm mb-3">{book.author}</p>
-                        <p className="text-white/70 text-xs line-clamp-4">
-                            {book.synopsis}
-                        </p>
-                    </motion.div>
-                </motion.div>
-            </div>
-        </motion.div>
+            <motion.div
+                layoutId={`book-cover-${book.id}`}
+                className="book-card w-full h-full relative cursor-pointer"
+                whileHover={{
+                    y: -10,
+                    scale: 1.05,
+                    rotateX: 10,
+                    boxShadow: '0px 20px 30px rgba(0,0,0,0.3)',
+                }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            >
+                <Image
+                    src={book.coverImage}
+                    alt={`${book.title} cover`}
+                    width={400}
+                    height={600}
+                    className="w-full h-full object-cover rounded-md shadow-lg"
+                    data-ai-hint={book.aiHint}
+                />
+                 <AnimatePresence>
+                    {isHovered && (
+                         <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
+                            className="absolute inset-0 w-full h-full p-4 flex flex-col justify-end bg-black/70 backdrop-blur-sm rounded-lg text-white"
+                         >
+                            <h3 className="font-headline text-xl font-bold text-white">{book.title}</h3>
+                            <p className="text-sm font-bold text-white/80 mb-2">{book.author}</p>
+                            <p className="text-sm text-white/90 line-clamp-4">{book.synopsis}</p>
+                         </motion.div>
+                    )}
+                </AnimatePresence>
+            </motion.div>
+        </div>
+
     );
 };
 
@@ -122,9 +130,11 @@ const BookShelf = ({ title, books, onOpenBook }: { title: string, books: Book[],
             <h2 className="text-2xl font-bold text-foreground/80 font-headline">{title}</h2>
             <div className="flex-grow h-px bg-border ml-6"></div>
         </div>
-        <div className="flex flex-wrap gap-x-12 gap-y-16 md:gap-x-16 md:gap-y-24 items-start justify-center lg:justify-start pl-4">
+        <div className="flex overflow-x-auto gap-8 pb-4 -mx-4 px-4 scrollbar-hide lg:grid lg:grid-cols-4 lg:overflow-visible lg:mx-0 lg:px-0 lg:gap-16">
            {books.map(book => (
-               <BookCard key={book.id} book={book} onOpenBook={onOpenBook} />
+               <div key={book.id} className="lg:flex lg:justify-center">
+                   <BookCard book={book} onOpenBook={onOpenBook} />
+               </div>
            ))}
         </div>
     </div>
@@ -144,8 +154,8 @@ export default function BooksPage() {
 
 
     return (
-        <div className="mt-20 bg-background text-foreground min-h-screen">
-            <main className="container mx-auto px-4 py-12 md:py-20">
+        <div className="bg-background text-foreground min-h-screen">
+            <main className="mt-20 container mx-auto px-4 py-12 md:py-20">
                 <header className="text-center mb-20">
                     <h1 className="font-headline text-5xl md:text-6xl font-bold text-primary">The Library</h1>
                     <p className="mt-4 text-lg text-foreground/80 max-w-2xl mx-auto">A quiet, well-lit space filled with curated wisdom. Each volume is a treasure—discover, open, and read.</p>

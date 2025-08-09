@@ -202,52 +202,13 @@ export default function SermonArchivePage() {
                     </div>
                 </section>
 
-                {/* Section 3: The Gallery Wall */}
-                <section className="container mx-auto px-4 py-16">
-                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 max-w-7xl mx-auto">
-                        {filteredSermons.map((sermon, index) => (
-                           <div 
-                              key={sermon.id} 
-                              className={cn(
-                                 index === 0 && "sm:col-span-2 lg:col-span-2 lg:row-span-1"
-                              )}
-                           >
-                              {index === 0 ? (
-                                 // Featured sermon with different styling
-                                 <Link href={`/sermon?sermonId=${sermon.id}`} passHref>
-                                    <motion.div
-                                       className="relative overflow-hidden rounded-xl cursor-pointer group shadow-xl hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-primary/5 to-accent/5"
-                                       whileHover={{ scale: 1.01, y: -4 }}
-                                    >
-                                       <div className="aspect-[16/10] relative">
-                                          <Image 
-                                             src={sermon.thumbnail || `https://placehold.co/1600x1000/2C3E50/f5f5f0?text=${encodeURIComponent(sermon.title)}`}
-                                             alt={sermon.title}
-                                             fill
-                                             className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                             priority
-                                          />
-                                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
-                                          <div className="absolute bottom-0 left-0 right-0 p-10">
-                                             <div className="flex items-center gap-2 text-accent mb-3">
-                                                <div className="w-12 h-[2px] bg-accent" />
-                                                <span className="text-sm font-bold uppercase tracking-wider">Latest Message</span>
-                                             </div>
-                                             <h3 className="text-white font-bold text-4xl mb-3">{sermon.title}</h3>
-                                             <p className="text-white/90 text-lg">{sermon.speaker} • {sermon.date}</p>
-                                          </div>
-                                       </div>
-                                    </motion.div>
-                                 </Link>
-                              ) : (
-                                 <Link href={`/sermon?sermonId=${sermon.id}`} passHref>
-                                    <SermonCard 
-                                       sermon={sermon}
-                                       className="h-full" 
-                                    />
-                                 </Link>
-                              )}
-                           </div>
+                {/* Section 3: Recent Messages */}
+                <section className="container mx-auto px-4 py-12">
+                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                        {filteredSermons.map(sermon => (
+                           <Link key={sermon.id} href={`/sermon?sermonId=${sermon.id}`} passHref>
+                                <SermonCard sermon={sermon} className="h-full" />
+                           </Link>
                         ))}
                     </div>
                 </section>

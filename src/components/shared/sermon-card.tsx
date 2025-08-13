@@ -18,6 +18,7 @@ interface Sermon {
     series?: string;
     thumbnail?: string;
     hint?: string;
+    duration?: number;
 }
 
 interface SermonCardProps {

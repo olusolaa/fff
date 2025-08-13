@@ -20,6 +20,7 @@ import {
 import { cn } from '@/lib/utils';
 import { SermonCard } from '@/components/shared/sermon-card';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 // Mock Data - Replace with your actual data fetching logic
 const currentSeries = {
@@ -42,9 +43,10 @@ const allSermons = [
   { id: 16, title: 'Grace in the Ruins', speaker: 'Rev. Michael Chen', date: 'October 15, 2023', series: 'Foundations', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 2850, notes: '', transcript: [], seriesId: 2, seriesPart: 3, category: 'Others' },
   { id: 17, title: 'The Godly Man', speaker: 'Rev. Michael Chen', date: 'October 22, 2023', series: 'Foundations', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 2850, notes: '', transcript: [], seriesId: 2, seriesPart: 4, category: 'Family Life' },
   { id: 18, title: 'The Virtuous Woman', speaker: 'Dr. Evelyn Reed', date: 'October 29, 2023', series: 'Paradox', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 2750, notes: '', transcript: [], seriesId: 4, seriesPart: 3, category: 'Family Life' },
+  { id: 19, title: 'Rise Up', speaker: 'Guest Speaker', date: 'June 10, 2023', series: 'Youth Rally', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 3200, notes: '', transcript: [], seriesId: 5, seriesPart: 1, category: 'Youth' },
 ];
 
-const sermonCategories = ["Discipleship Class", "Singles Club", "Marriage Forum", "Family Life", "Others"];
+const sermonCategories = ["Discipleship Class", "Singles Club", "Marriage Forum", "Family Life", "Youth", "Others"];
 
 const FilterDropdown = ({ title, options, selected, onSelectedChange }: any) => (
     <DropdownMenu>
@@ -75,9 +77,9 @@ const SermonShelf = ({ title, sermons }: { title: string, sermons: any[] }) => {
     return (
         <section className="container mx-auto px-4 py-8">
             <h2 className="text-2xl font-bold text-foreground/80 font-headline mb-4">{title}</h2>
-            <div className="flex overflow-x-auto gap-8 pb-4 -mx-4 px-4 scrollbar-hide">
+            <div className="flex overflow-x-auto gap-8 pb-4 -mx-4 px-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:mx-0 md:px-0">
                 {sermons.map(sermon => (
-                    <div key={sermon.id} className="w-80 flex-shrink-0 sm:w-[calc(50%-1rem)] md:w-[calc(33.33%-1.5rem)] lg:w-[calc(25%-1.5rem)]">
+                    <div key={sermon.id} className="w-80 flex-shrink-0 md:w-auto">
                         <Link href={`/?sermonId=${sermon.id}`} passHref>
                             <SermonCard sermon={sermon} className="h-full" />
                         </Link>
@@ -88,8 +90,10 @@ const SermonShelf = ({ title, sermons }: { title: string, sermons: any[] }) => {
     )
 }
 
-
-export default function SermonArchivePage() {
+function SermonArchivePageContent() {
+    const searchParams = useSearchParams();
+    const initialCategory = searchParams.get('category');
+    
     const [searchTerm, setSearchTerm] = useState('');
     const [filters, setFilters] = useState({
         series: [],
@@ -106,6 +110,11 @@ export default function SermonArchivePage() {
         );
     }
     
+    const allFilteredSermons = allSermons.filter(sermon =>
+        (sermon.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+         sermon.speaker.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+    
     // In a real app, these would be dynamically generated from your data.
     const seriesOptions = [...new Set(allSermons.map(s => s.series))];
     const speakerOptions = [...new Set(allSermons.map(s => s.speaker))];
@@ -113,7 +122,7 @@ export default function SermonArchivePage() {
 
 
     return (
-        <div className="mt-20 bg-background text-foreground min-h-screen">
+        <div className="bg-background text-foreground min-h-screen">
             <main>
                 {/* Section 1: Featured Current Series */}
                 <section className="bg-muted/30">
@@ -161,18 +170,37 @@ export default function SermonArchivePage() {
                         </div>
                     </div>
                 </section>
-
+                
                 {/* Sermon Categories */}
-                <div className="py-8">
-                    {sermonCategories.map(category => (
-                        <SermonShelf 
-                            key={category}
-                            title={category}
-                            sermons={getFilteredSermons(category)}
-                        />
-                    ))}
-                </div>
+                 <div className="py-8">
+                    {initialCategory ? (
+                         <SermonShelf 
+                            title={initialCategory}
+                            sermons={getFilteredSermons(initialCategory)}
+                         />
+                    ) : (
+                        sermonCategories.map(category => (
+                            <SermonShelf 
+                                key={category}
+                                title={category}
+                                sermons={getFilteredSermons(category)}
+                            />
+                        ))
+                    )}
+                 </div>
+
             </main>
         </div>
     );
 }
+
+
+export default function SermonArchivePage() {
+    return (
+        <React.Suspense fallback={<div>Loading...</div>}>
+            <SermonArchivePageContent />
+        </React.Suspense>
+    )
+}
+
+    

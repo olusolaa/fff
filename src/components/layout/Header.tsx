@@ -94,7 +94,7 @@ const navItems: NavItem[] = [
       { category: 'WATCH', label: 'Videos', href: '/resources/videos', icon: Video },
       { category: 'LISTEN', label: 'Music', href: '/resources/music', icon: Disc3 },
       { category: 'LISTEN', label: 'Podcasts', href: '/resources/podcasts', icon: Mic2 },
-      { category: 'READ', label: 'Articles', href: '/resources/blog', icon: Newspaper },
+      { category: 'READ', label: 'Articles', href: '/blogs', icon: Newspaper },
       { category: 'READ', label: 'Study Guides', href: '/resources/guides', icon: Library },
       { category: 'READ', label: 'Books', href: '/resources/books', icon: BookMarked },
     ]

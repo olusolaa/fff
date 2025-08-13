@@ -3,24 +3,20 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import {
   Search,
   ChevronDown,
+  AudioLines,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuCheckboxItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { cn } from '@/lib/utils';
 import { SermonCard } from '@/components/shared/sermon-card';
 import Link from 'next/link';
+
 import { useSearchParams } from 'next/navigation';
+
 
 // Mock Data - Replace with your actual data fetching logic
 const currentSeries = {
@@ -31,6 +27,7 @@ const currentSeries = {
 };
 
 const allSermons = [
+
   { id: 1, title: 'The Echo of Grace', speaker: 'Dr. Evelyn Reed', date: 'Oct 26, 2023', series: 'The Echo of Grace', thumbnail: 'https://placehold.co/600x400', duration: 2714, notes: '', transcript: [], seriesId: 1, seriesPart: 1, category: 'Discipleship Class' },
   { id: 2, title: 'The Unfailing Compass', speaker: 'Dr. Evelyn Reed', date: 'Nov 2, 2023', series: 'The Echo of Grace', thumbnail: 'https://placehold.co/600x400', duration: 2650, notes: '', transcript: [], seriesId: 1, seriesPart: 2, category: 'Discipleship Class' },
   { id: 3, title: 'The Lavish Banquet', speaker: 'Dr. Evelyn Reed', date: 'Nov 9, 2023', series: 'The Echo of Grace', thumbnail: 'https://placehold.co/600x400', duration: 2800, notes: '', transcript: [], seriesId: 1, seriesPart: 3, category: 'Discipleship Class' },
@@ -113,12 +110,8 @@ function SermonArchivePageContent() {
     const allFilteredSermons = allSermons.filter(sermon =>
         (sermon.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
          sermon.speaker.toLowerCase().includes(searchTerm.toLowerCase()))
+
     );
-    
-    // In a real app, these would be dynamically generated from your data.
-    const seriesOptions = [...new Set(allSermons.map(s => s.series))];
-    const speakerOptions = [...new Set(allSermons.map(s => s.speaker))];
-    const yearOptions = [...new Set(allSermons.map(s => new Date(s.date).getFullYear().toString()))].sort().reverse();
 
 
     return (
@@ -129,8 +122,8 @@ function SermonArchivePageContent() {
                     <div className="container mx-auto px-4 py-12 md:py-20">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                             <div className="order-2 md:order-1">
-                                <h1 className="font-headline text-4xl md:text-5xl lg:text-6xl font-bold text-primary">{currentSeries.title}</h1>
-                                <p className="mt-4 text-lg text-foreground/80 max-w-xl">{currentSeries.description}</p>
+                                <h1 className="font-headline text-4xl md:text-5xl lg:text-6xl font-bold text-primary text-left">{currentSeries.title}</h1>
+                                <p className="mt-4 text-lg text-foreground/80 max-w-xl text-left">{currentSeries.description}</p>
                                 <Button asChild size="lg" className="mt-6">
                                     <Link href={`/?sermonId=${currentSeries.latestSermonId}`}>Watch the Latest Message</Link>
                                 </Button>
@@ -150,24 +143,126 @@ function SermonArchivePageContent() {
                     </div>
                 </section>
 
-                {/* Section 2: Search & Filter Bar */}
-                <section className="container mx-auto px-4 py-8 sticky top-0 bg-background/95 backdrop-blur-sm z-10 border-b">
-                    <div className="flex flex-col md:flex-row gap-4">
-                        <div className="relative flex-grow">
-                            <Input 
-                                placeholder="Search messages by topic or scripture..." 
-                                className="pl-10 h-12 text-base" 
-                                value={searchTerm}
-                                onChange={e => setSearchTerm(e.target.value)}
-                            />
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                        </div>
-                        <div className="flex items-center gap-2 overflow-x-auto pb-2">
-                           <FilterDropdown title="Series" options={seriesOptions} selected={filters.series} onSelectedChange={() => {}}/>
-                           <FilterDropdown title="Speaker" options={speakerOptions} selected={filters.speaker} onSelectedChange={() => {}}/>
-                           <FilterDropdown title="Book" options={["Genesis", "Exodus", "Psalms", "John"]} selected={filters.book} onSelectedChange={() => {}}/>
-                           <FilterDropdown title="Year" options={yearOptions} selected={filters.year} onSelectedChange={() => {}}/>
-                        </div>
+                {/* Section 2: AI-Powered Search Command Bar */}
+                <section className="container mx-auto px-4 py-16">
+                    <div className="max-w-3xl mx-auto">
+                        <motion.div 
+                            className="relative"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                        >
+                            {/* Command Bar Container */}
+                            <div className={cn(
+                                "relative group transition-all duration-300",
+                                searchFocused && "scale-[1.02]"
+                            )}>
+                                <Input 
+                                    placeholder="Search for a message, topic, scripture, or ask a question..." 
+                                    className={cn(
+                                        "h-16 pl-14 pr-6 text-lg rounded-xl",
+                                        "bg-white/80 backdrop-blur-sm",
+                                        "border-2 border-gray-200/50",
+                                        "placeholder:text-muted-foreground/60",
+                                        "transition-all duration-300",
+                                        "focus:bg-white focus:border-primary/30 focus:shadow-xl",
+                                        searchFocused && "shadow-2xl border-primary/40"
+                                    )}
+                                    value={searchTerm}
+                                    onChange={e => setSearchTerm(e.target.value)}
+                                    onFocus={() => setSearchFocused(true)}
+                                    onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
+                                />
+                                <Search className={cn(
+                                    "absolute left-5 top-1/2 -translate-y-1/2 h-6 w-6 transition-all duration-300",
+                                    searchFocused ? "text-primary" : "text-muted-foreground/60"
+                                )} />
+                                
+                                {/* AI Badge */}
+                                <div className="absolute right-5 top-1/2 -translate-y-1/2">
+                                    <span className="text-xs font-medium text-muted-foreground/60 bg-primary/5 px-2 py-1 rounded-md">
+                                        AI-Powered
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            {/* Search Results Dropdown */}
+                            <AnimatePresence>
+                                {searchFocused && searchTerm && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-200/50 overflow-hidden z-50"
+                                    >
+                                        <div className="p-2">
+                                            <div className="px-3 py-2 text-xs font-medium text-muted-foreground/60 uppercase tracking-wider">
+                                                Suggested Results
+                                            </div>
+                                            {filteredSermons.slice(0, 5).map(sermon => (
+                                                <Link 
+                                                    key={sermon.id}
+                                                    href={`/sermon?sermonId=${sermon.id}`}
+                                                    className="block px-3 py-3 hover:bg-primary/5 rounded-lg transition-colors duration-200"
+                                                >
+                                                    <div className="flex items-start gap-3">
+                                                        <div className="w-12 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded flex items-center justify-center flex-shrink-0">
+                                                            <AudioLines className="h-5 w-5 text-primary/50" />
+                                                        </div>
+                                                        <div className="flex-grow">
+                                                            <h4 className="font-medium text-foreground">{sermon.title}</h4>
+                                                            <p className="text-sm text-muted-foreground mt-0.5">
+                                                                {sermon.speaker} • {sermon.series}
+                                                            </p>
+                                                            <p className="text-xs text-muted-foreground/60 mt-1">{sermon.date}</p>
+                                                        </div>
+                                                    </div>
+                                                </Link>
+                                            ))}
+                                            {searchTerm && filteredSermons.length === 0 && (
+                                                <div className="px-3 py-8 text-center text-muted-foreground/60">
+                                                    <p className="text-sm">No messages found for "{searchTerm}"</p>
+                                                    <p className="text-xs mt-2">Try different keywords or browse all messages below</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                            
+                            {/* Search Context Overlay */}
+                            <AnimatePresence>
+                                {searchFocused && (
+                                    <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                        className="fixed inset-0 bg-black/20 -z-10"
+                                        onClick={() => setSearchFocused(false)}
+                                    />
+                                )}
+                            </AnimatePresence>
+                        </motion.div>
+                        
+                        {/* Quick Filter Pills */}
+                        <motion.div 
+                            className="flex flex-wrap gap-2 justify-center mt-6"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.5, delay: 0.4 }}
+                        >
+                            {['Grace', 'Hope', 'Faith', 'Love', 'Purpose', 'Peace'].map(topic => (
+                                <button
+                                    key={topic}
+                                    onClick={() => setSearchTerm(topic)}
+                                    className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground bg-white/50 hover:bg-white rounded-full transition-all duration-200 hover:shadow-md"
+                                >
+                                    {topic}
+                                </button>
+                            ))}
+                        </motion.div>
                     </div>
                 </section>
                 
@@ -188,6 +283,7 @@ function SermonArchivePageContent() {
                         ))
                     )}
                  </div>
+
 
             </main>
         </div>

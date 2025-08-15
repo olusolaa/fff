@@ -3,3 +3,4 @@ config();
 
 import '@/ai/flows/ai-bible-study-companion.ts';
 import '@/ai/flows/create-quote-image.ts';
+import '@/ai/flows/ai-pastoral-assistant.ts';

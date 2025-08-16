@@ -14,7 +14,9 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { SermonCard } from '@/components/shared/sermon-card';
 import Link from 'next/link';
-import { AnimatePresence } from 'framer-motion';
+
+import { useSearchParams } from 'next/navigation';
+
 
 // Mock Data - Replace with your actual data fetching logic
 const currentSeries = {
@@ -25,28 +27,90 @@ const currentSeries = {
 };
 
 const allSermons = [
-  { id: 1, title: 'The Echo of Grace', speaker: 'Dr. Evelyn Reed', date: 'Oct 26, 2023', series: 'The Echo of Grace', thumbnail: 'https://placehold.co/600x800/2C3E50/f5f5f0?text=Grace+Echoes', duration: 2714, notes: '', transcript: [], seriesId: 1, seriesPart: 1, scripture: 'Ephesians 2:8' },
-  { id: 2, title: 'The Unfailing Compass', speaker: 'Dr. Evelyn Reed', date: 'Nov 2, 2023', series: 'The Echo of Grace', thumbnail: 'https://placehold.co/600x800/34495E/f5f5f0?text=Compass', duration: 2650, notes: '', transcript: [], seriesId: 1, seriesPart: 2, scripture: 'Proverbs 3:5-6' },
-  { id: 3, title: 'The Lavish Banquet', speaker: 'Dr. Evelyn Reed', date: 'Nov 9, 2023', series: 'The Echo of Grace', thumbnail: null, duration: 2800, notes: '', transcript: [], seriesId: 1, seriesPart: 3, scripture: 'Luke 14:16-24' },
-  { id: 10, title: 'Beyond Deserving', speaker: 'Rev. Michael Chen', date: 'May 14, 2023', series: 'Foundations', thumbnail: 'https://placehold.co/600x800/16A085/1a2a1a?text=Beyond', duration: 2500, notes: '', transcript: [], seriesId: 2, seriesPart: 1, scripture: 'Romans 5:8' },
-  { id: 11, title: 'The Currency of Heaven', speaker: 'Pastor Sarah Jones', date: 'June 1, 2023', series: 'Kingdom Economics', thumbnail: null, duration: 2900, notes: '', transcript: [], seriesId: 3, seriesPart: 1, scripture: 'Matthew 6:19-21' },
-  { id: 12, title: 'Held, Not Perfect', speaker: 'Dr. Evelyn Reed', date: 'July 22, 2023', series: 'Paradox', thumbnail: 'https://placehold.co/600x800/8E44AD/f5f5f0?text=Held', duration: 2600, notes: '', transcript: [], seriesId: 4, seriesPart: 1, scripture: '2 Corinthians 12:9' },
-  { id: 13, title: 'The Scandal of Mercy', speaker: 'Rev. Michael Chen', date: 'August 5, 2023', series: 'Foundations', thumbnail: null, duration: 3100, notes: '', transcript: [], seriesId: 2, seriesPart: 2, scripture: 'Micah 6:8' },
-  { id: 14, title: 'Freely Given, Freely Give', speaker: 'Pastor Sarah Jones', date: 'September 10, 2023', series: 'Kingdom Economics', thumbnail: 'https://placehold.co/600x800/D35400/f5f5f0?text=Give', duration: 2400, notes: '', transcript: [], seriesId: 3, seriesPart: 2, scripture: 'Acts 20:35' },
-  { id: 15, title: 'The Strongest Weakness', speaker: 'Dr. Evelyn Reed', date: 'October 1, 2023', series: 'Paradox', thumbnail: null, duration: 2750, notes: '', transcript: [], seriesId: 4, seriesPart: 2, scripture: '1 Corinthians 1:27' },
-  { id: 16, title: 'Grace in the Ruins', speaker: 'Rev. Michael Chen', date: 'October 15, 2023', series: 'Foundations', thumbnail: 'https://placehold.co/600x800/27AE60/1a2a1a?text=Ruins', duration: 2850, notes: '', transcript: [], seriesId: 2, seriesPart: 3, scripture: 'Isaiah 61:3' },
+
+  { id: 1, title: 'The Echo of Grace', speaker: 'Dr. Evelyn Reed', date: 'Oct 26, 2023', series: 'The Echo of Grace', thumbnail: 'https://placehold.co/600x400', duration: 2714, notes: '', transcript: [], seriesId: 1, seriesPart: 1, category: 'Discipleship Class' },
+  { id: 2, title: 'The Unfailing Compass', speaker: 'Dr. Evelyn Reed', date: 'Nov 2, 2023', series: 'The Echo of Grace', thumbnail: 'https://placehold.co/600x400', duration: 2650, notes: '', transcript: [], seriesId: 1, seriesPart: 2, category: 'Discipleship Class' },
+  { id: 3, title: 'The Lavish Banquet', speaker: 'Dr. Evelyn Reed', date: 'Nov 9, 2023', series: 'The Echo of Grace', thumbnail: 'https://placehold.co/600x400', duration: 2800, notes: '', transcript: [], seriesId: 1, seriesPart: 3, category: 'Discipleship Class' },
+  { id: 10, title: 'Beyond Deserving', speaker: 'Rev. Michael Chen', date: 'May 14, 2023', series: 'Foundations', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 2500, notes: '', transcript: [], seriesId: 2, seriesPart: 1, category: 'Discipleship Class' },
+  { id: 11, title: 'Navigating Singleness with Purpose', speaker: 'Pastor Sarah Jones', date: 'June 1, 2023', series: 'Kingdom Economics', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 2900, notes: '', transcript: [], seriesId: 3, seriesPart: 1, category: 'Singles Club' },
+  { id: 12, title: 'Two Become One', speaker: 'Dr. Evelyn Reed', date: 'July 22, 2023', series: 'Paradox', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 2600, notes: '', transcript: [], seriesId: 4, seriesPart: 1, category: 'Marriage Forum' },
+  { id: 13, title: 'The Scandal of Mercy', speaker: 'Rev. Michael Chen', date: 'August 5, 2023', series: 'Foundations', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 3100, notes: '', transcript: [], seriesId: 2, seriesPart: 2, category: 'Others' },
+  { id: 14, title: 'God\'s Design for the Family', speaker: 'Pastor Sarah Jones', date: 'September 10, 2023', series: 'Kingdom Economics', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 2400, notes: '', transcript: [], seriesId: 3, seriesPart: 2, category: 'Family Life' },
+  { id: 15, title: 'The Strongest Weakness', speaker: 'Dr. Evelyn Reed', date: 'October 1, 2023', series: 'Paradox', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 2750, notes: '', transcript: [], seriesId: 4, seriesPart: 2, category: 'Others' },
+  { id: 16, title: 'Grace in the Ruins', speaker: 'Rev. Michael Chen', date: 'October 15, 2023', series: 'Foundations', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 2850, notes: '', transcript: [], seriesId: 2, seriesPart: 3, category: 'Others' },
+  { id: 17, title: 'The Godly Man', speaker: 'Rev. Michael Chen', date: 'October 22, 2023', series: 'Foundations', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 2850, notes: '', transcript: [], seriesId: 2, seriesPart: 4, category: 'Family Life' },
+  { id: 18, title: 'The Virtuous Woman', speaker: 'Dr. Evelyn Reed', date: 'October 29, 2023', series: 'Paradox', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 2750, notes: '', transcript: [], seriesId: 4, seriesPart: 3, category: 'Family Life' },
+  { id: 19, title: 'Rise Up', speaker: 'Guest Speaker', date: 'June 10, 2023', series: 'Youth Rally', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 3200, notes: '', transcript: [], seriesId: 5, seriesPart: 1, category: 'Youth' },
 ];
 
-export default function SermonArchivePage() {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [page, setPage] = useState(1);
-    const [searchFocused, setSearchFocused] = useState(false);
+const sermonCategories = ["Discipleship Class", "Singles Club", "Marriage Forum", "Family Life", "Youth", "Others"];
 
-    // In a real app, this would use AI-powered vector search
-    const filteredSermons = allSermons.filter(sermon => 
-        sermon.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        sermon.speaker.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        sermon.series.toLowerCase().includes(searchTerm.toLowerCase())
+const FilterDropdown = ({ title, options, selected, onSelectedChange }: any) => (
+    <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="flex items-center gap-2">
+                {title} <ChevronDown className="h-4 w-4" />
+            </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56">
+            <DropdownMenuLabel>{title}</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {options.map((option: string) => (
+                <DropdownMenuCheckboxItem
+                    key={option}
+                    checked={selected.includes(option)}
+                    onCheckedChange={() => onSelectedChange(option)}
+                >
+                    {option}
+                </DropdownMenuCheckboxItem>
+            ))}
+        </DropdownMenuContent>
+    </DropdownMenu>
+);
+
+const SermonShelf = ({ title, sermons }: { title: string, sermons: any[] }) => {
+    if (sermons.length === 0) return null;
+
+    return (
+        <section className="container mx-auto px-4 py-8">
+            <h2 className="text-2xl font-bold text-foreground/80 font-headline mb-4">{title}</h2>
+            <div className="flex overflow-x-auto gap-8 pb-4 -mx-4 px-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:mx-0 md:px-0">
+                {sermons.map(sermon => (
+                    <div key={sermon.id} className="w-80 flex-shrink-0 md:w-auto">
+                        <Link href={`/?sermonId=${sermon.id}`} passHref>
+                            <SermonCard sermon={sermon} className="h-full" />
+                        </Link>
+                    </div>
+                ))}
+            </div>
+        </section>
+    )
+}
+
+function SermonArchivePageContent() {
+    const searchParams = useSearchParams();
+    const initialCategory = searchParams.get('category');
+    
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filters, setFilters] = useState({
+        series: [],
+        speaker: [],
+        book: [],
+        year: [],
+    });
+
+    const getFilteredSermons = (category: string) => {
+        return allSermons.filter(sermon => 
+            sermon.category === category &&
+            (sermon.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+             sermon.speaker.toLowerCase().includes(searchTerm.toLowerCase()))
+        );
+    }
+    
+    const allFilteredSermons = allSermons.filter(sermon =>
+        (sermon.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+         sermon.speaker.toLowerCase().includes(searchTerm.toLowerCase()))
+
     );
 
 
@@ -201,60 +265,38 @@ export default function SermonArchivePage() {
                         </motion.div>
                     </div>
                 </section>
+                
+                {/* Sermon Categories */}
+                 <div className="py-8">
+                    {initialCategory ? (
+                         <SermonShelf 
+                            title={initialCategory}
+                            sermons={getFilteredSermons(initialCategory)}
+                         />
+                    ) : (
+                        sermonCategories.map(category => (
+                            <SermonShelf 
+                                key={category}
+                                title={category}
+                                sermons={getFilteredSermons(category)}
+                            />
+                        ))
+                    )}
+                 </div>
 
-                {/* Section 3: Recent Messages */}
-                <section className="container mx-auto px-4 py-12">
-                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                        {filteredSermons.map(sermon => (
-                           <Link key={sermon.id} href={`/sermon?sermonId=${sermon.id}`} passHref>
-                                <SermonCard sermon={sermon} className="h-full" />
-                           </Link>
-                        ))}
-                    </div>
-                </section>
 
-                {/* Section 4: Pagination */}
-                <section className="container mx-auto px-4 pb-12">
-                    <div className="flex justify-center items-center gap-1">
-                        <Button 
-                            variant="ghost" 
-                            size="icon"
-                            disabled={page === 1} 
-                            onClick={() => setPage(p => Math.max(1, p - 1))}
-                        >
-                            <ChevronDown className="h-4 w-4 rotate-90" />
-                        </Button>
-                        
-                        {[...Array(5)].map((_, i) => {
-                            const pageNum = i + 1;
-                            return (
-                                <Button
-                                    key={pageNum}
-                                    variant={page === pageNum ? "default" : "ghost"}
-                                    size="sm"
-                                    onClick={() => setPage(pageNum)}
-                                    className={cn(
-                                        "min-w-[40px]",
-                                        page === pageNum && "pointer-events-none"
-                                    )}
-                                >
-                                    {pageNum}
-                                </Button>
-                            );
-                        })}
-                        
-                        <Button 
-                            variant="ghost" 
-                            size="icon"
-                            onClick={() => setPage(p => p + 1)}
-                        >
-                            <ChevronDown className="h-4 w-4 -rotate-90" />
-                        </Button>
-                    </div>
-                </section>
             </main>
         </div>
     );
+}
+
+
+export default function SermonArchivePage() {
+    return (
+        <React.Suspense fallback={<div>Loading...</div>}>
+            <SermonArchivePageContent />
+        </React.Suspense>
+    )
 }
 
     

@@ -4,6 +4,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import AppLayout from '@/components/layout/AppLayout';
 import { cn } from '@/lib/utils';
+import { PastoralAssistant } from '@/components/shared/pastoral-assistant';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const alegreya = Alegreya({ subsets: ['latin'], weight: ['400', '700'], variable: '--font-alegreya' });
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body className={cn("font-body antialiased", inter.variable, alegreya.variable, caveat.variable)}>
         <AppLayout>
           {children}
+          <PastoralAssistant />
         </AppLayout>
         <Toaster />
       </body>

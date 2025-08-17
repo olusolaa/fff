@@ -6,10 +6,22 @@ import { cn } from '@/lib/utils';
 interface AnimatedSectionProps {
   children: ReactNode;
   className?: string;
+  threshold?: number;
+  rootMargin?: string;
+  animationDelay?: number;
+  animationType?: 'fade' | 'slide' | 'scale' | 'blur';
 }
 
-const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, className }) => {
+const AnimatedSection: React.FC<AnimatedSectionProps> = ({ 
+  children, 
+  className,
+  threshold = 0.1,
+  rootMargin = '-50px',
+  animationDelay = 0,
+  animationType = 'fade'
+}) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -18,16 +30,24 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, className }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // We only want to trigger the animation once
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(section);
+        // Trigger animation when element comes into view
+        if (entry.isIntersecting && !hasAnimated) {
+          // Add delay if specified
+          if (animationDelay > 0) {
+            setTimeout(() => {
+              setIsVisible(true);
+              setHasAnimated(true);
+            }, animationDelay);
+          } else {
+            setIsVisible(true);
+            setHasAnimated(true);
+          }
         }
       },
       {
-        root: null, // relative to the viewport
-        rootMargin: '0px',
-        threshold: 0.1 // 10% of the element is visible
+        root: null,
+        rootMargin,
+        threshold
       }
     );
 
@@ -38,12 +58,38 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, className }
         observer.unobserve(section);
       }
     };
-  }, []);
+  }, [threshold, rootMargin, animationDelay, hasAnimated]);
+
+  // Animation classes based on type
+  const animationClasses = {
+    fade: {
+      initial: 'opacity-0',
+      animate: 'opacity-100 transition-opacity duration-1000 ease-out'
+    },
+    slide: {
+      initial: 'opacity-0 translate-y-12',
+      animate: 'opacity-100 translate-y-0 transition-all duration-1000 ease-out'
+    },
+    scale: {
+      initial: 'opacity-0 scale-95',
+      animate: 'opacity-100 scale-100 transition-all duration-1000 ease-out'
+    },
+    blur: {
+      initial: 'opacity-0 blur-sm',
+      animate: 'opacity-100 blur-0 transition-all duration-1000 ease-out'
+    }
+  };
+
+  const currentAnimation = animationClasses[animationType];
 
   return (
     <section
       ref={sectionRef}
-      className={cn( isVisible ? 'is-visible' : '', className)}
+      className={cn(
+        !isVisible ? currentAnimation.initial : currentAnimation.animate,
+        isVisible ? 'is-visible' : '',
+        className
+      )}
     >
       {children}
     </section>

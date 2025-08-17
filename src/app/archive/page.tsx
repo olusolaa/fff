@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search,
   ChevronDown,
@@ -11,6 +11,14 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import {
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { SermonCard } from '@/components/shared/sermon-card';
 import Link from 'next/link';
@@ -92,6 +100,7 @@ function SermonArchivePageContent() {
     const initialCategory = searchParams.get('category');
     
     const [searchTerm, setSearchTerm] = useState('');
+    const [searchFocused, setSearchFocused] = useState(false);
     const [filters, setFilters] = useState({
         series: [],
         speaker: [],
@@ -200,7 +209,7 @@ function SermonArchivePageContent() {
                                             <div className="px-3 py-2 text-xs font-medium text-muted-foreground/60 uppercase tracking-wider">
                                                 Suggested Results
                                             </div>
-                                            {filteredSermons.slice(0, 5).map(sermon => (
+                                            {allFilteredSermons.slice(0, 5).map(sermon => (
                                                 <Link 
                                                     key={sermon.id}
                                                     href={`/sermon?sermonId=${sermon.id}`}
@@ -220,7 +229,7 @@ function SermonArchivePageContent() {
                                                     </div>
                                                 </Link>
                                             ))}
-                                            {searchTerm && filteredSermons.length === 0 && (
+                                            {searchTerm && allFilteredSermons.length === 0 && (
                                                 <div className="px-3 py-8 text-center text-muted-foreground/60">
                                                     <p className="text-sm">No messages found for "{searchTerm}"</p>
                                                     <p className="text-xs mt-2">Try different keywords or browse all messages below</p>

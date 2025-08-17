@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Alegreya', Arial, Helvetica, sans-serif;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
 }
 
 @layer base {
@@ -11,7 +11,7 @@ body {
     /* HSL Values for easy manipulation */
     --primary-dark-green-hsl: 151 20% 30%;
     --accent-olive-green-hsl: 77 18% 52%;
-    --background-off-white-hsl: 30 20% 95%;
+    --background-off-white-hsl: 30 20% 98%;
     --text-dark-gray-hsl: 0 0% 13%;
 
     /* Usable Color Variables */
@@ -27,7 +27,7 @@ body {
     --primary: var(--primary-dark-green-hsl);
     --primary-foreground: 30 20% 98%; /* Lighter off-white for contrast on green */
 
-    --secondary: 151 20% 85%; /* Lighter shade of primary for backgrounds */
+    --secondary: 151 20% 92%; /* Even lighter shade for subtle backgrounds */
     --secondary-foreground: 151 20% 20%; /* Darker text on secondary */
     
     --muted: 0 0% 90%; /* Lighter gray for muted elements */
@@ -39,19 +39,19 @@ body {
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     
-    --border: 0 0% 85%; /* Light gray border */
-    --input: 0 0% 85%;
+    --border: 0 0% 90%; /* Lighter border for elegance */
+    --input: 0 0% 90%;
     --ring: var(--primary-dark-green-hsl);
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-     /* Reader variables */
-     --reader-bg-light: 48 33% 96%;
-     --reader-text-light: 30 5% 25%;
-     --reader-bg-sepia: 45 33% 84%;
-     --reader-text-sepia: 45 15% 28%;
-     --reader-bg-dark: 0 0% 10%;
-     --reader-text-dark: 0 0% 82%;
+    /* Reader variables */
+    --reader-bg-light: 48 33% 96%;
+    --reader-text-light: 30 5% 25%;
+    --reader-bg-sepia: 45 33% 84%;
+    --reader-text-sepia: 45 15% 28%;
+    --reader-bg-dark: 0 0% 10%;
+    --reader-text-dark: 0 0% 82%;
   }
 
   .dark {
@@ -90,7 +90,7 @@ body {
     --input: 0 0% 25%;
     --ring: var(--primary-dark-green-hsl);
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
   }
 }
 
@@ -99,12 +99,14 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-body;
+    @apply bg-background text-foreground;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern" 1, "liga" 1;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-headline;
+    letter-spacing: -0.02em;
   }
   .prose {
     color: var(--tw-prose-body);
@@ -113,29 +115,44 @@ body {
 
 @layer utilities {
   .animate-fade-in-slow {
-    animation: fadeInSlow 2s ease-out forwards;
+    animation: fadeInSlow 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
   }
   .animate-fade-in-delay {
-    animation: fadeInSlow 2s ease-out 0.5s forwards;
+    animation: fadeInSlow 2.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
     opacity: 0;
   }
   .animate-fade-in-buttons {
-    animation: fadeInSlow 2s ease-out 1s forwards;
+    animation: fadeInSlow 2.5s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards;
     opacity: 0;
+  }
+  
+  .animate-signature-fade {
+    animation: signatureFade 2s ease-out 1.5s forwards;
   }
 
   .cross-fade-enter {
     opacity: 0;
-    animation: fadeIn 0.5s ease-in-out forwards;
+    animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   .cross-fade-exit {
     opacity: 1;
-    animation: fadeOut 0.5s ease-in-out forwards;
+    animation: fadeOut 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   
   @keyframes fadeInSlow {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes signatureFade {
     from {
       opacity: 0;
       transform: translateY(10px);
@@ -145,6 +162,7 @@ body {
       transform: translateY(0);
     }
   }
+  
   @keyframes fadeOut {
     from { opacity: 1; }
     to { opacity: 0; }
@@ -158,18 +176,16 @@ body {
     scrollbar-width: none; /* Firefox */
   }
   
-
-
-  /* 3D Book Effect */
+  /* 3D Book Effect - Enhanced */
   .book-3d-container {
     position: relative;
     transform-style: preserve-3d;
-    transform: perspective(1000px) rotateY(-15deg);
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: perspective(1200px) rotateY(-12deg);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   .group:hover .book-3d-container {
-    transform: perspective(1000px) rotateY(0deg) translateZ(20px);
+    transform: perspective(1200px) rotateY(0deg) translateZ(20px);
   }
   
   .book-3d-container::before {
@@ -179,14 +195,14 @@ body {
     left: -8px;
     width: 8px;
     height: 100%;
-    background: linear-gradient(to right, #666, #ccc);
+    background: linear-gradient(to right, #888, #ddd);
     transform: rotateY(-90deg) translateZ(4px);
     transform-origin: right;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.6s ease;
   }
   
   .group:hover .book-3d-container::before {
-    opacity: 0.5;
+    opacity: 0.4;
   }
   
   .book-3d-container::after {
@@ -196,25 +212,24 @@ body {
     left: -15px;
     right: -5px;
     bottom: -5px;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.15);
     transform: translateZ(-15px);
-    filter: blur(10px);
-    transition: all 0.5s ease;
+    filter: blur(12px);
+    transition: all 0.6s ease;
   }
   
   .group:hover .book-3d-container::after {
     left: -10px;
     right: -10px;
     bottom: -10px;
-    background: rgba(0, 0, 0, 0.3);
-    filter: blur(15px);
+    background: rgba(0, 0, 0, 0.25);
+    filter: blur(20px);
   }
 }
 
-
 /* 
 =====================================================================
-  PHASE 2: THE INVITATION (WELCOME & GATHERINGS) CSS BLUEPRINT
+  ENHANCED INVITATION SECTION - ELEGANT & SPACIOUS
 =====================================================================
 */
 
@@ -222,17 +237,19 @@ body {
 .invitation-section {
   display: flex;
   justify-content: center;
-  padding: clamp(4rem, 10vw, 8rem) 1.5rem;
+  padding: clamp(6rem, 12vw, 10rem) 1.5rem;
   overflow: hidden;
+  position: relative;
 }
 
 .invitation-content-wrapper {
   width: 100%;
-  max-width: 65ch;
+  max-width: 70ch;
   text-align: center;
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1), transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(50px);
+  transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .invitation-section.is-visible .invitation-content-wrapper {
@@ -242,42 +259,53 @@ body {
 
 /* SECTION 2.2: THE PERSONAL WELCOME */
 .pastor-photo {
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  margin: 0 auto 1.5rem auto;
-  border: 1px solid #E9E5E2;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  transition-delay: 100ms;
+  margin: 0 auto 2rem auto;
+  border: 3px solid hsl(var(--background));
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.08),
+    0 2px 10px rgba(0, 0, 0, 0.04);
+  transition: all 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 200ms;
 }
 
 .welcome-headline {
-  font-family: var(--font-serif);
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-family: 'Alegreya', serif;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 700;
-  color: var(--text-dark-gray-hsl);
-  margin-bottom: 1rem;
+  color: hsl(var(--primary));
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
 }
 
 .welcome-paragraph {
-  font-family: var(--font-sans);
-  font-size: clamp(1.05rem, 2vw, 1.125rem);
-  line-height: 1.7;
-  color: var(--text-dark-gray-hsl);
-  margin-bottom: 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.1rem, 2vw, 1.25rem);
+  line-height: 1.8;
+  color: hsl(var(--foreground) / 0.8);
+  margin-bottom: 2.5rem;
+  font-weight: 300;
 }
 
 /* SECTION 2.3: GATHERING INFORMATION */
 .divider-line {
-  width: 80px;
-  height: 1px;
-  background-color: hsl(var(--accent-olive-green-hsl)); /* Using HSL variable */
-  margin: 0 auto 2.5rem auto;
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(
+    90deg, 
+    transparent, 
+    hsl(var(--accent-olive-green-hsl) / 0.5), 
+    transparent
+  );
+  margin: 0 auto 3rem auto;
   transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 700ms cubic-bezier(0.86, 0, 0.07, 1);
-  transition-delay: 500ms; /* Shortened delay */
+  transform-origin: center;
+  transition: transform 900ms cubic-bezier(0.86, 0, 0.07, 1);
+  transition-delay: 600ms;
 }
 
 .invitation-section.is-visible .divider-line {
@@ -285,43 +313,57 @@ body {
 }
 
 .locations-button {
-  display: inline-block;
-  padding: 0.8rem 2rem;
-  background-color: hsl(var(--accent-olive-green-hsl));
+  display: inline-flex;
+  align-items: center;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, 
+    hsl(var(--accent-olive-green-hsl)), 
+    hsl(var(--accent-olive-green-hsl) / 0.9)
+  );
   color: white;
-  font-family: var(--font-sans);
-  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
   text-decoration: none;
-  border-radius: 50px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1), letter-spacing 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 100px;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.15),
+    0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.01em;
 }
 
 .locations-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.2),
+    0 5px 15px rgba(0, 0, 0, 0.12);
   letter-spacing: 0.02em;
+  background: linear-gradient(135deg, 
+    hsl(var(--accent-olive-green-hsl) / 0.95), 
+    hsl(var(--accent-olive-green-hsl) / 0.85)
+  );
 }
 
 .locations-button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transform: translateY(-1px);
+  box-shadow: 
+    0 5px 15px rgba(0,0,0,0.15),
+    0 2px 5px rgba(0,0,0,0.1);
   transition-duration: 100ms;
 }
 
-
 /*
 =====================================================================
-  MODAL: "OUR GATHERINGS" CSS BLUEPRINT
+  ENHANCED MODAL - MORE ELEGANT & SPACIOUS
 =====================================================================
 */
 
 /* --- The Main Page Effect --- */
-/* This class is added to the <body> when the modal is open */
 body.modal-is-open main {
-  transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1), filter 400ms cubic-bezier(0.4, 0, 0.2, 1);
-  transform: scale(0.98);
-  filter: blur(8px) saturate(0.8);
+  transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1), 
+              filter 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(0.97);
+  filter: blur(10px) saturate(0.7) brightness(0.95);
 }
 
 /* --- The Modal Container & Overlay --- */
@@ -332,22 +374,30 @@ body.modal-is-open main {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 2rem;
   
   /* Hidden by default */
   opacity: 0;
   visibility: hidden;
-  transition: opacity 400ms ease-out, visibility 0s 400ms;
+  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1), 
+              visibility 0s 500ms;
 }
+
 .locations-modal-container.is-open {
   opacity: 1;
   visibility: visible;
-  transition: opacity 400ms ease-out, visibility 0s;
+  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1), 
+              visibility 0s;
 }
 
 .modal-overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to bottom, 
+    rgba(0, 0, 0, 0.3), 
+    rgba(0, 0, 0, 0.5)
+  );
+  backdrop-filter: blur(2px);
   cursor: pointer;
 }
 
@@ -355,59 +405,77 @@ body.modal-is-open main {
 .modal-window {
   position: relative;
   width: 90%;
-  max-width: 800px;
-  background-color: hsl(var(--background));
-  border-radius: 16px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  padding: 2.5rem;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: linear-gradient(to bottom, 
+    hsl(var(--background)), 
+    hsl(var(--background) / 0.98)
+  );
+  border-radius: 24px;
+  box-shadow: 
+    0 40px 80px -20px rgba(0, 0, 0, 0.3),
+    0 20px 40px -10px rgba(0, 0, 0, 0.2);
+  padding: 3rem;
 
   /* Opening/Closing Animation */
-  transform: scale(0.95);
-  transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(0.9) translateY(20px);
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .locations-modal-container.is-open .modal-window {
-  transform: scale(1);
+  transform: scale(1) translateY(0);
 }
 
 .modal-close-button {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 2.5rem;
-  height: 2.5rem;
-  background: none;
-  border: none;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 3rem;
+  height: 3rem;
+  background: hsl(var(--background) / 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid hsl(var(--border));
   cursor: pointer;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  transition: background-color 200ms ease-out;
+  transition: all 200ms ease-out;
 }
+
 .modal-close-button .icon {
   width: 24px;
   height: 24px;
   stroke: hsl(var(--foreground));
-  opacity: 0.6;
+  opacity: 0.5;
+  transition: opacity 200ms ease-out;
 }
+
 .modal-close-button:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: hsl(var(--background));
+  border-color: hsl(var(--accent));
+}
+
+.modal-close-button:hover .icon {
+  opacity: 1;
 }
 
 .modal-title {
   font-family: 'Alegreya', serif;
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(2rem, 3.5vw, 2.5rem);
   text-align: center;
-  margin-bottom: 2rem;
-  color: hsl(var(--foreground));
+  margin-bottom: 3rem;
+  color: hsl(var(--primary));
+  letter-spacing: -0.02em;
 }
 
 /* --- The Location Cards --- */
 .modal-body {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
 }
 
 /* Responsive: stack cards on smaller screens */
@@ -415,69 +483,106 @@ body.modal-is-open main {
   .modal-body {
     grid-template-columns: 1fr;
   }
+  
+  .modal-window {
+    padding: 2rem;
+  }
 }
 
 .location-card {
-  background-color: hsl(var(--card));
-  border-radius: 12px;
+  background: linear-gradient(to bottom, 
+    hsl(var(--card)), 
+    hsl(var(--card) / 0.98)
+  );
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.08),
+    0 2px 10px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.location-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.12),
+    0 5px 15px rgba(0, 0, 0, 0.06);
 }
 
 .card-image-container {
   width: 100%;
-  height: 150px;
+  height: 180px;
   position: relative;
+  overflow: hidden;
 }
+
 .card-image-container img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 700ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.location-card:hover .card-image-container img {
+  transform: scale(1.05);
 }
 
 .card-content {
-  padding: 1.5rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* Allows the button to be pushed to the bottom */
+  flex-grow: 1;
 }
 
 .card-title {
   font-family: 'Inter', sans-serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: hsl(var(--foreground));
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: hsl(var(--primary));
+  letter-spacing: -0.01em;
 }
 
 .card-address, .card-times {
   font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
-  line-height: 1.5;
+  font-size: 1rem;
+  line-height: 1.6;
   color: hsl(var(--foreground));
-  opacity: 0.8;
-  margin-bottom: 0.25rem;
+  opacity: 0.75;
+  margin-bottom: 0.5rem;
 }
+
 .card-times {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  opacity: 0.85;
 }
 
 .card-button {
-  margin-top: auto; /* Pushes button to the bottom */
+  margin-top: auto;
   display: inline-block;
   width: 100%;
   text-align: center;
-  padding: 0.75rem 1rem;
-  background-color: hsl(var(--primary));
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, 
+    hsl(var(--primary)), 
+    hsl(var(--primary) / 0.95)
+  );
   color: hsl(var(--primary-foreground));
   font-family: 'Inter', sans-serif;
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
-  border-radius: 8px;
-  transition: background-color 200ms ease-out;
+  border-radius: 12px;
+  transition: all 200ms ease-out;
+  letter-spacing: 0.01em;
 }
+
 .card-button:hover {
-  background-color: hsl(var(--primary) / 0.9);
+  background: linear-gradient(135deg, 
+    hsl(var(--primary) / 0.95), 
+    hsl(var(--primary) / 0.9)
+  );
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }

@@ -76,6 +76,7 @@ const libraryBooks: Book[] = [
 ];
 
 const BookCard = ({ book, onOpenBook }: { book: Book, onOpenBook: (book: Book) => void }) => {
+    const [isHovered, setIsHovered] = useState(false);
     return (
 
         <div 

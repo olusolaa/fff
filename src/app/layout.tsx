@@ -1,3 +1,5 @@
+"use client"
+
 import type {Metadata} from 'next';
 import { Inter, Alegreya, Caveat } from 'next/font/google';
 import './globals.css';
@@ -5,7 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import AppLayout from '@/components/layout/AppLayout';
 import { cn } from '@/lib/utils';
 import React, { useState, useEffect } from 'react';
-import { LayoutProvider } from '@/contexts/layout-context;
+import { LayoutProvider } from '@/contexts/layout-context';
 import { PastoralAssistant } from '@/components/shared/pastoral-assistant';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });

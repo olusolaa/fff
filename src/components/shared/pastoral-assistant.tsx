@@ -4,14 +4,14 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Send, X, Loader2, Users, HandHeart } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 import { pastoralAssistant } from '@/ai/flows/ai-pastoral-assistant';
 import { Separator } from '@/components/ui/separator';
-import { buttonVariants } from '@/components/ui/button';
+import { useLayoutContext } from '@/contexts/layout-context';
 
 interface Message {
     role: 'user' | 'assistant';
@@ -24,6 +24,7 @@ export function PastoralAssistant() {
     const [input, setInput] = useState('');
     const [isTyping, setIsTyping] = useState(false);
     const [isAiResponding, setIsAiResponding] = useState(false);
+    const { isCompanionOpen } = useLayoutContext();
 
     const welcomeMessage = "Welcome. I'm a ministry assistant trained on Pastor Evelyn's teachings. Whatever is on your heart, you're in a safe place to share.";
 
@@ -71,7 +72,10 @@ export function PastoralAssistant() {
     return (
         <>
             {/* The Icon */}
-            <div className="fixed bottom-6 right-6 z-50">
+            <div className={cn(
+                "fixed bottom-6 right-6 z-50 transition-all duration-500 ease-in-out",
+                isCompanionOpen && "right-[calc(24rem+1.5rem)]"
+            )}>
                 <Button
                     size="icon"
                     className="rounded-full w-16 h-16 bg-primary/80 backdrop-blur-sm hover:bg-primary shadow-2xl group"

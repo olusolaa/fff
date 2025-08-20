@@ -66,7 +66,7 @@ export default function BiblePage() {
 
     return (
         <div className={cn(
-            "flex min-h-screen bg-[#fdfbf3] text-[#3a301c]",
+            "mt-20 flex min-h-screen bg-[#fdfbf3] text-[#3a301c]",
         )}>
              <main 
                 className={cn(

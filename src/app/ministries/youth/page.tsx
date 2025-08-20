@@ -39,7 +39,7 @@ const testimonials = [
 
 export default function YouthMinistryPage() {
     return (
-        <div className="bg-background text-foreground min-h-screen">
+        <div className="mt-20 bg-background text-foreground min-h-screen">
             {/* Section 1: The Arrival - Hero */}
             <section className="relative h-[60vh] md:h-[80vh] w-full flex items-center justify-center text-white">
                 <Image

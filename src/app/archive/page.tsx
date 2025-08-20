@@ -80,7 +80,7 @@ const SermonShelf = ({ title, sermons }: { title: string, sermons: any[] }) => {
             <div className="flex overflow-x-auto gap-8 pb-4 -mx-4 px-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:mx-0 md:px-0">
                 {sermons.map(sermon => (
                     <div key={sermon.id} className="w-80 flex-shrink-0 md:w-auto">
-                        <Link href={`/?sermonId=${sermon.id}`} passHref>
+                        <Link href={`/sermon?sermonId=${sermon.id}`} passHref>
                             <SermonCard sermon={sermon} className="h-full" />
                         </Link>
                     </div>
@@ -122,7 +122,7 @@ function SermonArchivePageContent() {
 
 
     return (
-        <div className="bg-background text-foreground min-h-screen">
+        <div className="mt-20 bg-background text-foreground min-h-screen">
             <main>
                 {/* Section 1: Featured Current Series */}
                 <section className="bg-muted/30">
@@ -132,7 +132,7 @@ function SermonArchivePageContent() {
                                 <h1 className="font-headline text-4xl md:text-5xl lg:text-6xl font-bold text-primary">{currentSeries.title}</h1>
                                 <p className="mt-4 text-lg text-foreground/80 max-w-xl">{currentSeries.description}</p>
                                 <Button asChild size="lg" className="mt-6">
-                                    <Link href={`/?sermonId=${currentSeries.latestSermonId}`}>Watch the Latest Message</Link>
+                                    <Link href={`/sermon?sermonId=${currentSeries.latestSermonId}`}>Watch the Latest Message</Link>
                                 </Button>
                             </div>
                             <div className="order-1 md:order-2">

@@ -75,15 +75,15 @@ const navItems: NavItem[] = [
     isMegaMenu: true,
     megaMenuItems: [
         { label: 'All Programs Overview', href: '/programs', icon: LayoutDashboard, isFullWidthLink: true },
-        { label: 'Adolescent & Singles Club', href: '/programs/youth-student-empowerment', icon: Users, category: 'PROGRAMS'},
-        { label: 'School Outreaches', href: '/programs/school-outreaches', icon: School, category: 'PROGRAMS' },
-        { label: 'Counseling Services', href: '/programs/counseling-family-support', icon: HeartHandshake, category: 'PROGRAMS' },
-        { label: 'Family Life Seminars', href: '/programs/family-life-seminars', icon: CalendarDays, category: 'PROGRAMS' },
-        { label: 'Marriage Forum', href: '/programs/counseling-family-support', icon: Users2, category: 'PROGRAMS' }, // Points to category page
-        { label: 'Discipleship Classes', href: '/programs/faith-growth', icon: BookOpen, category: 'PROGRAMS' }, // Points to category page
-    ]
-  },
-  {
+        { label: 'Adolescent & Singles Club', href: '/ministries/youth', icon: Users, category: 'PROGRAMS'},
+        // { label: 'School Outreaches', href: '/programs/school-outreaches', icon: School, category: 'PROGRAMS' },
+        // { label: 'Counseling Services', href: '/programs/counseling-family-support', icon: HeartHandshake, category: 'PROGRAMS' },
+        // { label: 'Family Life Seminars', href: '/programs/family-life-seminars', icon: CalendarDays, category: 'PROGRAMS' },
+        { label: 'Marriage Forum', href: '/ministries/marriage', icon: Users2, category: 'PROGRAMS' }, // Points to category page
+        // { label: 'Discipleship Classes', href: '/programs/faith-growth', icon: BookOpen, category: 'PROGRAMS' }, // Points to category page
+      ]
+    },
+    {
     id: 'resources',
     label: 'Resources',
     href: '/resources',
@@ -97,6 +97,7 @@ const navItems: NavItem[] = [
       { category: 'READ', label: 'Articles', href: '/blogs', icon: Newspaper },
       { category: 'READ', label: 'Study Guides', href: '/resources/guides', icon: Library },
       { category: 'READ', label: 'Books', href: '/resources/books', icon: BookMarked },
+      { category: 'READ', label: 'Bible', href: '/bible', icon: BookOpen },
     ]
   },
   {

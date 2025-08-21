@@ -75,11 +75,11 @@ const navItems: NavItem[] = [
     isMegaMenu: true,
     megaMenuItems: [
         { label: 'All Programs Overview', href: '/programs', icon: LayoutDashboard, isFullWidthLink: true },
-        { label: 'Adolescent & Singles Club', href: '/ministries/youth', icon: Users, category: 'PROGRAMS'},
+        { label: 'Adolescent & Singles Club', href: '/programs/youth', icon: Users, category: 'PROGRAMS'},
         // { label: 'School Outreaches', href: '/programs/school-outreaches', icon: School, category: 'PROGRAMS' },
         // { label: 'Counseling Services', href: '/programs/counseling-family-support', icon: HeartHandshake, category: 'PROGRAMS' },
         // { label: 'Family Life Seminars', href: '/programs/family-life-seminars', icon: CalendarDays, category: 'PROGRAMS' },
-        { label: 'Marriage Forum', href: '/ministries/marriage', icon: Users2, category: 'PROGRAMS' }, // Points to category page
+        { label: 'Marriage Forum', href: '/programs/marriage', icon: Users2, category: 'PROGRAMS' }, // Points to category page
         // { label: 'Discipleship Classes', href: '/programs/faith-growth', icon: BookOpen, category: 'PROGRAMS' }, // Points to category page
       ]
     },
@@ -90,14 +90,14 @@ const navItems: NavItem[] = [
     isMegaMenu: true,
     megaMenuItems: [
       { label: 'Explore All Resources', href: '/resources', icon: LayoutDashboard, isFullWidthLink: true },
-      { category: 'WATCH', label: 'Sermons', href: '/archive', icon: Church },
-      { category: 'WATCH', label: 'Videos', href: '/resources/videos', icon: Video },
-      { category: 'LISTEN', label: 'Music', href: '/resources/music', icon: Disc3 },
+      { category: 'LISTEN', label: 'Sermons', href: '/archive', icon: Church },
+      // { category: 'WATCH', label: 'Videos', href: '/resources/videos', icon: Video },
+      // { category: 'LISTEN', label: 'Music', href: '/resources/music', icon: Disc3 },
       { category: 'LISTEN', label: 'Podcasts', href: '/resources/podcasts', icon: Mic2 },
       { category: 'READ', label: 'Articles', href: '/blogs', icon: Newspaper },
-      { category: 'READ', label: 'Study Guides', href: '/resources/guides', icon: Library },
+      // { category: 'READ', label: 'Study Guides', href: '/resources/guides', icon: Library },
       { category: 'READ', label: 'Books', href: '/resources/books', icon: BookMarked },
-      { category: 'READ', label: 'Bible', href: '/bible', icon: BookOpen },
+      { category: 'BIBLE', label: 'Bible', href: '/bible', icon: BookOpen },
     ]
   },
   {
@@ -289,7 +289,7 @@ export default function Header() {
 
                     {item.id === 'resources' && (
                       <div className="grid grid-cols-3 gap-x-8 gap-y-6">
-                        {(['WATCH', 'LISTEN', 'READ'] as const).map(category => (
+                        {(['BIBLE', 'LISTEN', 'READ'] as const).map(category => (
                           <div key={category} className="space-y-4">
                             <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">{category}</h3>
                             <div className="space-y-3">

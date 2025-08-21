@@ -118,10 +118,10 @@ const MinistryHubCard = ({ hub }: { hub: MinistryHub }) => {
                 )}
             >
                 <div className="max-w-xl">
-                <h2 className="font-headline text-3xl md:text-4xl lg:text-5xl font-bold drop-shadow-md">
+                <h2 className="font-headline text-2xl md:text-3xl lg:text-3xl font-bold drop-shadow-md">
                     {hub.title}
                 </h2>
-                <p className="mt-2 text-lg md:text-xl drop-shadow">
+                <p className="mt-2 text-sm md:text-sm drop-shadow">
                     {hub.subtitle}
                 </p>
                 <Button
@@ -155,7 +155,7 @@ export default function MinistryHubsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="font-headline text-5xl md:text-7xl font-bold text-primary"
+            className="font-headline text-3xl md:text-5xl font-bold text-primary"
           >
             Find Your Place in the Story
           </motion.h1>
@@ -163,7 +163,7 @@ export default function MinistryHubsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-            className="mt-4 text-lg text-foreground/80 max-w-2xl mx-auto"
+            className="mt-4 text-sm text-foreground/80 max-w-2xl mx-auto"
           >
             Our church is a home with many rooms. Each ministry is a unique space,
             designed to meet you where you are and help you grow. Explore our hubs

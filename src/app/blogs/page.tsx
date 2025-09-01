@@ -24,7 +24,7 @@ const blogPosts: Post[] = [
         id: 1,
         title: 'Grace Isn\'t Fair, and That\'s the Point',
         author: 'Dr. Evelyn Reed',
-        image: 'https://i.postimg.cc/tJ05Fz0v/20250622-2011-image.png',
+        image: '/images/reading.jpg',
         snippet: 'We often struggle with the concept of grace because it defies our innate sense of fairness. But what if that\'s the very beauty of it? This post explores the radical, unmerited nature of grace.',
         readTime: '5 min read',
         aiHint: 'abstract grace'
@@ -33,7 +33,7 @@ const blogPosts: Post[] = [
         id: 2,
         title: 'When You Don\'t Feel Forgiven: A Practical Guide',
         author: 'Rev. Michael Chen',
-        image: 'https://i.postimg.cc/C12pB1d5/20250622-2011-image.png',
+        image: '/images/reading.jpg',
         snippet: 'The gap between knowing you are forgiven and feeling it can be a canyon. Here are three practical steps to bridge that divide and walk in the freedom Christ offers.',
         readTime: '7 min read',
         aiHint: 'contemplative person'
@@ -42,7 +42,7 @@ const blogPosts: Post[] = [
         id: 3,
         title: 'The Three Words that Change Everything',
         author: 'Pastor Sarah Jones',
-        image: 'https://i.postimg.cc/vB3xxV0p/20250622-2011-image.png',
+        image: '/images/reading.jpg',
         snippet: 'Three simple words spoken by Jesus on the cross hold the power to reframe our entire existence. Let\'s unpack the depth and power of "It is finished."',
         readTime: '4 min read',
         aiHint: 'ancient scroll'
@@ -51,7 +51,7 @@ const blogPosts: Post[] = [
         id: 4,
         title: 'A Theology of Second Chances',
         author: 'Dr. Evelyn Reed',
-        image: 'https://i.postimg.cc/L5K7v0sK/20250622-2011-image.png',
+        image: '/images/reading.jpg',
         snippet: 'From David to Peter, scripture is filled with stories of failure and restoration. This is not an accident; it\'s a core tenet of the Gospel narrative. God is a God of the second chance.',
         readTime: '6 min read',
         aiHint: 'path forward'

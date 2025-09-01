@@ -25,7 +25,7 @@ const hubs: MinistryHub[] = [
     subtitle: 'Guidance and community for every stage of your journey together.',
     heroContent: (
       <Image
-        src="https://placehold.co/1600x900/1a2a1a/f5f5f0"
+        src="/images/couples.jpg"
         alt="Couples laughing together"
         layout="fill"
         objectFit="cover"
@@ -43,7 +43,7 @@ const hubs: MinistryHub[] = [
     heroContent: (
       <div className="absolute inset-0 w-full h-full">
          <Image
-            src="https://placehold.co/1600x900/a7d1ab/1a2a1a"
+            src="/images/youth.jpg"
             alt="Youth group"
             layout="fill"
             objectFit="cover"
@@ -61,7 +61,7 @@ const hubs: MinistryHub[] = [
     subtitle: 'Navigating life and faith as a single adult.',
     heroContent: (
       <Image
-        src="https://placehold.co/1600x900/cdb38b/1a2a1a"
+        src="/images/single.jpg"
         alt="Single person looking content"
         layout="fill"
         objectFit="cover"
@@ -78,7 +78,7 @@ const hubs: MinistryHub[] = [
     subtitle: 'Resources and support for thriving families.',
     heroContent: (
       <Image
-        src="https://placehold.co/1600x900/f5f5f0/1a2a1a"
+        src="/images/family.jpg"
         alt="Family playing together"
         layout="fill"
         objectFit="cover"

@@ -59,24 +59,25 @@ interface Book {
     chapter?: string;
 }
 
-const bookData: Book[] = [
-    { id: 1, title: 'The Echo of Grace', coverImage: 'https://placehold.co/400x600/22577A/f5f5f0?text=GRACE', chapter: 'Chapter 1: The First Sound' },
-    { id: 2, title: 'Hope in the Ruins', coverImage: 'https://placehold.co/400x600/38A3A5/f5f5f0?text=HOPE' },
-    { id: 3, title: 'A Faith That Lasts', coverImage: 'https://placehold.co/400x600/57CC99/1a2a1a?text=FAITH', chapter: 'Chapter 5: Everyday Mercy' },
+const blogData: BlogPost[] = [
+  { id: 1, title: 'Grace Isn\'t Fair, and That\'s the Point', image: '/images/blog.jpg', readTime: '5 min read', },
+  { id: 2, title: 'When You Don\'t Feel Forgiven: A Practical Guide', image: '/images/blog.jpg', readTime: '7 min read', },
+  { id: 3, title: 'The Three Words that Change Everything', image: '/images/blog.jpg', readTime: '4 min read', },
+  { id: 4, title: 'A Theology of Second Chances', image: '/images/blog.jpg', readTime: '6 min read', },
 ];
 
-  const podcastData: PodcastEpisode[] = [
-    { id: 1, title: 'Evelyn Reed on the Weight of Grace', coverArt: 'https://placehold.co/400x400/1A535C/f5f5f0?text=Podcast', duration: '28 min listen' },
-    { id: 2, title: 'How to Parent with Grace (and Not Lose Your Mind)', coverArt: 'https://placehold.co/400x400/4ECDC4/1a2a1a?text=Family', duration: '45 min listen' },
-    { id: 3, title: 'Roundtable: Grace, Justice, and the Modern Church', coverArt: 'https://placehold.co/400x400/F7FFF7/1a2a1a?text=Discussion', duration: '52 min listen' },
-    { id: 4, title: 'A Story of Radical Forgiveness', coverArt: 'https://placehold.co/400x400/FF6B6B/f5f5f0?text=Stories', duration: '18 min listen' },
+const podcastData: PodcastEpisode[] = [
+    { id: 1, title: 'Evelyn Reed on the Weight of Grace', coverArt: '/images/podcast.jpg', duration: '28 min listen' },
+    { id: 2, title: 'How to Parent with Grace (and Not Lose Your Mind)', coverArt: '/images/podcast.jpg', duration: '45 min listen' },
+    { id: 3, title: 'Roundtable: Grace, Justice, and the Modern Church', coverArt: '/images/podcast.jpg', duration: '52 min listen' },
+    { id: 4, title: 'A Story of Radical Forgiveness', coverArt: '/images/podcast.jpg', duration: '18 min listen' },
 ];
-  const blogData: BlogPost[] = [
-    { id: 1, title: 'Grace Isn\'t Fair, and That\'s the Point', image: 'https://placehold.co/800x600/2D5A3D/f5f5f0?text=Grace', readTime: '5 min read', },
-    { id: 2, title: 'When You Don\'t Feel Forgiven: A Practical Guide', image: 'https://placehold.co/800x600/4A6FA5/f5f5f0?text=Forgiveness', readTime: '7 min read', },
-    { id: 3, title: 'The Three Words that Change Everything', image: 'https://placehold.co/800x600/7B4397/f5f5f0?text=Hope', readTime: '4 min read', },
-    { id: 4, title: 'A Theology of Second Chances', image: 'https://placehold.co/800x600/C97B84/f5f5f0?text=Renewal', readTime: '6 min read', },
-  ];
+
+const bookData: Book[] = [
+    { id: 1, title: 'The Echo of Grace', coverImage: '/images/book.jpg', chapter: 'Chapter 1: The First Sound' },
+    { id: 2, title: 'Hope in the Ruins', coverImage: '/images/book.jpg', },
+    { id: 3, title: 'A Faith That Lasts', coverImage: '/images/book.jpg', chapter: 'Chapter 5: Everyday Mercy' },
+];
   
   const relatedPulpitData: Sermon[] = [
       { id: 10, title: 'Beyond Deserving', speaker: 'Rev. Michael Chen', date: 'May 14, 2023', thumbnail: 'https://placehold.co/600x400/a7d1ab/1a2a1a', duration: 2500, notes: '', seriesId: 2, seriesPart: 1, hint: 'grace abstract' },
@@ -97,9 +98,9 @@ const relatedContent = [
 ];
 
 const upcomingEvents = [
-    { id: 1, title: 'Wednesday Night Live', date: 'Every Wednesday @ 7PM', image: 'https://placehold.co/600x400/a7d1ab/1a2a1a' },
-    { id: 2, title: 'All-Nighter Lock-in', date: 'Oct 25, 2024', image: 'https://placehold.co/600x400/a7d1ab/1a2a1a' },
-    { id: 3, title: 'Summer Camp Sign-ups Open!', date: 'Nov 1, 2024', image: 'https://placehold.co/600x400/a7d1ab/1a2a1a' },
+    { id: 1, title: 'Wednesday Night Live', date: 'Every Wednesday @ 7PM', image: '/images/youth-hero.jpg' },
+    { id: 2, title: 'All-Nighter Lock-in', date: 'Oct 25, 2024', image: '/images/youth-hero.jpg' },
+    { id: 3, title: 'Summer Camp Sign-ups Open!', date: 'Nov 1, 2024', image: '/images/youth-hero.jpg' },
 ];
 
 
@@ -107,12 +108,12 @@ const testimonials = [
     {
         name: 'Ethan',
         quote: "This isn't just a youth group, it's a family. I finally found a place where I belong.",
-        image: 'https://placehold.co/200x200'
+        image: '/images/pastor.jpg'
     },
     {
         name: 'Maya',
         quote: "I used to be so quiet. Being here has given me the confidence to be myself and use my voice.",
-        image: 'https://placehold.co/200x200'
+        image: '/images/pastor.jpg'
     }
 ];
 
@@ -122,7 +123,7 @@ export default function YouthMinistryPage() {
             {/* Section 1: The Arrival - Hero */}
             <section className="relative h-[60vh] md:h-[80vh] w-full flex items-center justify-center text-white">
                 <Image
-                    src="https://placehold.co/1600x900/a7d1ab/1a2a1a"
+                    src="/images/youth-hero.jpg"
                     alt="Energetic youth worship service"
                     layout="fill"
                     objectFit="cover"
@@ -162,7 +163,7 @@ export default function YouthMinistryPage() {
                     <Card className="p-6 shadow-lg">
                         <CardContent className="flex flex-col items-center text-center p-0">
                             <Avatar className="w-24 h-24 mb-4">
-                                <AvatarImage src="https://placehold.co/200x200" alt="Pastor Sarah Jones" />
+                                <AvatarImage src="/images/pastor.jpg" alt="Pastor Sarah Jones" />
                                 <AvatarFallback>SJ</AvatarFallback>
                             </Avatar>
                             <h3 className="font-bold text-xl text-primary">Pastor Sarah Jones</h3>

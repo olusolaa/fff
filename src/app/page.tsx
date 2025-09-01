@@ -15,19 +15,19 @@ import LocationsModal from '@/components/shared/LocationsModal';
 const pathwayItems = [
   {
     title: 'Connect in a Group',
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/connect.jpg',
     imageHint: 'people laughing community',
     link: '/connect/groups',
   },
   {
     title: 'Make a Difference',
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/difference.jpg',
     imageHint: 'volunteers serving joy',
     link: '/connect/serve',
   },
   {
     title: 'Upcoming Events',
-    image: 'https://placehold.co/600x400.png',
+    image: '/images/welcome.jpg',
     imageHint: 'church event vibrant',
     link: '/events',
   },
@@ -41,7 +41,7 @@ export default function HomePage() {
       <HeroSection
         title="A Place to Belong."
         subtitle="Connecting our community to God, each other, and their purpose."
-        imageUrl="https://i.postimg.cc/QdMCtd7t/20250622-2011-image.png"
+        imageUrl="/images/hero.jpg"
         imageAlt="A diverse group of people in a community setting, representing belonging"
         imageHint="community belonging diverse"
         primaryActionText="Find Your Community"
@@ -54,7 +54,7 @@ export default function HomePage() {
       <AnimatedSection className="invitation-section">
         <div className="invitation-content-wrapper">
           <Image
-            src="https://placehold.co/120x120.png"
+            src="/images/pastor.jpg"
             alt="Lead Pastor"
             width={120}
             height={120}
@@ -86,7 +86,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative aspect-video group">
               <Image 
-                src="https://placehold.co/800x450.png" 
+                src="/images/track.jpg" 
                 alt="Latest sermon series graphic" 
                 fill
                 className="rounded-lg shadow-lg object-cover" 
@@ -145,7 +145,7 @@ export default function HomePage() {
       <Testimonial
         quote="I walked in empty and, for the first time in my life, I found a family."
         attribution="Jessica's Story"
-        imageUrl="https://placehold.co/600x800.png"
+        imageUrl="/images/testimony.jpg"
         imageHint="woman smiling portrait"
         actionText="Read Her Story"
         actionLink="/story"

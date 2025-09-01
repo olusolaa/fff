@@ -26,7 +26,7 @@ import { useSearchParams } from 'next/navigation';
 const currentSeries = {
     title: 'The Echo of Grace',
     description: 'This series explores the profound and persistent nature of God\'s grace. It\'s not a one-time event, but a continuous, resonant echo that shapes our past, present, and future.',
-    graphic: 'https://placehold.co/1600x900/1a2a1a/f5f5f0',
+    graphic: '/images/echo.avif',
     latestSermonId: 1,
 };
 

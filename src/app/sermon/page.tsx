@@ -141,7 +141,7 @@ const sermonData: Sermon[] = [
         title: 'The Echo of Grace',
         speaker: 'Dr. Evelyn Reed',
         date: 'October 26, 2023',
-        thumbnail: 'https://placehold.co/1280x720/1a2a1a/f5f5f0',
+        thumbnail: '/images/echo.avif',
         duration: 2714,
         notes: `This week's message explores the pervasive and persistent nature of grace. It's not a fleeting moment, a continuous echo in our lives.
 
@@ -175,7 +175,7 @@ We are called not just to be recipients of grace, but conduits. How can you be a
         title: 'The Unfailing Compass',
         speaker: 'Dr. Evelyn Reed',
         date: 'November 2, 2023',
-        thumbnail: 'https://placehold.co/1280x720/1a2a1a/f5f5f0',
+        thumbnail: '/images/echo.avif',
         duration: 2650,
         notes: 'Exploring how grace acts as our guide in life\'s most confusing seasons.',
         transcript: [{ time: 0, text: "Last week we talked about the echo of grace, and today we ask: how does that echo guide us?" }],
@@ -188,7 +188,7 @@ We are called not just to be recipients of grace, but conduits. How can you be a
         title: 'The Lavish Banquet',
         speaker: 'Dr. Evelyn Reed',
         date: 'November 9, 2023',
-        thumbnail: 'https://placehold.co/1280x720/1a2a1a/f5f5f0',
+        thumbnail: '/images/echo.avif',
         duration: 2800,
         notes: 'Understanding the sheer abundance and generosity of God\'s grace.',
         transcript: [{ time: 0, text: "There is a seat for you at the table of grace, and it is a lavish banquet." }],
@@ -223,7 +223,7 @@ const seriesData: SermonSeries[] = [
         id: 1,
         title: 'The Echo of Grace',
         description: 'This series explores the profound and persistent nature of God\'s grace. It\'s not just a single act, but a continuous, resonant echo that shapes our past, present, and future. We will journey through scripture to understand how this amazing grace saves us, sustains us, and sends us out to be echoes of that same love in the world.',
-        graphic: 'https://placehold.co/1600x900/1a2a1a/f5f5f0',
+        graphic: '/images/echo.avif',
         sermons: allSermons.filter(s => s.seriesId === 1),
         topic: 'the Nature of Grace',
     },
@@ -231,7 +231,7 @@ const seriesData: SermonSeries[] = [
         id: 2,
         title: 'Foundations',
         description: 'What are the unshakable pillars of our faith? This series goes back to the basics, exploring the foundational truths that anchor us in a shifting world. From the nature of God to the authority of Scripture, these messages are designed to build a solid foundation for a lasting faith.',
-        graphic: 'https://placehold.co/1600x900/a7d1ab/1a2a1a',
+        graphic: '/images/foundations.jpg',
         sermons: allSermons.filter(s => s.seriesId === 2),
         topic: 'Core Christian Beliefs',
     },
@@ -239,7 +239,7 @@ const seriesData: SermonSeries[] = [
         id: 3,
         title: 'Kingdom Economics',
         description: 'Jesus had a lot to say about money and possessions. This series confronts our modern assumptions about wealth and generosity, exploring the radical, upside-down economy of the Kingdom of God. It\'s a call to view our resources not as our own, but as tools for a greater purpose.',
-        graphic: 'https://placehold.co/1600x900/a7d1ab/1a2a1a',
+        graphic: '/images/kingdom.jpg',
         sermons: allSermons.filter(s => s.seriesId === 3),
         topic: 'Generosity and Stewardship',
     },
@@ -247,30 +247,30 @@ const seriesData: SermonSeries[] = [
         id: 4,
         title: 'Paradox',
         description: 'The way of Jesus is often a paradox: the first shall be last, the weak are strong, and we find our life by losing it. This series dives into the beautiful and challenging paradoxes of the Christian faith, finding profound truth in apparent contradictions.',
-        graphic: 'https://placehold.co/1600x900/a7d1ab/1a2a1a',
+        graphic: '/images/paradox.jpg',
         sermons: allSermons.filter(s => s.seriesId === 4),
         topic: 'the Paradoxes of Faith',
     }
 ];
 
 const blogData: BlogPost[] = [
-  { id: 1, title: 'Grace Isn\'t Fair, and That\'s the Point', image: 'https://placehold.co/800x600/2D5A3D/f5f5f0?text=Grace', readTime: '5 min read', },
-  { id: 2, title: 'When You Don\'t Feel Forgiven: A Practical Guide', image: 'https://placehold.co/800x600/4A6FA5/f5f5f0?text=Forgiveness', readTime: '7 min read', },
-  { id: 3, title: 'The Three Words that Change Everything', image: 'https://placehold.co/800x600/7B4397/f5f5f0?text=Hope', readTime: '4 min read', },
-  { id: 4, title: 'A Theology of Second Chances', image: 'https://placehold.co/800x600/C97B84/f5f5f0?text=Renewal', readTime: '6 min read', },
+  { id: 1, title: 'Grace Isn\'t Fair, and That\'s the Point', image: '/images/blog.jpg', readTime: '5 min read', },
+  { id: 2, title: 'When You Don\'t Feel Forgiven: A Practical Guide', image: '/images/blog.jpg', readTime: '7 min read', },
+  { id: 3, title: 'The Three Words that Change Everything', image: '/images/blog.jpg', readTime: '4 min read', },
+  { id: 4, title: 'A Theology of Second Chances', image: '/images/blog.jpg', readTime: '6 min read', },
 ];
 
 const podcastData: PodcastEpisode[] = [
-    { id: 1, title: 'Evelyn Reed on the Weight of Grace', coverArt: 'https://placehold.co/400x400/1A535C/f5f5f0?text=Podcast', duration: '28 min listen' },
-    { id: 2, title: 'How to Parent with Grace (and Not Lose Your Mind)', coverArt: 'https://placehold.co/400x400/4ECDC4/1a2a1a?text=Family', duration: '45 min listen' },
-    { id: 3, title: 'Roundtable: Grace, Justice, and the Modern Church', coverArt: 'https://placehold.co/400x400/F7FFF7/1a2a1a?text=Discussion', duration: '52 min listen' },
-    { id: 4, title: 'A Story of Radical Forgiveness', coverArt: 'https://placehold.co/400x400/FF6B6B/f5f5f0?text=Stories', duration: '18 min listen' },
+    { id: 1, title: 'Evelyn Reed on the Weight of Grace', coverArt: '/images/podcast.jpg', duration: '28 min listen' },
+    { id: 2, title: 'How to Parent with Grace (and Not Lose Your Mind)', coverArt: '/images/podcast.jpg', duration: '45 min listen' },
+    { id: 3, title: 'Roundtable: Grace, Justice, and the Modern Church', coverArt: '/images/podcast.jpg', duration: '52 min listen' },
+    { id: 4, title: 'A Story of Radical Forgiveness', coverArt: '/images/podcast.jpg', duration: '18 min listen' },
 ];
 
 const bookData: Book[] = [
-    { id: 1, title: 'The Echo of Grace', coverImage: 'https://placehold.co/400x600/22577A/f5f5f0?text=GRACE', chapter: 'Chapter 1: The First Sound' },
-    { id: 2, title: 'Hope in the Ruins', coverImage: 'https://placehold.co/400x600/38A3A5/f5f5f0?text=HOPE' },
-    { id: 3, title: 'A Faith That Lasts', coverImage: 'https://placehold.co/400x600/57CC99/1a2a1a?text=FAITH', chapter: 'Chapter 5: Everyday Mercy' },
+    { id: 1, title: 'The Echo of Grace', coverImage: '/images/book.jpg', chapter: 'Chapter 1: The First Sound' },
+    { id: 2, title: 'Hope in the Ruins', coverImage: '/images/book.jpg', },
+    { id: 3, title: 'A Faith That Lasts', coverImage: '/images/book.jpg', chapter: 'Chapter 5: Everyday Mercy' },
 ];
 
 const TabContent = ({ isVisible, children }: { isVisible: boolean; children: React.ReactNode }) => (

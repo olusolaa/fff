@@ -76,23 +76,24 @@ interface Book {
     chapter?: string;
 }
 
-const bookData: Book[] = [
-    { id: 1, title: 'The Echo of Grace', coverImage: 'https://placehold.co/400x600/22577A/f5f5f0?text=GRACE', chapter: 'Chapter 1: The First Sound' },
-    { id: 2, title: 'Hope in the Ruins', coverImage: 'https://placehold.co/400x600/38A3A5/f5f5f0?text=HOPE' },
-    { id: 3, title: 'A Faith That Lasts', coverImage: 'https://placehold.co/400x600/57CC99/1a2a1a?text=FAITH', chapter: 'Chapter 5: Everyday Mercy' },
-];
-
+const blogData: BlogPost[] = [
+    { id: 1, title: 'Grace Isn\'t Fair, and That\'s the Point', image: '/images/blog.jpg', readTime: '5 min read', },
+    { id: 2, title: 'When You Don\'t Feel Forgiven: A Practical Guide', image: '/images/blog.jpg', readTime: '7 min read', },
+    { id: 3, title: 'The Three Words that Change Everything', image: '/images/blog.jpg', readTime: '4 min read', },
+    { id: 4, title: 'A Theology of Second Chances', image: '/images/blog.jpg', readTime: '6 min read', },
+  ];
+  
   const podcastData: PodcastEpisode[] = [
-    { id: 1, title: 'Evelyn Reed on the Weight of Grace', coverArt: 'https://placehold.co/400x400/1A535C/f5f5f0?text=Podcast', duration: '28 min listen' },
-    { id: 2, title: 'How to Parent with Grace (and Not Lose Your Mind)', coverArt: 'https://placehold.co/400x400/4ECDC4/1a2a1a?text=Family', duration: '45 min listen' },
-    { id: 3, title: 'Roundtable: Grace, Justice, and the Modern Church', coverArt: 'https://placehold.co/400x400/F7FFF7/1a2a1a?text=Discussion', duration: '52 min listen' },
-    { id: 4, title: 'A Story of Radical Forgiveness', coverArt: 'https://placehold.co/400x400/FF6B6B/f5f5f0?text=Stories', duration: '18 min listen' },
-];
-  const blogData: BlogPost[] = [
-    { id: 1, title: 'Grace Isn\'t Fair, and That\'s the Point', image: 'https://placehold.co/800x600/2D5A3D/f5f5f0?text=Grace', readTime: '5 min read', },
-    { id: 2, title: 'When You Don\'t Feel Forgiven: A Practical Guide', image: 'https://placehold.co/800x600/4A6FA5/f5f5f0?text=Forgiveness', readTime: '7 min read', },
-    { id: 3, title: 'The Three Words that Change Everything', image: 'https://placehold.co/800x600/7B4397/f5f5f0?text=Hope', readTime: '4 min read', },
-    { id: 4, title: 'A Theology of Second Chances', image: 'https://placehold.co/800x600/C97B84/f5f5f0?text=Renewal', readTime: '6 min read', },
+      { id: 1, title: 'Evelyn Reed on the Weight of Grace', coverArt: '/images/podcast.jpg', duration: '28 min listen' },
+      { id: 2, title: 'How to Parent with Grace (and Not Lose Your Mind)', coverArt: '/images/podcast.jpg', duration: '45 min listen' },
+      { id: 3, title: 'Roundtable: Grace, Justice, and the Modern Church', coverArt: '/images/podcast.jpg', duration: '52 min listen' },
+      { id: 4, title: 'A Story of Radical Forgiveness', coverArt: '/images/podcast.jpg', duration: '18 min listen' },
+  ];
+  
+  const bookData: Book[] = [
+      { id: 1, title: 'The Echo of Grace', coverImage: '/images/book.jpg', chapter: 'Chapter 1: The First Sound' },
+      { id: 2, title: 'Hope in the Ruins', coverImage: '/images/book.jpg', },
+      { id: 3, title: 'A Faith That Lasts', coverImage: '/images/book.jpg', chapter: 'Chapter 5: Everyday Mercy' },
   ];
   
   const relatedPulpitData: Sermon[] = [
@@ -114,9 +115,9 @@ const relatedContent = [
 ];
 
 const upcomingEvents = [
-    { id: 1, title: 'Marriage Enrichment Weekend', date: 'Nov 8-10, 2024', image: 'https://placehold.co/600x400' },
-    { id: 2, title: 'Date Night Challenge Kick-off', date: 'Dec 5, 2024', image: 'https://placehold.co/600x400' },
-    { id: 3, title: 'Parenting & Partnership Workshop', date: 'Jan 18, 2025', image: 'https://placehold.co/600x400' },
+    { id: 1, title: 'Marriage Enrichment Weekend', date: 'Nov 8-10, 2024', image: '/images/couples-upcoming.jpg' },
+    { id: 2, title: 'Date Night Challenge Kick-off', date: 'Dec 5, 2024', image: '/images/couples-upcoming.jpg' },
+    { id: 3, title: 'Parenting & Partnership Workshop', date: 'Jan 18, 2025', image: '/images/couples-upcoming.jpg' },
 ];
 
 const testimonials = [
@@ -124,13 +125,13 @@ const testimonials = [
         name: 'David & Sarah',
         quote: "This group became the family we didn't even know we needed.",
         story: "When we first joined, we were struggling to connect amidst the chaos of parenting young children. The Marriage Hub gave us practical tools, but more importantly, it gave us a community that understood. We found friends who prayed with us, laughed with us, and reminded us that we weren't alone. It's transformed not just our marriage, but our entire family life.",
-        image: 'https://placehold.co/200x200'
+        image: '/images/pastor.jpg'
     },
     {
         name: 'Marcus & Chloe',
         quote: "We learned how to fight for our marriage, not just in it.",
         story: "Conflict used to be something we avoided at all costs, which meant a lot of issues went unresolved. The workshops here taught us how to communicate with honesty and grace. It wasn't easy, but learning to navigate disagreements constructively has made our bond stronger than ever. We're more in love now than we were on our wedding day.",
-        image: 'https://placehold.co/200x200'
+        image: '/images/pastor.jpg'
     }
 ];
 
@@ -140,7 +141,7 @@ export default function MarriageMinistryPage() {
             {/* Section 1: The Arrival - Hero */}
             <section className="relative h-[60vh] md:h-[80vh] w-full flex items-center justify-center text-white">
                 <Image
-                    src="https://placehold.co/1600x900/1a2a1a/f5f5f0"
+                    src="/images/couple-hero.jpg"
                     alt="Warm, authentic shot of diverse couples laughing together"
                     layout="fill"
                     objectFit="cover"
@@ -180,7 +181,7 @@ export default function MarriageMinistryPage() {
                     <Card className="p-6 shadow-lg">
                         <CardContent className="flex flex-col items-center text-center p-0">
                             <Avatar className="w-24 h-24 mb-4">
-                                <AvatarImage src="https://placehold.co/200x200" alt="Dr. Evelyn and James Reed" />
+                                <AvatarImage src="/images/pastor.jpg" alt="Dr. Evelyn and James Reed" />
                                 <AvatarFallback>ER</AvatarFallback>
                             </Avatar>
                             <h3 className="font-bold text-xl text-primary">Dr. Evelyn & James Reed</h3>

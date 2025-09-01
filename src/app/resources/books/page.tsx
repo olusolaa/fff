@@ -23,7 +23,7 @@ const libraryBooks: Book[] = [
         id: 1,
         title: 'The Anchor in the Storm',
         author: 'Dr. Evelyn Reed',
-        coverImage: 'https://placehold.co/400x600/1a2a1a/f5f5f0',
+        coverImage: '/images/book.jpg',
         aiHint: 'book cover anchor',
         synopsis: 'A profound exploration of finding steadfastness in faith during life\'s most turbulent seasons. This book offers practical wisdom and spiritual guidance to anchor your soul in unwavering hope.',
         shelf: 'featured',
@@ -32,7 +32,7 @@ const libraryBooks: Book[] = [
         id: 5,
         title: 'Echoes of Grace',
         author: 'Dr. Evelyn Reed',
-        coverImage: 'https://placehold.co/400x600/1a2a1a/f5f5f0',
+        coverImage: '/images/book.jpg',
         aiHint: 'book cover grace',
         synopsis: 'Explore the resonant and persistent nature of God\'s grace. This book will help you see how grace is not a single event, but a continuous echo shaping your entire life.',
         shelf: 'featured',
@@ -41,7 +41,7 @@ const libraryBooks: Book[] = [
         id: 4,
         title: 'Beautiful Paradox',
         author: 'Dr. Evelyn Reed',
-        coverImage: 'https://placehold.co/400x600/cdb38b/1a2a1a',
+        coverImage: '/images/book.jpg',
         aiHint: 'book cover paradox',
         synopsis: 'The Christian journey is filled with beautiful contradictions: finding strength in weakness, life in death, and wisdom in foolishness. This book dives into these profound mysteries.',
         shelf: 'featured',
@@ -79,22 +79,20 @@ const BookCard = ({ book, onOpenBook }: { book: Book, onOpenBook: (book: Book) =
     return (
 
         <div 
-            className="book-card-container w-40 h-60 md:w-48 md:h-72 flex-shrink-0"
+            className="flex overflow-x-auto space-x-8 pb-4 -mx-4 px-4 scrollbar-hide"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             onClick={() => onOpenBook(book)}
         >
             <motion.div
                 layoutId={`book-cover-${book.id}`}
-                className="book-card w-full h-full relative cursor-pointer"
-                whileHover={{
-                    y: -10,
-                    scale: 1.05,
-                    rotateX: 10,
-                    boxShadow: '0px 20px 30px rgba(0,0,0,0.3)',
-                }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                className="flex-shrink-0 w-56"
+                whileHover={{ scale: 1.05, z: 10 }}
+                transition={{ duration: 0.3 }}
             >
+
+<div className="relative cursor-pointer group">
+<div className="book-3d-container relative">
                 <Image
                     src={book.coverImage}
                     alt={`${book.title} cover`}
@@ -118,6 +116,8 @@ const BookCard = ({ book, onOpenBook }: { book: Book, onOpenBook: (book: Book) =
                          </motion.div>
                     )}
                 </AnimatePresence>
+                </div>
+                </div>
             </motion.div>
         </div>
 

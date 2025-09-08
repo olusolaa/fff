@@ -49,7 +49,7 @@ export default function CommunityGroupsPage() {
         title="Find Your Community"
         text="We believe life is better together. Community Groups are the heart of our church—they are the primary way we connect with each other, grow in our faith, and impact our city."
         className="bg-secondary/30 text-center"
-        titleClassName="text-4xl md:text-5xl"
+        titleClassName="text-4xl md:text-5xl mt-20"
       />
       <CardGrid title="Explore Our Groups" items={groupItems} gridCols="md:grid-cols-2" />
     </div>

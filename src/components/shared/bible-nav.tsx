@@ -28,9 +28,9 @@ export function BibleNav({
     onChapterChange,
 }: BibleNavProps) {
     return (
-        <div className="flex justify-center items-center gap-2 p-2 rounded-lg bg-background/50 backdrop-blur-sm max-w-md mx-auto">
+        <div className="flex flex-row justify-center items-center gap-2 p-2 rounded-lg bg-background/50 backdrop-blur-sm max-w-md mx-auto">
             <Select value={selectedBook} onValueChange={onBookChange}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-full sm:w-[180px]">
                     <SelectValue placeholder="Book" />
                 </SelectTrigger>
                 <SelectContent>
@@ -40,7 +40,7 @@ export function BibleNav({
                 </SelectContent>
             </Select>
             <Select value={selectedChapter.toString()} onValueChange={onChapterChange}>
-                <SelectTrigger className="w-[100px]">
+                <SelectTrigger className="w-full sm:w-[100px]">
                     <SelectValue placeholder="Chapter" />
                 </SelectTrigger>
                 <SelectContent>
@@ -50,7 +50,7 @@ export function BibleNav({
                 </SelectContent>
             </Select>
             <Select>
-                <SelectTrigger className="w-[100px]">
+                <SelectTrigger className="w-full sm:w-[100px]">
                     <SelectValue placeholder="Verse" />
                 </SelectTrigger>
                 <SelectContent>
@@ -62,4 +62,3 @@ export function BibleNav({
         </div>
     );
 }
-

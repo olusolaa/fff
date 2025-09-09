@@ -61,7 +61,7 @@ export default function BiblePage() {
     };
 
     useEffect(() => {
-        const handleMouseUp = () => {
+        const handleSelection = () => {
             const currentSelection = window.getSelection();
             if (!currentSelection || !currentSelection.anchorNode) {
                 setSelection({ text: '', rect: null });
@@ -89,8 +89,13 @@ export default function BiblePage() {
             }
         };
 
-        document.addEventListener('mouseup', handleMouseUp);
-        return () => document.removeEventListener('mouseup', handleMouseUp);
+        document.addEventListener('mouseup', handleSelection);
+        document.addEventListener('touchend', handleSelection);
+        
+        return () => {
+            document.removeEventListener('mouseup', handleSelection);
+            document.removeEventListener('touchend', handleSelection);
+        };
     }, []);
     
     const handleBookChange = (book: string) => {
@@ -114,12 +119,12 @@ export default function BiblePage() {
         )}>
              <main 
                 className={cn(
-                    "flex-grow transition-all duration-500 ease-in-out py-24 px-4 md:px-8",
-                    isCompanionOpen ? 'md:mr-[24rem]' : 'mr-0'
+                    "flex-grow transition-all duration-500 ease-in-out py-16 md:py-24 px-4 md:px-8",
+                     isCompanionOpen ? 'md:mr-[24rem]' : 'mr-0'
                 )}
             >
                 <div className={cn("max-w-4xl transition-all duration-500 ease-in-out", isCompanionOpen ? 'mx-auto' : 'mx-auto')}>
-                    <div className="text-center mb-12">
+                    <div className="mb-12 mt-10">
                          <BibleNav 
                             books={Object.keys(bibleData)}
                             selectedBook={selectedBook}
@@ -130,12 +135,12 @@ export default function BiblePage() {
                          />
                     </div>
                     
-                    <div className="text-center mb-16">
-                        <h1 className="text-5xl md:text-6xl font-bold font-headline">{scripture.book}</h1>
-                        <p className="text-3xl md:text-4xl mt-2 font-headline">{scripture.chapter}</p>
+                    <div className="text-center mb-12 md:mb-16">
+                        <h1 className="text-4xl md:text-6xl font-bold font-headline">{scripture.book}</h1>
+                        <p className="text-2xl md:text-4xl mt-2 font-headline">{scripture.chapter}</p>
                     </div>
 
-                    <article className="prose-xl max-w-none text-inherit leading-loose font-headline">
+                    <article className="prose-lg md:prose-xl max-w-none text-inherit leading-loose font-headline">
                         {scripture.verses.map(v => (
                             <p key={v.verse}>
                                 <sup className="text-sm opacity-60 mr-2 font-sans">{v.verse}</sup>
@@ -151,7 +156,7 @@ export default function BiblePage() {
                     className="absolute z-20 flex gap-2"
                     style={{
                         top: selection.rect.top + window.scrollY - 50,
-                        left: selection.rect.left + window.scrollX - 44,
+                        left: selection.rect.left + window.scrollX + (selection.rect.width / 2) - 44,
                     }}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}

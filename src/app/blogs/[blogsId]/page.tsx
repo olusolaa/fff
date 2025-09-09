@@ -16,9 +16,9 @@ const blogPosts = [
         id: 1,
         title: 'Grace Isn\'t Fair, and That\'s the Point',
         author: 'Dr. Evelyn Reed',
-        authorImage: 'https://i.postimg.cc/8Pj3gWzD/20250622-2011-image.png',
+        authorImage: '/images/pastor.jpg',
         authorBio: 'Dr. Evelyn Reed is the lead pastor at Sanctuary, with a passion for unpacking complex theology in a way that connects with everyday life.',
-        image: 'https://i.postimg.cc/tJ05Fz0v/20250622-2011-image.png',
+        image: '/images/blog.webp',
         readTime: '5 min read',
         aiHint: 'abstract grace',
         content: `
@@ -35,9 +35,9 @@ const blogPosts = [
 ];
 
 const relatedPosts = [
-    { id: 2, title: 'When You Don\'t Feel Forgiven', image: 'https://i.postimg.cc/C12pB1d5/20250622-2011-image.png', aiHint: 'contemplative person' },
-    { id: 3, title: 'The Three Words that Change Everything', image: 'https://i.postimg.cc/vB3xxV0p/20250622-2011-image.png', aiHint: 'ancient scroll' },
-    { id: 4, title: 'A Theology of Second Chances', image: 'https://i.postimg.cc/L5K7v0sK/20250622-2011-image.png', aiHint: 'path forward' },
+    { id: 2, title: 'When You Don\'t Feel Forgiven', image:  '/images/blog.webp', aiHint: 'contemplative person' },
+    { id: 3, title: 'The Three Words that Change Everything', image: '/images/blog.webp', aiHint: 'ancient scroll' },
+    { id: 4, title: 'A Theology of Second Chances', image: '/images/blog.webp', aiHint: 'path forward' },
 ];
 
 export default function BlogPostPage() {
@@ -122,28 +122,47 @@ export default function BlogPostPage() {
 
                         {/* Related Posts */}
                         <div className="mt-12">
-                            <h3 className="text-2xl font-bold font-headline text-center mb-8">Continue Reading</h3>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {relatedPosts.map(related => (
-                                    <Link key={related.id} href={`/blog/${related.id}`} passHref>
-                                        <Card className="overflow-hidden group">
-                                            <div className="relative aspect-video">
-                                                <Image 
-                                                    src={related.image} 
-                                                    alt={related.title}
-                                                    fill
-                                                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                                                    data-ai-hint={related.aiHint}
-                                                />
-                                            </div>
-                                            <div className="p-4">
-                                                <h4 className="font-headline font-bold text-lg group-hover:text-primary transition-colors">{related.title}</h4>
-                                            </div>
-                                        </Card>
-                                    </Link>
-                                ))}
-                            </div>
-                        </div>
+  <h3 className="text-2xl font-bold font-headline text-center mb-8">
+    Continue Reading
+  </h3>
+
+  <div
+    className="
+      flex items-stretch overflow-x-auto gap-6 -mx-4 px-4 pb-6
+      sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-8 sm:mx-0 sm:px-0 sm:pb-0
+      scrollbar-hide
+    "
+  >
+    {relatedPosts.map((related) => (
+      <div
+        key={related.id}
+        className="flex-shrink-0 w-80 sm:w-auto flex"
+      >
+        <Link href={`/blog/${related.id}`} passHref className="flex flex-col w-full">
+          <Card className="flex flex-col h-full w-full overflow-hidden group">
+            <div className="relative aspect-video">
+              <Image
+                src={related.image}
+                alt={related.title}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                data-ai-hint={related.aiHint}
+              />
+            </div>
+
+            <div className="p-4 flex flex-col flex-grow">
+              <h4 className="font-headline font-bold text-lg group-hover:text-primary transition-colors">
+                {related.title}
+              </h4>
+              <div className="mt-auto" />
+            </div>
+          </Card>
+        </Link>
+      </div>
+    ))}
+  </div>
+</div>
+
                         
                         {/* Newsletter Signup */}
                         <div className="mt-24">

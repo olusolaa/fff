@@ -54,7 +54,7 @@ export default function HeroSection({
                 <Link href={primaryActionLink}>{primaryActionText}</Link>
               </Button>
               {secondaryActionText && secondaryActionLink && (
-                <Button asChild variant="outline" size="lg" className="min-w-[220px] border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
+                <Button asChild variant="outline" size="lg" className="min-w-[220px] border-primary-foreground text-primary hover:bg-primary-foreground/10">
                   <Link href={secondaryActionLink}>{secondaryActionText}</Link>
                 </Button>
               )}

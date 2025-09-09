@@ -165,7 +165,7 @@ export default function HomePage() {
           <p className="text-lg text-primary-foreground/80 mb-8">
             Let us know you're coming and we'll roll out the red carpet for you. We have a special gift waiting for you at our Welcome Center.
           </p>
-          <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+          <Button asChild size="lg" className="border-primary-foreground bg-primary-foreground text-primary hover:bg-primary-foreground/90">
             <Link href="/new">Start Your Journey</Link>
           </Button>
         </div>

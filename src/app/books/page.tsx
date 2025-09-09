@@ -23,7 +23,7 @@ const libraryBooks: Book[] = [
         id: 1,
         title: 'The Anchor in the Storm',
         author: 'Dr. Evelyn Reed',
-        coverImage: 'https://placehold.co/400x600/1a2a1a/f5f5f0',
+        coverImage: "/images/book.jfif",
         aiHint: 'book cover anchor',
         synopsis: 'A profound exploration of finding steadfastness in faith during life\'s most turbulent seasons. This book offers practical wisdom and spiritual guidance to anchor your soul in unwavering hope.',
         shelf: 'featured',

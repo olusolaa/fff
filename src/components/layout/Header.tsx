@@ -347,111 +347,178 @@ export default function Header() {
         </div>
 
         <div className="md:hidden">
-          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="Open menu" className={cn(linkStyles.iconColor, linkStyles.dropdownButtonHoverBg)}>
-                <Menu className="h-6 w-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-full max-w-xs bg-background p-6 overflow-y-auto">
-              <div className="mb-8 flex items-center justify-between">
-                <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
-                <Link href="/" className="text-xl font-bold font-headline text-primary" onClick={() => setMobileMenuOpen(false)}>
-                  Family Tent Ministry
-                </Link>
-                 <SheetClose asChild>
-                  <Button variant="ghost" size="icon" className="text-muted-foreground">
-                    <X className="h-5 w-5" />
-                    <span className="sr-only">Close</span>
-                  </Button>
-                </SheetClose>
-              </div>
+        <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+  <SheetTrigger asChild>
+    <Button
+      variant="ghost"
+      size="icon"
+      aria-label="Open menu"
+      className={cn(linkStyles.iconColor, linkStyles.dropdownButtonHoverBg)}
+    >
+      <Menu className="h-6 w-6" />
+    </Button>
+  </SheetTrigger>
 
-              <nav className="flex flex-col space-y-2">
-                {navItems.map((item) => {
-                  const itemsToDisplayInAccordion = item.megaMenuItems?.filter(mItem => !mItem.isFullWidthLink);
+  <SheetContent
+    side="right"
+    className="w-full max-w-xs bg-background p-6 overflow-y-auto"
+  >
+    {/* Header */}
+    <div className="mb-8 flex items-center justify-between">
+      <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
+      <Link
+        href="/"
+        className="text-xl font-bold font-headline text-primary"
+        onClick={() => setMobileMenuOpen(false)}
+      >
+        Family Tent Ministry
+      </Link>
+      <SheetClose asChild>
+        <Button variant="ghost" size="icon" className="text-muted-foreground">
+          <X className="h-5 w-5" />
+          <span className="sr-only">Close</span>
+        </Button>
+      </SheetClose>
+    </div>
 
-                  if (item.isMegaMenu && itemsToDisplayInAccordion && itemsToDisplayInAccordion.length > 0) {
-                    return (
-                      <Accordion key={item.id} type="single" collapsible className="w-full">
-                        <AccordionItem value={item.id} className="border-b-0">
-                           <AccordionTrigger
-                              className={cn(
-                                "text-lg font-medium text-foreground hover:text-primary hover:no-underline py-3 px-0 data-[state=open]:text-primary [&[data-state=open]>svg]:text-primary [&>svg]:ml-auto"
-                              )}
-                            >
-                               {item.icon && <item.icon className="h-6 w-6 text-muted-foreground mr-3" />}
-                              <span className="mr-auto">{item.label}</span>
-                            </AccordionTrigger>
-                          <AccordionContent className="pt-1 pb-0 pl-4">
-                            <nav className="flex flex-col space-y-2 mt-1">
-                              {(() => {
-                                const fullWidthLink = item.megaMenuItems?.find(m => m.isFullWidthLink);
-                                if (!fullWidthLink) return null;
-                                
-                                const IconComponent = fullWidthLink.icon;
+    {/* Navigation */}
+    <nav className="flex flex-col space-y-2">
+      <Accordion type="single" collapsible className="w-full">
+        {navItems.map((item) => {
+          const itemsToDisplayInAccordion =
+            item.megaMenuItems?.filter((mItem) => !mItem.isFullWidthLink);
 
-                                return (
-                                  <NavLink 
-                                    href={fullWidthLink.href} 
-                                    onClick={() => setMobileMenuOpen(false)} 
-                                    className="text-base font-semibold py-1 hover:text-primary"
-                                  >
-                                    {IconComponent && <IconComponent className="h-5 w-5 text-muted-foreground" />}
-                                    {fullWidthLink.label}
-                                  </NavLink>
-                                );
-                              })()}
-                              {item.id === 'resources' ? (
-                                (['WATCH', 'LISTEN', 'READ'] as const).map(category => (
-                                  <React.Fragment key={category}>
-                                    <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mt-2 mb-1">{category}</h4>
-                                    {item.megaMenuItems!.filter(sub => sub.category === category && !sub.isFullWidthLink).map((subItem) => (
-                                      <NavLink key={subItem.label} href={subItem.href} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary">
-                                        {subItem.icon && <subItem.icon className="h-5 w-5 text-muted-foreground" />}
-                                        {subItem.label}
-                                      </NavLink>
-                                    ))}
-                                  </React.Fragment>
-                                ))
-                              ) : (
-                                itemsToDisplayInAccordion?.map(subItem => (
-                                  <NavLink key={subItem.label} href={subItem.href} onClick={() => setMobileMenuOpen(false)} className="text-base py-1 hover:text-primary">
-                                    {subItem.icon && <subItem.icon className="h-5 w-5 text-muted-foreground" />}
-                                    {subItem.label}
-                                  </NavLink>
-                                ))
-                              )}
-                            </nav>
-                          </AccordionContent>
-                        </AccordionItem>
-                      </Accordion>
-                    );
-                  }
-                  return (
-                    <NavLink
-                      key={item.id}
-                      href={item.href!}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="text-lg font-medium py-3 px-0 text-foreground hover:text-primary"
-                    >
-                      {item.icon && <item.icon className="h-6 w-6 text-muted-foreground" />}
-                      <span>{item.label}</span>
-                    </NavLink>
-                  );
-                })}
-                 <Button asChild variant="ghost" className="flex w-full items-center justify-start space-x-3 text-lg font-medium py-3 px-0 text-foreground hover:text-primary">
-                    <Link href="#" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); }}>
-                      <Search className="h-6 w-6 text-muted-foreground" />
-                      <span>Search</span>
-                    </Link>
-                  </Button>
-                <Button asChild variant="default" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg mt-4" onClick={() => setMobileMenuOpen(false)}>
-                  <Link href="/new">I'm New</Link>
-                </Button>
-              </nav>
-            </SheetContent>
-          </Sheet>
+          if (item.isMegaMenu && itemsToDisplayInAccordion?.length > 0) {
+            return (
+              <AccordionItem key={item.id} value={item.id} className="border-b-0">
+                <AccordionTrigger
+                  className="flex items-center gap-3 justify-start text-lg font-medium text-foreground hover:text-primary hover:no-underline py-3 px-0 data-[state=open]:text-primary [&[data-state=open]>svg]:text-primary"
+                >
+                  {item.icon && (
+                    <item.icon className="h-6 w-6 text-muted-foreground" />
+                  )}
+                  <span>{item.label}</span>
+                </AccordionTrigger>
+
+                <AccordionContent className="pt-1 pb-0 pl-4">
+                  <nav className="flex flex-col space-y-2 mt-1">
+                    {(() => {
+                      const fullWidthLink = item.megaMenuItems?.find(
+                        (m) => m.isFullWidthLink
+                      );
+                      if (!fullWidthLink) return null;
+
+                      const IconComponent = fullWidthLink.icon;
+
+                      return (
+                        <NavLink
+                          href={fullWidthLink.href}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="flex items-center gap-2 justify-start text-base font-semibold py-2 hover:text-primary"
+                        >
+                          {IconComponent && (
+                            <IconComponent className="h-5 w-5 text-muted-foreground" />
+                          )}
+                          <span>{fullWidthLink.label}</span>
+                        </NavLink>
+                      );
+                    })()}
+
+                    {item.id === "resources" ? (
+                      (["BIBLE", "LISTEN", "READ"] as const).map((category) => (
+                        <React.Fragment key={category}>
+                          <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mt-2 mb-1">
+                            {category}
+                          </h4>
+                          {item.megaMenuItems!
+                            .filter(
+                              (sub) =>
+                                sub.category === category && !sub.isFullWidthLink
+                            )
+                            .map((subItem) => (
+                              <NavLink
+                                key={subItem.label}
+                                href={subItem.href}
+                                onClick={() => setMobileMenuOpen(false)}
+                                className="flex items-center gap-2 justify-start text-base py-2 hover:text-primary"
+                              >
+                                {subItem.icon && (
+                                  <subItem.icon className="h-5 w-5 text-muted-foreground" />
+                                )}
+                                <span>{subItem.label}</span>
+                              </NavLink>
+                            ))}
+                        </React.Fragment>
+                      ))
+                    ) : (
+                      itemsToDisplayInAccordion?.map((subItem) => (
+                        <NavLink
+                          key={subItem.label}
+                          href={subItem.href}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="flex items-center gap-2 justify-start text-base py-2 hover:text-primary"
+                        >
+                          {subItem.icon && (
+                            <subItem.icon className="h-5 w-5 text-muted-foreground" />
+                          )}
+                          <span>{subItem.label}</span>
+                        </NavLink>
+                      ))
+                    )}
+                  </nav>
+                </AccordionContent>
+              </AccordionItem>
+            );
+          }
+
+          return (
+            <NavLink
+              key={item.id}
+              href={item.href!}
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-3 justify-start text-lg font-medium py-3 px-0 text-foreground hover:text-primary"
+            >
+              {item.icon && (
+                <item.icon className="h-6 w-6 text-muted-foreground" />
+              )}
+              <span>{item.label}</span>
+            </NavLink>
+          );
+        })}
+      </Accordion>
+
+      {/* Search */}
+      <Button
+        asChild
+        variant="ghost"
+        className="flex items-center gap-3 justify-start w-full text-lg font-medium py-3 px-0 text-foreground hover:text-primary"
+      >
+        <Link
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            setMobileMenuOpen(false);
+          }}
+        >
+          <Search className="h-6 w-6 text-muted-foreground" />
+          <span>Search</span>
+        </Link>
+      </Button>
+
+      {/* CTA Button */}
+      <Button
+        asChild
+        variant="default"
+        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg mt-4"
+        onClick={() => setMobileMenuOpen(false)}
+      >
+        <Link href="/new">I'm New</Link>
+      </Button>
+    </nav>
+  </SheetContent>
+</Sheet>
+
+
         </div>
       </div>
     </header>

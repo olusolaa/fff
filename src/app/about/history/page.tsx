@@ -9,7 +9,7 @@ export default function HistoryPage() {
         title="Our History"
         text="Detailed information about the history of Family Tent Ministry. Content is coming soon."
         className="bg-secondary/30 text-center"
-        titleClassName="text-4xl md:text-5xl"
+        titleClassName="text-4xl md:text-5xl mt-20"
       />
       <AnimatedSection className="container mx-auto px-4 py-12 md:py-20">
         <div className="max-w-3xl mx-auto space-y-6 text-lg text-foreground/80">

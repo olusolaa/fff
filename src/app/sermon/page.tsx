@@ -4,6 +4,7 @@
 
 import React, { useState, useRef, useEffect, useMemo, FormEvent, Suspense } from 'react';
 import Image from 'next/image';
+import { useRouter } from "next/navigation";
 import { useSearchParams } from 'next/navigation';
 import { AnimatePresence, motion, useAnimation } from 'framer-motion';
 import {
@@ -20,6 +21,15 @@ import {
   Headphones,
   Play,
 } from 'lucide-react';
+import Link from "next/link";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -85,12 +95,15 @@ interface PodcastEpisode {
 }
 
 interface Book {
-    id: number;
-    title: string;
-    coverImage: string;
-    chapter?: string;
+  id: number;
+  title: string;
+  author: string;
+  coverImage: string;
+  aiHint?: string;
+  synopsis?: string;
+  shelf?: "featured" | "new_releases" | "essential_reading";
+  chapter?: string;
 }
-
 const PlayerControls = React.memo(({ isAudioOnly, onToggleAudio }: { isAudioOnly: boolean, onToggleAudio: () => void }) => (
   <motion.div
     initial={{ opacity: 0 }}
@@ -254,23 +267,90 @@ const seriesData: SermonSeries[] = [
 ];
 
 const blogData: BlogPost[] = [
-  { id: 1, title: 'Grace Isn\'t Fair, and That\'s the Point', image: '/images/blog.jpg', readTime: '5 min read', },
-  { id: 2, title: 'When You Don\'t Feel Forgiven: A Practical Guide', image: '/images/blog.jpg', readTime: '7 min read', },
-  { id: 3, title: 'The Three Words that Change Everything', image: '/images/blog.jpg', readTime: '4 min read', },
-  { id: 4, title: 'A Theology of Second Chances', image: '/images/blog.jpg', readTime: '6 min read', },
+  {
+    id: 1,
+    title: "Grace Isn't Fair, and That's the Point",
+    image: "/images/blog.webp",
+    readTime: "5 min read",
+  },
+  {
+    id: 2,
+    title: "When You Don't Feel Forgiven: A Practical Guide",
+    image: "/images/blog.webp",
+    readTime: "7 min read",
+  },
+  {
+    id: 3,
+    title: "The Three Words that Change Everything",
+    image: "/images/blog.webp",
+    readTime: "4 min read",
+  },
+  {
+    id: 4,
+    title: "A Theology of Second Chances",
+    image: "/images/blog.jpg",
+    readTime: "6 min read",
+  },
 ];
 
 const podcastData: PodcastEpisode[] = [
-    { id: 1, title: 'Evelyn Reed on the Weight of Grace', coverArt: '/images/podcast.jpg', duration: '28 min listen' },
-    { id: 2, title: 'How to Parent with Grace (and Not Lose Your Mind)', coverArt: '/images/podcast.jpg', duration: '45 min listen' },
-    { id: 3, title: 'Roundtable: Grace, Justice, and the Modern Church', coverArt: '/images/podcast.jpg', duration: '52 min listen' },
-    { id: 4, title: 'A Story of Radical Forgiveness', coverArt: '/images/podcast.jpg', duration: '18 min listen' },
+  {
+    id: 1,
+    title: "Evelyn Reed on the Weight of Grace",
+    coverArt: "/images/podcast.avif",
+    duration: "28 min listen",
+  },
+  {
+    id: 2,
+    title: "How to Parent with Grace (and Not Lose Your Mind)",
+    coverArt: "/images/podcast.avif",
+    duration: "45 min listen",
+  },
+  {
+    id: 3,
+    title: "Roundtable: Grace, Justice, and the Modern Church",
+    coverArt: "/images/podcast.avif",
+    duration: "52 min listen",
+  },
+  {
+    id: 4,
+    title: "A Story of Radical Forgiveness",
+    coverArt: "/images/podcast.avif",
+    duration: "18 min listen",
+  },
 ];
 
 const bookData: Book[] = [
-    { id: 1, title: 'The Echo of Grace', coverImage: '/images/book.jpg', chapter: 'Chapter 1: The First Sound' },
-    { id: 2, title: 'Hope in the Ruins', coverImage: '/images/book.jpg', },
-    { id: 3, title: 'A Faith That Lasts', coverImage: '/images/book.jpg', chapter: 'Chapter 5: Everyday Mercy' },
+  {
+    id: 1,
+    title: "The Anchor in the Storm",
+    author: "Dr. Evelyn Reed",
+    coverImage: "/images/book.jfif",
+    aiHint: "book cover anchor",
+    synopsis:
+      "A profound exploration of finding steadfastness in faith during life's most turbulent seasons. This book offers practical wisdom and spiritual guidance to anchor your soul in unwavering hope.",
+    shelf: "featured",
+  },
+  {
+    id: 2,
+    title: "Foundations of Faith",
+    author: "Rev. Michael Chen",
+    coverImage: "/images/book.jfif",
+    aiHint: "book cover foundations",
+    synopsis:
+      "Returning to the essentials, this book unpacks the core tenets of Christian belief. A must-read for both new believers and seasoned saints looking to solidify their spiritual bedrock.",
+    shelf: "essential_reading",
+  },
+  {
+    id: 3,
+    title: "The Generous Kingdom",
+    author: "Pastor Sarah Jones",
+    coverImage: "/images/book.jfif",
+    aiHint: "book cover kingdom",
+    synopsis:
+      "This book challenges our modern perceptions of wealth and possessions, inviting us into the radical, upside-down economy of God's Kingdom where true riches are found in giving.",
+    shelf: "new_releases",
+  },
 ];
 
 const TabContent = ({ isVisible, children }: { isVisible: boolean; children: React.ReactNode }) => (
@@ -459,9 +539,14 @@ function SanctuaryMediaHubContent() {
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   }
+    const router = useRouter();
+  
+    const handleOpenBook = (bookId: number) => {
+      router.push(`/books/${bookId}`);
+    };
 
   return (
-    <div className={cn("bg-background text-foreground min-h-screen transition-all duration-700 ease-in-out", { 'pb-28 md:pb-24': isDocked })}>
+    <div className={cn("bg-background text-foreground min-h-screen transition-all duration-700 ease-in-out")}>
       <main className="mt-20 container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
           {/* Left Column: Video Player and Info */}
@@ -718,142 +803,157 @@ function SanctuaryMediaHubContent() {
                     </div>
                 </div>
 
-                 {/* Shelf 2: Deeper Readings */}
-                 <div className="mt-32">
-                    <h3 className="text-2xl font-bold text-foreground mb-6">Deeper Readings</h3>
-                    <div className="flex overflow-x-auto space-x-6 pb-4 -mx-4 px-4 scrollbar-hide">
-                        {blogData.map((post) => (
-                            <motion.div 
-                                key={post.id} 
-                                className="flex-shrink-0 w-96 lg:w-[480px]"
-                                whileHover={{ scale: 1.02 }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <div className="relative overflow-hidden rounded-lg cursor-pointer h-full shadow-md hover:shadow-xl transition-all duration-300 group">
-                                    <div className="aspect-[8/6] relative">
-                                        <Image 
-                                            src={post.image} 
-                                            alt={post.title} 
-                                            fill
-                                            className="object-cover transition-transform duration-700 group-hover:scale-110" 
-                                            data-ai-hint="reading book"
-                                        />
-                                        
-                                        {/* Hover Gradient Overlay */}
-                                        <motion.div 
-                                            className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                        />
-                                        
-                                        {/* Title and Read Time - Hidden by default, shown on hover */}
-                                        <motion.div 
-                                            className="absolute bottom-0 left-0 p-6 text-white"
-                                            initial={{ opacity: 0, y: 20 }}
-                                            whileHover={{ opacity: 1, y: 0 }}
-                                            transition={{ duration: 0.3, delay: 0.1 }}
-                                        >
-                                            <h3 className="font-bold text-xl">{post.title}</h3>
-                                            <div className="flex items-center gap-2 mt-2 text-sm opacity-90">
-                                                <BookOpen size={16}/>
-                                                <span>{post.readTime}</span>
-                                            </div>
-                                        </motion.div>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Shelf 3: Continue the Conversation */}
-                <div className="mt-32">
-                    <h3 className="text-2xl font-bold text-foreground mb-6">Continue the Conversation</h3>
-                     <div className="flex overflow-x-auto space-x-6 pb-4 -mx-4 px-4 scrollbar-hide">
-                        {podcastData.map((episode) => (
-                            <motion.div 
-                                key={episode.id} 
-                                className="flex-shrink-0 w-72"
-                                whileHover={{ scale: 1.02 }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <div className="relative aspect-square overflow-hidden rounded-lg cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 group">
-                                    <Image 
-                                        src={episode.coverArt} 
-                                        alt={episode.title} 
-                                        fill
-                                        className="object-cover transition-transform duration-700 group-hover:scale-110" 
-                                        data-ai-hint="podcast microphone"
-                                    />
-                                    
-                                    {/* Dark Overlay on Hover */}
-                                    <motion.div 
-                                        className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                    />
-                                    
-                                    {/* Play Icon - Hidden by default, shown on hover */}
-                                    <motion.div 
-                                        className="absolute inset-0 flex flex-col items-center justify-center text-white"
-                                        initial={{ opacity: 0, scale: 0.8 }}
-                                        whileHover={{ opacity: 1, scale: 1 }}
-                                        transition={{ duration: 0.3, delay: 0.1 }}
-                                    >
-                                        <div className="bg-accent rounded-full p-4 mb-4">
-                                            <Play size={32} fill="white" className="ml-1" />
-                                        </div>
-                                        <h3 className="font-bold text-lg text-center px-4 line-clamp-2">{episode.title}</h3>
-                                        <div className="flex items-center gap-2 mt-2 text-sm opacity-90">
-                                            <Headphones size={16} />
-                                            <span>{episode.duration}</span>
-                                        </div>
-                                    </motion.div>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-                
-                 {/* Shelf 4: From Our Library */}
-                <div className="mt-32 mb-8">
-                    <h3 className="text-2xl font-bold text-foreground mb-6">From Our Library</h3>
-                    <div className="flex overflow-x-auto space-x-8 pb-4 -mx-4 px-4 scrollbar-hide">
-                        {bookData.map((book) => (
-                            <motion.div 
-                                key={book.id} 
-                                className="flex-shrink-0 w-56"
-                                whileHover={{ scale: 1.05, z: 10 }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <div className="relative cursor-pointer group">
-                                    <div className="book-3d-container relative">
-                                        <Image 
-                                            src={book.coverImage} 
-                                            alt={book.title} 
-                                            width={400} 
-                                            height={600} 
-                                            className="w-full h-auto object-contain rounded-r-sm shadow-2xl" 
-                                            data-ai-hint="book cover"
-                                        />
-                                        
-                                        {/* Dark Overlay with Book Info on Hover */}
-                                        <motion.div 
-                                            className="absolute inset-0 bg-black/80 rounded-r-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6"
-                                            initial={{ opacity: 0 }}
-                                            whileHover={{ opacity: 1 }}
-                                            transition={{ duration: 0.3 }}
-                                        >
-                                            <h3 className="font-bold text-xl text-white mb-2">{book.title}</h3>
-                                            <p className="text-white/80 text-sm mb-3">by Dr. Evelyn Reed</p>
-                                            <p className="text-white/70 text-xs line-clamp-3">
-                                                A profound exploration of grace that echoes through every aspect of our lives, 
-                                                revealing how God's unmerited favor transforms our past, present, and future.
-                                            </p>
-                                            {book.chapter && <p className="text-accent text-sm mt-3 font-medium">{book.chapter}</p>}
-                                        </motion.div>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
+               {/* Shelf 2: Deeper Readings */}
+                           <div className="mt-32">
+                             <h3 className="text-2xl font-bold text-foreground mb-6">
+                               Deeper Readings
+                             </h3>
+                             <div className="flex overflow-x-auto space-x-6 pb-4 -mx-4 px-4 scrollbar-hide">
+                 {blogData.map((post) => (
+                   <Link key={post.id} href={`/blogs/${post.id}`} passHref>
+                     <motion.div
+                       className="flex-shrink-0 w-96 lg:w-[480px] cursor-pointer"
+                       whileHover={{ scale: 1.02 }}
+                       transition={{ duration: 0.3 }}
+                     >
+                       <div className="relative overflow-hidden rounded-lg h-full shadow-md hover:shadow-xl transition-all duration-300 group">
+                         <div className="aspect-[8/6] relative">
+                           <Image
+                             src={post.image}
+                             alt={post.title}
+                             fill
+                             className="object-cover transition-transform duration-700 group-hover:scale-110"
+                             data-ai-hint="reading book"
+                           />
+               
+                           {/* Overlay + Content */}
+                           <motion.div
+                             className="
+                               absolute inset-0 
+                               flex flex-col justify-end
+                               bg-gradient-to-t from-black/90 via-black/40 to-transparent
+                               opacity-100 sm:opacity-0 sm:group-hover:opacity-100
+                               transition-opacity duration-300
+                               p-6 text-white
+                             "
+                             transition={{ duration: 0.3, delay: 0.1 }}
+                           >
+                             <h3 className="font-bold text-xl">{post.title}</h3>
+                             <div className="flex items-center gap-2 mt-2 text-sm opacity-90">
+                               <BookOpen size={16} />
+                               <span>{post.readTime}</span>
+                             </div>
+                           </motion.div>
+                         </div>
+                       </div>
+                     </motion.div>
+                   </Link>
+                 ))}
+               </div>
+                           </div>
+               
+                           {/* Shelf 3: Continue the Conversation */}
+               
+                           <div className="mt-32">
+                             <h3 className="text-2xl font-bold text-foreground mb-6">
+                               Continue the Conversation
+                             </h3>
+                             <div className="flex overflow-x-auto space-x-6 pb-4 -mx-4 px-4 scrollbar-hide">
+                               {podcastData.map((episode) => (
+                                 <motion.div
+                                   key={episode.id}
+                                   className="flex-shrink-0 w-72"
+                                   whileHover={{ scale: 1.02 }}
+                                   transition={{ duration: 0.3 }}
+                                 >
+                                   <div className="relative aspect-square overflow-hidden rounded-lg cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 group">
+                                     <Image
+                                       src={episode.coverArt}
+                                       alt={episode.title}
+                                       fill
+                                       className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                       data-ai-hint="podcast microphone"
+                                     />
+               
+                                     {/* Dark Overlay on Hover */}
+                                     <motion.div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+               
+                                     {/* Play Icon - Hidden by default, shown on hover */}
+                                     <motion.div
+                                       className="absolute inset-0 flex flex-col items-center justify-center text-white"
+                                       initial={{ opacity: 0, scale: 0.8 }}
+                                       whileHover={{ opacity: 1, scale: 1 }}
+                                       transition={{ duration: 0.3, delay: 0.1 }}
+                                     >
+                                       <div className="bg-accent rounded-full p-4 mb-4">
+                                         <Play size={32} fill="white" className="ml-1" />
+                                       </div>
+                                       <h3 className="font-bold text-lg text-center px-4 line-clamp-2">
+                                         {episode.title}
+                                       </h3>
+                                       <div className="flex items-center gap-2 mt-2 text-sm opacity-90">
+                                         <Headphones size={16} />
+                                         <span>{episode.duration}</span>
+                                       </div>
+                                     </motion.div>
+                                   </div>
+                                 </motion.div>
+                               ))}
+                             </div>
+                           </div>
+               
+                           <div className="mt-32 mb-8">
+                             <h3 className="text-2xl font-bold text-foreground mb-6">
+                               From Our Library
+                             </h3>
+                             <div className="flex overflow-x-auto space-x-8 pb-4 -mx-4 px-4 scrollbar-hide">
+                               {bookData.map((book) => (
+                                 <motion.div
+                                   key={book.id}
+                                   className="flex-shrink-0 w-56 cursor-pointer"
+                                   whileHover={{ scale: 1.05, z: 10 }}
+                                   transition={{ duration: 0.3 }}
+                                   onClick={() => handleOpenBook(book.id)} // 👈 added routing
+                                 >
+                                   <div className="relative group">
+                                     <div className="book-3d-container relative">
+                                       <Image
+                                         src={book.coverImage}
+                                         alt={book.title}
+                                         width={400}
+                                         height={600}
+                                         className="w-full h-auto object-contain rounded-r-sm shadow-2xl"
+                                         data-ai-hint="book cover"
+                                       />
+               
+                                       {/* Dark Overlay with Book Info on Hover */}
+                                       <motion.div
+                                         className="absolute inset-0 bg-black/80 rounded-r-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6"
+                                         initial={{ opacity: 0 }}
+                                         whileHover={{ opacity: 1 }}
+                                         transition={{ duration: 0.3 }}
+                                       >
+                                         <h3 className="font-bold text-xl text-white mb-2">
+                                           {book.title}
+                                         </h3>
+                                         <p className="text-white/80 text-sm mb-3">
+                                           by {book.author}
+                                         </p>
+                                         <p className="text-white/70 text-xs line-clamp-3">
+                                           {book.synopsis}
+                                         </p>
+                                         {book.chapter && (
+                                           <p className="text-accent text-sm mt-3 font-medium">
+                                             {book.chapter}
+                                           </p>
+                                         )}
+                                       </motion.div>
+                                     </div>
+                                   </div>
+                                 </motion.div>
+                               ))}
+                             </div>
+                           </div>
 
             </div>
         </section>
@@ -868,7 +968,7 @@ function SanctuaryMediaHubContent() {
                     <Button variant="secondary" size="lg" className="bg-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/30">
                         Discuss This in Community
                     </Button>
-                    <Button variant="outline" size="lg" className="border-primary-foreground/50 text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+                    <Button variant="outline" size="lg" className="border-primary-foreground/50 text-primary hover:bg-primary hover:text-primary-foreground">
                         Talk About This Confidentially
                     </Button>
                 </div>

@@ -9,7 +9,7 @@ export default function BeliefsPage() {
         title="Our Beliefs"
         text="At Family Tent Ministry, our foundation is built upon core Christian principles. We believe in:"
         className="bg-secondary/30 text-center"
-        titleClassName="text-4xl md:text-5xl"
+        titleClassName="text-4xl md:text-5xl mt-20"
       />
       <AnimatedSection className="container mx-auto px-4 py-12 md:py-20">
         <div className="max-w-3xl mx-auto space-y-6 text-lg text-foreground/80">

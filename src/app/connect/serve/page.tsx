@@ -48,7 +48,7 @@ export default function ServePage() {
         title="Make a Difference"
         text="One of the best ways to get involved, meet people, and grow in your faith is to serve. We have many opportunities to use your gifts to build up the church and bless our community."
         className="bg-secondary/30 text-center"
-        titleClassName="text-4xl md:text-5xl"
+        titleClassName="text-4xl md:text-5xl mt-20"
       />
       <CardGrid title="Serving Opportunities" items={serveOpportunities} gridCols="md:grid-cols-2" />
     </div>

@@ -116,28 +116,33 @@ export default function HomePage() {
           <h2 className="text-4xl md:text-5xl font-headline text-primary text-center mb-12">
             Discover Your Place
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {pathwayItems.map((item) => (
-              <Link href={item.link} key={item.title}>
-                  <Card className="overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-2">
-                    <CardHeader className="p-0">
-                      <div className="relative aspect-[4/3]">
-                        <Image
-                          src={item.image}
-                          alt={item.title}
-                          fill
-                          className="object-cover"
-                          data-ai-hint={item.imageHint}
-                        />
-                      </div>
-                    </CardHeader>
-                    <CardContent className="p-6">
-                      <CardTitle className="text-2xl font-headline text-primary">{item.title}</CardTitle>
-                    </CardContent>
-                  </Card>
-              </Link>
-            ))}
-          </div>
+          <div className="flex overflow-x-auto space-x-6 pb-4 -mx-4 px-4 scrollbar-hide">
+  {pathwayItems.map((item) => (
+    <div key={item.title} className="flex-shrink-0 w-80 md:w-96">
+      <Link href={item.link}>
+        <Card className="overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-2">
+          <CardHeader className="p-0">
+            <div className="relative aspect-[4/3]">
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                className="object-cover"
+                data-ai-hint={item.imageHint}
+              />
+            </div>
+          </CardHeader>
+          <CardContent className="p-6">
+            <CardTitle className="text-2xl font-headline text-primary">
+              {item.title}
+            </CardTitle>
+          </CardContent>
+        </Card>
+      </Link>
+    </div>
+  ))}
+</div>
+
         </div>
       </section>
 
@@ -160,7 +165,7 @@ export default function HomePage() {
           <p className="text-lg text-primary-foreground/80 mb-8">
             Let us know you're coming and we'll roll out the red carpet for you. We have a special gift waiting for you at our Welcome Center.
           </p>
-          <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+          <Button asChild size="lg" className="border-primary-foreground bg-primary-foreground text-primary hover:bg-primary-foreground/90">
             <Link href="/new">Start Your Journey</Link>
           </Button>
         </div>

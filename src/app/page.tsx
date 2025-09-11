@@ -103,7 +103,7 @@ export default function HomePage() {
                 Join us as we explore how to live a life of courage and trust in God amidst uncertain times. Discover the power of faith to overcome any obstacle.
               </p>
               <Button asChild variant="outline" size="lg">
-                <Link href="/sermons">Explore All Messages</Link>
+                <Link href="/archive">Explore All Messages</Link>
               </Button>
             </div>
           </div>

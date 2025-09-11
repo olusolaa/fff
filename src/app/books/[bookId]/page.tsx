@@ -19,6 +19,7 @@ import {
   AlertDialogFooter,
   AlertDialogCancel,
 } from '@/components/ui/alert-dialog';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 
 // Mock Data - In a real app, this would be fetched based on the bookId
@@ -48,6 +49,7 @@ export default function BookReaderPage() {
     const router = useRouter();
     const params = useParams();
     const { bookId } = params;
+    const isMobile = useIsMobile();
     
     const [theme, setTheme] = useState<Theme>('light');
     const [fontSize, setFontSize] = useState(18);
@@ -61,6 +63,12 @@ export default function BookReaderPage() {
     const contentRef = useRef<HTMLDivElement>(null);
 
     const book = libraryBooks.find(b => b.id === parseInt(bookId as string));
+
+    useEffect(() => {
+        if (isMobile) {
+            setControlsVisible(true);
+        }
+    }, [isMobile]);
 
     useEffect(() => {
         const contentEl = contentRef.current;
@@ -160,11 +168,15 @@ export default function BookReaderPage() {
                 transition={{ duration: 0.5, ease: 'easeInOut' }}
                 onClick={() => router.back()}
                 onMouseMove={(e) => {
-                    if (e.clientY < 100) {
+                    if (e.clientY < 100 && !isMobile) {
                         setControlsVisible(true);
                     }
                 }}
-                onMouseLeave={() => setControlsVisible(false)}
+                onMouseLeave={() => {
+                    if (!isMobile) {
+                        setControlsVisible(false);
+                    }
+                }}
             >
                 <div 
                     className={cn(
@@ -212,6 +224,7 @@ export default function BookReaderPage() {
                                        setTheme={setTheme}
                                        fontSize={fontSize}
                                        setFontSize={setFontSize}
+                                       onClose={() => router.back()}
                                    />
                                )}
                             </AnimatePresence>

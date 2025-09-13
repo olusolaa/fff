@@ -427,9 +427,9 @@ export default function Header() {
                     {item.id === "resources" ? (
                       (["BIBLE", "LISTEN", "READ"] as const).map((category) => (
                         <React.Fragment key={category}>
-                          <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mt-2 mb-1">
+                          {/* <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mt-2 mb-1">
                             {category}
-                          </h4>
+                          </h4> */}
                           {item.megaMenuItems!
                             .filter(
                               (sub) =>
@@ -476,11 +476,11 @@ export default function Header() {
               key={item.id}
               href={item.href!}
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-3 justify-start text-lg font-medium py-3 px-0 text-foreground hover:text-primary"
+              className="flex items-center gap-3 justify-start text-base font-medium py-3 px-0 text-foreground hover:text-primary"
             >
-              {item.icon && (
+              {/* {item.icon && (
                 <item.icon className="h-6 w-6 text-muted-foreground" />
-              )}
+              )} */}
               <span>{item.label}</span>
             </NavLink>
           );
@@ -512,7 +512,7 @@ export default function Header() {
         className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg mt-4"
         onClick={() => setMobileMenuOpen(false)}
       >
-        <Link href="/new">I'm New</Link>
+        <Link href="/">I'm New</Link>
       </Button>
     </nav>
   </SheetContent>

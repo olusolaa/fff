@@ -32,7 +32,7 @@ const libraryBooks: Book[] = [
         id: 5,
         title: 'Echoes of Grace',
         author: 'Dr. Evelyn Reed',
-        coverImage: 'https://placehold.co/400x600/1a2a1a/f5f5f0',
+        coverImage: '/images/book.jfif',
         aiHint: 'book cover grace',
         synopsis: 'Explore the resonant and persistent nature of God\'s grace. This book will help you see how grace is not a single event, but a continuous echo shaping your entire life.',
         shelf: 'featured',
@@ -41,7 +41,7 @@ const libraryBooks: Book[] = [
         id: 4,
         title: 'Beautiful Paradox',
         author: 'Dr. Evelyn Reed',
-        coverImage: 'https://placehold.co/400x600/cdb38b/1a2a1a',
+        coverImage: '/images/book.jfif',
         aiHint: 'book cover paradox',
         synopsis: 'The Christian journey is filled with beautiful contradictions: finding strength in weakness, life in death, and wisdom in foolishness. This book dives into these profound mysteries.',
         shelf: 'featured',
@@ -50,7 +50,7 @@ const libraryBooks: Book[] = [
         id: 2,
         title: 'Foundations of Faith',
         author: 'Rev. Michael Chen',
-        coverImage: 'https://placehold.co/400x600/a7d1ab/1a2a1a',
+        coverImage: '/images/book.jfif',
         aiHint: 'book cover foundations',
         synopsis: 'Returning to the essentials, this book unpacks the core tenets of Christian belief. A must-read for both new believers and seasoned saints looking to solidify their spiritual bedrock.',
         shelf: 'essential_reading',
@@ -59,7 +59,7 @@ const libraryBooks: Book[] = [
         id: 6,
         title: 'A Faith That Lasts',
         author: 'Rev. Michael Chen',
-        coverImage: 'https://placehold.co/400x600/a7d1ab/1a2a1a',
+        coverImage: '/images/book.jfif',
         aiHint: 'book cover faith',
         synopsis: 'In a world of constant change, how do we cultivate a faith that endures? This book provides a roadmap for building a resilient and lifelong relationship with God.',
         shelf: 'essential_reading',
@@ -68,7 +68,7 @@ const libraryBooks: Book[] = [
         id: 3,
         title: 'The Generous Kingdom',
         author: 'Pastor Sarah Jones',
-        coverImage: 'https://placehold.co/400x600/3a4a3a/f5f5f0',
+        coverImage: '/images/book.jfif',
         aiHint: 'book cover kingdom',
         synopsis: 'This book challenges our modern perceptions of wealth and possessions, inviting us into the radical, upside-down economy of God\'s Kingdom where true riches are found in giving.',
         shelf: 'new_releases',
@@ -154,7 +154,7 @@ export default function BooksPage() {
 
 
     return (
-        <div className="bg-background text-foreground min-h-screen">
+        <div className="mt-20 bg-background text-foreground min-h-screen">
             <main className="container mx-auto px-4 py-12 md:py-20">
                 <header className="text-center mb-20">
                     <h1 className="font-headline text-5xl md:text-6xl font-bold text-primary">The Library</h1>

@@ -24,7 +24,7 @@ export function PastoralAssistant() {
     const [input, setInput] = useState('');
     const [isTyping, setIsTyping] = useState(false);
     const [isAiResponding, setIsAiResponding] = useState(false);
-    const { isCompanionOpen } = useLayoutContext();
+    const { isCompanionOpen, isOnBiblePage } = useLayoutContext();
 
     const welcomeMessage = "Welcome. I'm a ministry assistant trained on Pastor Evelyn's teachings. Whatever is on your heart, you're in a safe place to share.";
 
@@ -74,7 +74,8 @@ export function PastoralAssistant() {
             {/* The Icon */}
             <div className={cn(
                 "fixed bottom-6 right-6 z-50 transition-all duration-500 ease-in-out",
-                isCompanionOpen && "right-[calc(24rem+1.5rem)]"
+                isCompanionOpen ? "right-[calc(24rem+1.5rem)]" : 
+                isOnBiblePage ? "right-[4.5rem]" : "right-6"
             )}>
                 <Button
                     size="icon"
@@ -178,19 +179,24 @@ export function PastoralAssistant() {
                             </div>
                             
                             {/* Footer Actions */}
-                             <div className="p-4 border-t bg-muted/50">
-                                <p className="text-sm text-center text-muted-foreground mb-3">For a more personal connection:</p>
-                                <div className="flex gap-4">
-                                    <Button variant="outline" className="w-full">
-                                        <Users className="mr-2 h-4 w-4" />
-                                        Find a Community Group
-                                    </Button>
-                                     <Button variant="outline" className="w-full">
-                                        <HandHeart className="mr-2 h-4 w-4" />
-                                        Submit a Prayer Request
-                                    </Button>
-                                </div>
-                            </div>
+                            <div className="p-4 border-t bg-muted/50">
+  <p className="text-sm text-center text-muted-foreground mb-3">
+    For a more personal connection:
+  </p>
+
+  <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
+    <Button variant="outline" className="w-full">
+      <Users className="mr-2 h-4 w-4" />
+      Find a Community Group
+    </Button>
+
+    <Button variant="outline" className="w-full">
+      <HandHeart className="mr-2 h-4 w-4" />
+      Submit a Prayer Request
+    </Button>
+  </div>
+</div>
+
                         </motion.div>
                     </motion.div>
                 )}

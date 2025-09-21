@@ -8,6 +8,7 @@ import AppLayout from '@/components/layout/AppLayout';
 import { cn } from '@/lib/utils';
 import React, { useState, useEffect } from 'react';
 import { LayoutProvider } from '@/contexts/layout-context';
+import { AuthProvider } from '@/contexts/auth-context';
 import { PastoralAssistant } from '@/components/shared/pastoral-assistant';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
@@ -49,17 +50,19 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className={cn("font-body antialiased", inter.variable, alegreya.variable, caveat.variable)}>
-        <AppLayout>
-        <LayoutProvider>
-          <div className="relative">
-            {children}
-            <ClientOnly>
-                <PastoralAssistant />
-            </ClientOnly>
-          </div>
-        </LayoutProvider>
-        </AppLayout>
-        <Toaster />
+        <AuthProvider>
+          <AppLayout>
+            <LayoutProvider>
+              <div className="relative">
+                {children}
+                <ClientOnly>
+                    <PastoralAssistant />
+                </ClientOnly>
+              </div>
+            </LayoutProvider>
+          </AppLayout>
+          <Toaster />
+        </AuthProvider>
       </body>
     </html>
   );
